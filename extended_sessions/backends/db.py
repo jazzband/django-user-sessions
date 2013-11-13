@@ -12,9 +12,9 @@ class SessionStore(SessionBase):
     """
     Implements database session store.
     """
-    def __init__(self, device, ip, session_key=None):
+    def __init__(self, user_agent, ip, session_key=None):
         super(SessionStore, self).__init__(session_key)
-        self.device, self.ip, self.user_id = device[:200], ip, None
+        self.user_agent, self.ip, self.user_id = user_agent[:200], ip, None
 
     def __setitem__(self, key, value):
         if key == SESSION_KEY:
@@ -28,8 +28,8 @@ class SessionStore(SessionBase):
                 expire_date__gt=timezone.now()
             )
             self.user_id = s.user_id
-            # do not overwrite device/ip, as those might have been updated
-            if self.device != s.device or self.ip != s.ip:
+            # do not overwrite user_agent/ip, as those might have been updated
+            if self.user_agent != s.user_agent or self.ip != s.ip:
                 self.modified = True
             return self.decode(s.session_data)
         except (Session.DoesNotExist, SuspiciousOperation) as e:
@@ -68,7 +68,7 @@ class SessionStore(SessionBase):
             session_key=self._get_or_create_session_key(),
             session_data=self.encode(self._get_session(no_load=must_create)),
             expire_date=self.get_expiry_date(),
-            device=self.device,
+            user_agent=self.user_agent,
             user_id=self.user_id,
             ip=self.ip,
         )

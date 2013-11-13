@@ -12,7 +12,7 @@ class SessionMiddleware(object):
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
         request.session = engine.SessionStore(
             ip=request.META.get('REMOTE_ADDR'),
-            device=request.META.get('HTTP_USER_AGENT'),
+            user_agent=request.META.get('HTTP_USER_AGENT'),
             session_key=session_key
         )
 

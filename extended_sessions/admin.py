@@ -1,16 +1,7 @@
-import warnings
-
 from django.contrib import admin
-from django.utils.safestring import mark_safe
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _, ugettext
-
-try:
-    from django.contrib.gis.geoip import GeoIP
-    geoip = GeoIP()
-except Exception as e:
-    warnings.warn(str(e), stacklevel=2)
-    geoip = None
+from django.utils.translation import ugettext_lazy as _
+from extended_sessions.templatetags.extended_sessions import humanagent, location
 
 from extended_sessions.models import Session
 
@@ -56,15 +47,8 @@ class SessionAdmin(admin.ModelAdmin):
     is_valid.boolean = True
 
     def location(self, obj):
-        if not geoip:
-            return ''
-        location = geoip.city(obj.ip)
-        print location
-        if location and location['country_name']:
-            if location['city']:
-                return '%s, %s' % (location['city'], location['country_name'])
-            else:
-                return location['country_name']
-        else:
-            return mark_safe('<i>%s</i>' % ugettext('unknown'))
+        return location(obj.ip)
+
+    def device(self, obj):
+        return humanagent(obj.user_agent)
 admin.site.register(Session, SessionAdmin)

@@ -88,5 +88,7 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
+
 SESSION_ENGINE = 'extended_sessions.backends.db'
 GEOIP_PATH = os.path.join(BASE_DIR, 'GeoLiteCity.dat')
+LOGIN_URL = '/admin/'
