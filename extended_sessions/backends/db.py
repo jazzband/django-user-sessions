@@ -14,7 +14,7 @@ class SessionStore(SessionBase):
     """
     def __init__(self, device, ip, session_key=None):
         super(SessionStore, self).__init__(session_key)
-        self.device, self.ip, self.user_id = device[:100], ip, None
+        self.device, self.ip, self.user_id = device[:200], ip, None
 
     def __setitem__(self, key, value):
         if key == SESSION_KEY:

@@ -37,7 +37,7 @@ class Session(models.Model):
 
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
-    device = models.CharField(max_length=100)
+    user_agent = models.CharField(max_length=200)
     if django.VERSION[:2] >= (1, 6):
         ip = models.GenericIPAddressField()
     else:
