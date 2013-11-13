@@ -14,7 +14,7 @@ setup(
     description='User sessions for Django',
     license='MIT',
     long_description=open('README.rst').read(),
-    install_requires=['Django>=1.5'],
+    install_requires=['Django>=1.4'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',
