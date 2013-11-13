@@ -2,7 +2,7 @@
 Django User Sessions
 ====================
 
-.. image:: https://travis-ci.org/Bouke/django-user-sessions.png?branch=develop
+.. image:: https://travis-ci.org/Bouke/django-user-sessions.png?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/Bouke/django-user-sessions
 
