@@ -11,11 +11,11 @@ away into a base64 encoded data string. This makes it very difficult to run a
 query on all active sessions for a particular user. Django User Sessions fixes
 this and makes session objects just as queryable as other objects.
 
-To get the list of a user's sessions:
+To get the list of a user's sessions::
 
     user.session_set.filter(expire_date__gt=now())
 
-Or logout the user everywhere:
+Or logout the user everywhere::
 
     user.session_set.all().delete()
 
