@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.base import RedirectView
-from extended_sessions.views import SessionListView, SessionDeleteView
+from user_sessions.views import SessionListView, SessionDeleteView
 
 admin.autodiscover()
 

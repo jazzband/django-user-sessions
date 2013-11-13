@@ -12,22 +12,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+SECRET_KEY = 'NOT SO SECRET ANY MORE'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#!6s%9rk8c@uz2de0vx#d@*_iv109ez$qiooei0x15q2m2+j^g'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -36,12 +24,12 @@ INSTALLED_APPS = (
     #'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'extended_sessions',
+    'user_sessions',
 )
 
 MIDDLEWARE_CLASSES = (
     'demo.middleware.SetRemoteAddrFromForwardedFor',
-    'extended_sessions.middleware.SessionMiddleware',
+    'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -89,6 +77,6 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
-SESSION_ENGINE = 'extended_sessions.backends.db'
+SESSION_ENGINE = 'user_sessions.backends.db'
 GEOIP_PATH = os.path.join(BASE_DIR, 'GeoLiteCity.dat')
 LOGIN_URL = '/admin/'

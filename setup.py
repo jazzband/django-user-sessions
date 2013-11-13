@@ -2,16 +2,16 @@ from distutils.core import setup
 from setuptools import find_packages
 
 setup(
-    name='django-extended-sessions',
+    name='django-user-sessions',
     version='0.1.0-dev',
     author='Bouke Haarsma',
     author_email='bouke@webatoom.nl',
     packages=find_packages(exclude=('demo', 'tests',)),
     package_data={
-        'extended_sessions': ['templates/extended_sessions/*.html'],
+        'user_sessions': ['templates/user_sessions/*.html'],
     },
-    url='http://github.com/Bouke/django-extended-sessions',
-    description='Extended sessions for django',
+    url='http://github.com/Bouke/django-user-sessions',
+    description='User sessions for django',
     license='MIT',
     long_description=open('README.rst').read(),
     install_requires=['Django>=1.5'],

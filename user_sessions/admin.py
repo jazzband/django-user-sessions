@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from extended_sessions.templatetags.extended_sessions import humanagent, location
+from user_sessions.templatetags.user_sessions import humanagent, location
 
-from extended_sessions.models import Session
+from user_sessions.models import Session
 
 
 class ExpiredFilter(admin.SimpleListFilter):
