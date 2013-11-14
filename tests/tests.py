@@ -68,7 +68,7 @@ class SessionStoreTest(TestCase):
         self.assertFalse(self.store.accessed)
 
     def test_auth_session_key(self):
-        _ = SESSION_KEY in self.store
+        self.assertFalse(SESSION_KEY in self.store)
         self.assertFalse(self.store.modified)
         self.assertTrue(self.store.accessed)
 
@@ -92,7 +92,8 @@ class SessionStoreTest(TestCase):
     def test_load_unmodified(self):
         self.store[SESSION_KEY] = 1
         self.store.save()
-        store2 = SessionStore('Python/2.7', '127.0.0.1', self.store.session_key)
+        store2 = SessionStore('Python/2.7', '127.0.0.1',
+                              self.store.session_key)
         store2.load()
         self.assertEqual(store2.user_agent, 'Python/2.7')
         self.assertEqual(store2.ip, '127.0.0.1')
@@ -129,10 +130,10 @@ class DeviceTemplateFilterTest(TestCase):
         self.assertEqual(
             'Internet Explorer on Windows Vista',
             device('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; '
-                   'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; '
-                   'InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
-                   'MS-RTC LM 8; OfficeLiveConnector.1.4; OfficeLivePatch.1.3; '
-                   '.NET CLR 3.0.30729)')
+                   'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322;'
+                   ' InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
+                   'MS-RTC LM 8; OfficeLiveConnector.1.4; OfficeLivePatch.1.3;'
+                   ' .NET CLR 3.0.30729)')
         )
         self.assertEqual(
             'Internet Explorer on Windows 7',
@@ -141,8 +142,8 @@ class DeviceTemplateFilterTest(TestCase):
         )
         self.assertEqual(
             'Internet Explorer on Windows 8',
-            device('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; '
-                   'x64; Trident/6.0)')
+            device('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; '
+                   'Win64; x64; Trident/6.0)')
         )
         self.assertEqual(
             'Internet Explorer on Windows 8.1',

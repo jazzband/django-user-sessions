@@ -41,10 +41,13 @@ class SessionMiddleware(object):
                 # Skip session save for 500 responses, refs #3881.
                 if response.status_code != 500:
                     request.session.save()
-                    response.set_cookie(settings.SESSION_COOKIE_NAME,
-                            request.session.session_key, max_age=max_age,
-                            expires=expires, domain=settings.SESSION_COOKIE_DOMAIN,
-                            path=settings.SESSION_COOKIE_PATH,
-                            secure=settings.SESSION_COOKIE_SECURE or None,
-                            httponly=settings.SESSION_COOKIE_HTTPONLY or None)
+                    response.set_cookie(
+                        settings.SESSION_COOKIE_NAME,
+                        request.session.session_key,
+                        max_age=max_age,
+                        expires=expires,
+                        domain=settings.SESSION_COOKIE_DOMAIN,
+                        path=settings.SESSION_COOKIE_PATH,
+                        secure=settings.SESSION_COOKIE_SECURE or None,
+                        httponly=settings.SESSION_COOKIE_HTTPONLY or None)
         return response
