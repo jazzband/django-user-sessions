@@ -1,4 +1,3 @@
-from collections import OrderedDict
 import re
 import warnings
 
@@ -9,14 +8,14 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 
 register = template.Library()
 
-BROWSERS = OrderedDict((
+BROWSERS = (
     (re.compile('Chrome'), _('Chrome')),
     (re.compile('Safari'), _('Safari')),
     (re.compile('Firefox'), _('Firefox')),
     (re.compile('Opera'), _('Opera')),
     (re.compile('IE'), _('Internet Explorer')),
-))
-DEVICES = OrderedDict((
+)
+DEVICES = (
     (re.compile('Android'), _('Android')),
     (re.compile('Linux'), _('Linux')),
     (re.compile('iPhone'), _('iPhone')),
@@ -28,18 +27,18 @@ DEVICES = OrderedDict((
     (re.compile('NT 6.2'), _('Windows 8')),
     (re.compile('NT 6.3'), _('Windows 8.1')),
     (re.compile('Windows'), _('Windows')),
-))
+)
 
 
 @register.filter
 def device(value):
-    for regex, name in BROWSERS.items():
+    for regex, name in BROWSERS:
         if regex.search(value):
             browser = name
             break
     else:
         browser = 'unknown'
-    for regex, name in DEVICES.items():
+    for regex, name in DEVICES:
         if regex.search(value):
             device = name
             break
