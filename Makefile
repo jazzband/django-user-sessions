@@ -14,7 +14,7 @@ test:
 coverage:
 	coverage erase
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		coverage run --branch --source=user_sessions
+		coverage run --branch --source=user_sessions \
 		`which django-admin.py` test tests
 	coverage html
-
+	coverage report
