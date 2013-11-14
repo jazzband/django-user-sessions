@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name='django-user-sessions',
-    version='0.1.0-beta',
+    version='0.1.0',
     author='Bouke Haarsma',
     author_email='bouke@webatoom.nl',
     packages=find_packages(exclude=('example', 'tests',)),
@@ -16,7 +16,7 @@ setup(
     long_description=open('README.rst').read(),
     install_requires=['Django>=1.4'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
