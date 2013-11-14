@@ -1,13 +1,18 @@
 from datetime import timedelta
+import sys
 
 from django.contrib.auth import SESSION_KEY
 from django.test import TestCase
 from django.utils.timezone import now
-from django.utils.unittest.case import skipUnless
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import location, device
+
+if sys.version_info[:2] < (2, 7):
+    from django.utils.unittest.case import skipUnless
+else:
+    from unittest import skipUnless
 
 try:
     from django.contrib.gis.geoip import GeoIP
