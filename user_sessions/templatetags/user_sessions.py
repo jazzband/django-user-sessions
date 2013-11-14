@@ -10,9 +10,9 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 register = template.Library()
 
 BROWSERS = OrderedDict((
+    (re.compile('Chrome'), _('Chrome')),
     (re.compile('Safari'), _('Safari')),
     (re.compile('Firefox'), _('Firefox')),
-    (re.compile('Chrome'), _('Chrome')),
     (re.compile('Opera'), _('Opera')),
     (re.compile('IE'), _('Internet Explorer')),
 ))
@@ -21,8 +21,7 @@ DEVICES = OrderedDict((
     (re.compile('Linux'), _('Linux')),
     (re.compile('iPhone'), _('iPhone')),
     (re.compile('iPad'), _('iPad')),
-    (re.compile('(Macintosh|OS_X)'), _('Mac OS X')),
-    (re.compile('Apple'), _('Apple')),
+    (re.compile('(Mac OS X)'), _('OS X')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
     (re.compile('NT 6.1'), _('Windows 7')),

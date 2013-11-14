@@ -123,7 +123,7 @@ class DeviceTemplateFilterTest(TestCase):
                    'Mobile/11A465 Safari/9537.53')
         )
         self.assertEqual(
-            'Safari on Mac OS X',
+            'Safari on OS X',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) '
                    'AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 '
                    'Safari/536.26.17')
@@ -138,3 +138,16 @@ class DeviceTemplateFilterTest(TestCase):
                    'Version/3.1.2 Mobile Safari/525.20.1')
         )
 
+    def test_firefox(self):
+        self.assertEqual(
+            'Firefox on Windows 7',
+            device('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:22.0) '
+                   'Gecko/20130328 Firefox/22.0')
+        )
+
+    def test_chrome(self):
+        self.assertEqual(
+            'Chrome on Windows 8.1',
+            device('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
+                   'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
+        )
