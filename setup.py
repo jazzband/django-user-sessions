@@ -11,7 +11,7 @@ setup(
         'user_sessions': ['templates/user_sessions/*.html'],
     },
     url='http://github.com/Bouke/django-user-sessions',
-    description='User sessions for Django',
+    description='Django sessions with a foreign key to the user',
     license='MIT',
     long_description=open('README.rst').read(),
     install_requires=['Django>=1.4'],
