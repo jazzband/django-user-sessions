@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from user_sessions.templatetags.user_sessions import humanagent, location
+from user_sessions.templatetags.user_sessions import device, location
 
 from user_sessions.models import Session
 
@@ -50,5 +50,5 @@ class SessionAdmin(admin.ModelAdmin):
         return location(obj.ip)
 
     def device(self, obj):
-        return humanagent(obj.user_agent)
+        return device(obj.user_agent)
 admin.site.register(Session, SessionAdmin)

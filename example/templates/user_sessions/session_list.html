@@ -16,7 +16,7 @@
     {% for object in object_list %}
       <tr {% if object.session_key == session_key %}class="active"{% endif %}>
         <td>{{ object.ip|location }} <small>({{ object.ip }})</small></td>
-        <td>{{ object.user_agent|humanagent }}</td>
+        <td>{{ object.user_agent|device }}</td>
         <td>
           {{ object.last_activity|timesince }} ago
           {% if object.session_key == session_key %}(this session){% endif %}
