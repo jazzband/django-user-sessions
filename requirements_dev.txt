@@ -1,4 +1,4 @@
-# The debug toolbar itself
+# The app itself
 
 -e .
 
