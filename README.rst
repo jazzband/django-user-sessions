@@ -31,7 +31,7 @@ And also in a custom layout:
 Installation
 ============
 
-1. ``pip install django-user-sessions``
+1. ``pip install django-user-sessions --pre``
 2. In ``INSTALLED_APPS`` replace ``'django.contrib.sessions'`` with
    ``'user_sessions'``.
 3. In ``MIDDLEWARE_CLASSES`` replace
