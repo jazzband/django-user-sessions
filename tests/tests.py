@@ -1,9 +1,9 @@
 from datetime import timedelta
-from unittest import skipUnless
 
 from django.contrib.auth import SESSION_KEY
 from django.test import TestCase
 from django.utils.timezone import now
+from django.utils.unittest.case import skipUnless
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
