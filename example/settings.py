@@ -1,5 +1,5 @@
 """
-Django settings for demo project.
+Django settings for example project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -10,9 +10,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(__file__)
 
-SECRET_KEY = 'NOT SO SECRET ANY MORE'
+SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -28,7 +28,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'demo.middleware.SetRemoteAddrFromForwardedFor',
+    'example.middleware.SetRemoteAddrFromForwardedFor',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -37,9 +37,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'demo.urls'
+ROOT_URLCONF = 'example.urls'
 
-WSGI_APPLICATION = 'demo.wsgi.application'
+WSGI_APPLICATION = 'example.wsgi.application'
 
 
 # Database

@@ -1,7 +1,11 @@
-.PHONY: flake8 example test compress_js compress_css translatable_strings update_translations
+.PHONY: flake8 example test coverage
 
 flake8:
-	flake8 debug_toolbar example tests
+	flake8 user_sessions example tests
+
+example:
+	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
+		django-admin.py runserver
 
 test:
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
@@ -10,6 +14,7 @@ test:
 coverage:
 	coverage erase
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		coverage run --branch --source=user_sessions `which django-admin.py` \
-		test tests
+		coverage run --branch --source=user_sessions
+		`which django-admin.py` test tests
 	coverage html
+

@@ -48,9 +48,9 @@ documentation on `installing GeoIP`_.
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
 
-Demo application
-----------------
-Also, have a look at the demo application. It includes template examples and
+Example application
+-------------------
+Also, have a look at the example application. It includes template examples and
 shows how to use the session list and delete views.
 
 Compatibility

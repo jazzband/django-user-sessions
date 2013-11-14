@@ -6,7 +6,7 @@ setup(
     version='0.1.0-beta',
     author='Bouke Haarsma',
     author_email='bouke@webatoom.nl',
-    packages=find_packages(exclude=('demo', 'tests',)),
+    packages=find_packages(exclude=('example', 'tests',)),
     package_data={
         'user_sessions': ['templates/user_sessions/*.html'],
     },

@@ -1,3 +1,7 @@
-/demo/db.sqlite3
-/demo/GeoLiteCity.dat
+/example/db.sqlite3
+/example/GeoLiteCity.dat
 /django_user_sessions.egg-info/
+
+/htmlcov/
+
+/.coverage
