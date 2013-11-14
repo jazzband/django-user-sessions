@@ -10,9 +10,8 @@ try:
     from django.contrib.gis.geoip import GeoIP
     geoip = GeoIP()
 except Exception as e:
-    warnings.warn(str(e), stacklevel=2)
+    warnings.warn(str(e))
     geoip = None
-
 
 register = template.Library()
 
@@ -57,13 +56,10 @@ def humanagent(value):
 
 @register.filter
 def location(value):
-    if not geoip:
-        return ''
-    location = geoip.city(value)
+    location = geoip and geoip.city(value)
     if location and location['country_name']:
         if location['city']:
             return '%s, %s' % (location['city'], location['country_name'])
         else:
             return location['country_name']
-    else:
-        return mark_safe('<i>%s</i>' % ugettext('unknown'))
+    return mark_safe('<i>%s</i>' % ugettext('unknown'))
