@@ -55,8 +55,8 @@ shows how to use the session list and delete views.
 
 Compatibility
 -------------
-Tested on Django 1.6 with Python 2.7 and 3.3. However it should work fine on
-Django 1.4 and above.
+Tested on Django 1.4, 1.5 and 1.6 with Python 2.7 and 3.3. However it should 
+work fine with Python 2.6 and 3.2 as well.
 
 Contributing
 ============
