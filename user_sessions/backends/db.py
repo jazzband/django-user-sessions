@@ -14,7 +14,7 @@ class SessionStore(SessionBase):
     """
     def __init__(self, user_agent, ip, session_key=None):
         super(SessionStore, self).__init__(session_key)
-        self.user_agent, self.ip, self.user_id = user_agent[:200], ip, None
+        self.user_agent, self.ip, self.user_id = user_agent, ip, None
 
     def __setitem__(self, key, value):
         if key == SESSION_KEY:
