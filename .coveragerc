@@ -1,0 +1,6 @@
+[run]
+source = user_sessions
+omit = */migrations/*
+
+[report]
+precision = 2

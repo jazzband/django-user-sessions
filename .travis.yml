@@ -16,4 +16,7 @@ matrix:
       env: DJANGO_VERSION=1.4.10
 install:
   - pip install Django==$DJANGO_VERSION
-script: make test
+  - pip install -e .
+  - pip install coveralls
+script: make coverage
+after_success: coveralls

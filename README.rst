@@ -6,6 +6,14 @@ Django User Sessions
     :alt: Build Status
     :target: https://travis-ci.org/Bouke/django-user-sessions
 
+.. image:: https://coveralls.io/repos/Bouke/django-user-sessions/badge.png?branch=master
+    :alt: Test Coverage
+    :target: https://coveralls.io/r/Bouke/django-user-sessions?branch=master
+
+.. image:: https://badge.fury.io/py/django-user-sessions.png
+    :alt: PyPI
+    :target: https://pypi.python.org/pypi/django-user-sessions
+
 Django includes excellent built-in sessions, however all the data is hidden
 away into a base64 encoded data string. This makes it very difficult to run a
 query on all active sessions for a particular user. Django User Sessions fixes
