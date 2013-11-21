@@ -15,9 +15,9 @@ Django User Sessions
     :target: https://pypi.python.org/pypi/django-user-sessions
 
 Django includes excellent built-in sessions, however all the data is hidden
-away into a base64 encoded data string. This makes it very difficult to run a
-query on all active sessions for a particular user. Django User Sessions fixes
-this and makes session objects just as queryable as other objects.
+away into base64 encoded data. This makes it very difficult to run a query on
+all active sessions for a particular user. `django-user-sessions` fixes this
+and makes session objects a first class citizen like other ORM objects.
 
 To get the list of a user's sessions::
 
