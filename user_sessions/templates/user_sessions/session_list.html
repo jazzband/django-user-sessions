@@ -1,0 +1,36 @@
+{% extends "user_sessions/_base.html" %}
+{% load user_sessions i18n future %}
+
+{% block content %}
+  <h1>{% trans "Active Sessions" %}</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{% trans "Location" %}</th>
+        <th>{% trans "Device" %}</th>
+        <th>{% trans "Last Activity" %}</th>
+        <th>{% trans "End Session" %}</th>
+      </tr>
+    </thead>
+    {% for object in object_list %}
+      <tr {% if object.session_key == session_key %}class="active"{% endif %}>
+        <td>{{ object.ip|location }} <small>({{ object.ip }})</small></td>
+        <td>{{ object.user_agent|device }}</td>
+        <td>
+          {% if object.session_key == session_key %}
+            {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago (this session){% endblocktrans %}
+          {% else %}
+            {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago{% endblocktrans %}
+          {% endif %}
+        </td>
+        <td>
+          <form method="post" action="{% url 'user_sessions:session_delete' object.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-xs btn-danger">{% trans "End Session" %}</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

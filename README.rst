@@ -46,7 +46,9 @@ Installation
    ``'django.contrib.sessions.middleware.SessionMiddleware'`` with
    ``'user_sessions.middleware.SessionMiddleware'``.
 4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
-5. Run ``python manage.py syncdb`` (or ``migrate``) and start hacking!
+5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
+   ``urls.py``.
+6. Run ``python manage.py syncdb`` (or ``migrate``) and start hacking!
 
 GeoIP
 -----

@@ -20,4 +20,5 @@ urlpatterns = patterns(
     url(r'^$', empty),
     url(r'^modify_session/$', modify_session),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('user_sessions.urls', 'user_sessions')),
 )

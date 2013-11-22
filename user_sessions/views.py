@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from django.views.generic import ListView, DeleteView
@@ -24,4 +25,5 @@ class SessionListView(LoginRequiredMixin, SessionMixin, ListView):
 
 
 class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
-    pass
+    def get_success_url(self):
+        return str(reverse_lazy('user_sessions:session_list'))

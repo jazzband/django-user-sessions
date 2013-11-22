@@ -1,10 +1,19 @@
 from datetime import timedelta
 import sys
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 
 from django.conf import settings
-from django.contrib.auth import SESSION_KEY
+from django.contrib.auth import SESSION_KEY, authenticate, login
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.contrib.sessions.backends.base import CreateError
+from django.core.urlresolvers import reverse
+from django.db import IntegrityError
+from django.http import HttpRequest
+from django.test import TestCase, Client as BaseClient
+from django.test.utils import override_settings
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
@@ -23,6 +32,45 @@ try:
 except Exception as e:
     geoip = None
     geoip_msg = str(e)
+
+
+class Client(BaseClient):
+    def login(self, **credentials):
+        """
+        Sets the Factory to appear as if it has successfully logged into a site.
+
+        Returns True if login is possible; False if the provided credentials
+        are incorrect, or the user is inactive, or if the sessions framework is
+        not available.
+        """
+        user = authenticate(**credentials)
+        if user and user.is_active:
+            # Create a fake request to store login details.
+            request = HttpRequest()
+            if self.session:
+                request.session = self.session
+            else:
+                request.session = SessionStore('Python/2.7', '127.0.0.1')
+            login(request, user)
+
+            # Save the session values.
+            request.session.save()
+
+            # Set the cookie to represent the session.
+            session_cookie = settings.SESSION_COOKIE_NAME
+            self.cookies[session_cookie] = request.session.session_key
+            cookie_data = {
+                'max-age': None,
+                'path': '/',
+                'domain': settings.SESSION_COOKIE_DOMAIN,
+                'secure': settings.SESSION_COOKIE_SECURE or None,
+                'expires': None,
+            }
+            self.cookies[session_cookie].update(cookie_data)
+
+            return True
+        else:
+            return False
 
 
 class MiddlewareTest(TestCase):
@@ -57,6 +105,25 @@ class MiddlewareTest(TestCase):
     def test_long_ua(self):
         self.client.get('/modify_session/',
                         HTTP_USER_AGENT=''.join('a' for _ in range(400)))
+
+
+class ViewsTest(TestCase):
+    client_class = Client
+
+    def setUp(self):
+        User.objects.create_user('bouke', '', 'secret')
+        assert self.client.login(username='bouke', password='secret')
+
+    def test_list(self):
+        response = self.client.get(reverse('user_sessions:session_list'))
+        self.assertContains(response, 'Active Sessions')
+        self.assertContains(response, 'End Session', 2)
+
+    def test_delete(self):
+        session_key = self.client.cookies[settings.SESSION_COOKIE_NAME].value
+        response = self.client.post(reverse('user_sessions:session_delete',
+                                            args=[session_key]))
+        self.assertRedirects(response, reverse('user_sessions:session_list'))
 
 
 class SessionStoreTest(TestCase):
