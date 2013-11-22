@@ -73,12 +73,11 @@ class SessionStore(SessionBase):
             ip=self.ip,
         )
         using = router.db_for_write(Session, instance=obj)
-        sid = transaction.savepoint(using=using)
         try:
-            obj.save(force_insert=must_create, using=using)
+            with transaction.commit_on_success(using):
+                obj.save(force_insert=must_create, using=using)
         except IntegrityError as e:
             if must_create and 'session_key' in str(e):
-                transaction.savepoint_rollback(sid, using=using)
                 raise CreateError
             raise
 

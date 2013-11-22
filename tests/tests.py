@@ -218,14 +218,47 @@ class SessionStoreTest(TestCase):
         self.assertEqual(store2.user_id, 1)
         self.assertEqual(store2.modified, True)
 
+    def test_duplicate_create(self):
+        s1 = SessionStore('Python/2.7', '127.0.0.1', 'DUPLICATE')
+        s1.create()
+        s2 = SessionStore('Python/2.7', '127.0.0.1', 'DUPLICATE')
+        s2.create()
+        self.assertNotEqual(s1.session_key, s2.session_key)
 
-@skipUnless(geoip, geoip_msg)
+        s3 = SessionStore('Python/2.7', '127.0.0.1', s1.session_key)
+        with self.assertRaises(CreateError):
+            s3.save(must_create=True)
+
+    def test_integrity(self):
+        self.store.user_agent = None
+        with self.assertRaisesMessage(IntegrityError,
+                                      'user_sessions_session.user_agent may '
+                                      'not be NULL'):
+            self.store.save()
+
+    def test_delete(self):
+        # not persisted, should just return
+        self.store.delete()
+
+        # create, then delete
+        self.store.create()
+        session_key = self.store.session_key
+        self.store.delete()
+
+        # non-existing sessions, should not raise
+        self.store.delete()
+        self.store.delete(session_key)
+
+
 class LocationTemplateFilterTest(TestCase):
+    @override_settings(GEOIP_PATH=None)
     def test_no_location(self):
         self.assertEqual(location('127.0.0.1'), '<i>unknown</i>')
 
-    def test_google(self):
+    @skipUnless(geoip, geoip_msg)
+    def test_locations(self):
         self.assertEqual(location('8.8.8.8'), 'United States')
+        self.assertEqual(location('44.55.66.77'), 'San Diego, United States')
 
 
 class DeviceTemplateFilterTest(TestCase):
