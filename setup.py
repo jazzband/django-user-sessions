@@ -1,20 +1,18 @@
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
 setup(
     name='django-user-sessions',
-    version='0.1.1',
+    version='0.1.2',
+    description='Django sessions with a foreign key to the user',
+    long_description=open('README.rst').read(),
     author='Bouke Haarsma',
     author_email='bouke@webatoom.nl',
-    packages=find_packages(exclude=('example', 'tests',)),
-    package_data={
-        'user_sessions': ['templates/user_sessions/*.html'],
-    },
     url='http://github.com/Bouke/django-user-sessions',
-    description='Django sessions with a foreign key to the user',
+    download_url='https://pypi.python.org/pypi/django-user-sessions',
     license='MIT',
-    long_description=open('README.rst').read(),
+    packages=find_packages(exclude=('example', 'tests',)),
     install_requires=['Django>=1.4'],
+    include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
