@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+type = PO
+
+[django-user-sessions.user_sessions]
+file_filter = user_sessions/locale/<lang>/LC_MESSAGES/django.po
+source_file = user_sessions/locale/en/LC_MESSAGES/django.po
+source_lang = en

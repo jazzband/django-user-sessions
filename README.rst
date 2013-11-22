@@ -70,5 +70,9 @@ work fine with Python 2.6 and 3.2 as well.
 
 Contributing
 ============
-* Fork the repository on GitHub and start hacking
-* Send a pull request with your changes
+* Fork the repository on GitHub and start hacking.
+* Run the tests.
+* Send a pull request with your changes.
+* Provide a translation using Transifex_.
+
+.. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/

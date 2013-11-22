@@ -18,3 +18,11 @@ coverage:
 		`which django-admin.py` test tests
 	coverage html
 	coverage report
+
+tx-pull:
+	tx pull -a
+	cd user_sessions; django-admin.py compilemessages
+
+tx-push:
+	cd user_sessions; django-admin.py makemessages -l en
+	tx push -s

@@ -44,7 +44,8 @@ def device(value):
             break
     else:
         device = 'unknown'
-    return _('%s on %s') % (browser, device)
+    return _('%(browser)s on %(device)s') % {'browser': browser,
+                                             'device': device}
 
 
 @register.filter
