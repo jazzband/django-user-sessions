@@ -6,19 +6,20 @@ except ImportError:
     from urllib import urlencode
 
 from django.conf import settings
-from django.contrib.auth import SESSION_KEY, authenticate, login
+from django.contrib.auth import SESSION_KEY
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
-from django.http import HttpRequest
-from django.test import TestCase, Client as BaseClient
+
+from django.test import TestCase
 from django.test.utils import override_settings
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import location, device
+from user_sessions.utils.tests import Client
 
 if sys.version_info[:2] < (2, 7):
     from django.utils.unittest.case import skipUnless
@@ -32,45 +33,6 @@ try:
 except Exception as e:
     geoip = None
     geoip_msg = str(e)
-
-
-class Client(BaseClient):
-    def login(self, **credentials):
-        """
-        Sets the Factory to appear as if it has successfully logged into a site.
-
-        Returns True if login is possible; False if the provided credentials
-        are incorrect, or the user is inactive, or if the sessions framework is
-        not available.
-        """
-        user = authenticate(**credentials)
-        if user and user.is_active:
-            # Create a fake request to store login details.
-            request = HttpRequest()
-            if self.session:
-                request.session = self.session
-            else:
-                request.session = SessionStore('Python/2.7', '127.0.0.1')
-            login(request, user)
-
-            # Save the session values.
-            request.session.save()
-
-            # Set the cookie to represent the session.
-            session_cookie = settings.SESSION_COOKIE_NAME
-            self.cookies[session_cookie] = request.session.session_key
-            cookie_data = {
-                'max-age': None,
-                'path': '/',
-                'domain': settings.SESSION_COOKIE_DOMAIN,
-                'secure': settings.SESSION_COOKIE_SECURE or None,
-                'expires': None,
-            }
-            self.cookies[session_cookie].update(cookie_data)
-
-            return True
-        else:
-            return False
 
 
 class MiddlewareTest(TestCase):
@@ -134,7 +96,7 @@ class AdminTest(TestCase):
         assert self.client.login(username='bouke', password='secret')
 
         expired = SessionStore('Python/2.5', '20.13.1.1')
-        expired.set_expiry(-365*86400)
+        expired.set_expiry(-365 * 86400)
         expired.save()
         unexpired = SessionStore('Python/2.7', '1.1.1.1')
         unexpired.save()
