@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# KuwaitNET, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-user-sessions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-22 08:28+0100\n"
+"PO-Revision-Date: 2013-12-31 14:42+0000\n"
+"Last-Translator: KuwaitNET\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/django-user-sessions/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: admin.py:10
+msgid "Is Valid"
+msgstr "صالح"
+
+#: admin.py:15
+msgid "Active"
+msgstr "فعال"
+
+#: admin.py:16
+msgid "Expired"
+msgstr "منتهي"
+
+#: admin.py:27
+msgid "Owner"
+msgstr "المالك"
+
+#: admin.py:32
+msgid "Self"
+msgstr "شخصي"
+
+#: models.py:25
+msgid "session key"
+msgstr "مفتاح الجلسة"
+
+#: models.py:27
+msgid "session data"
+msgstr "بيانات الجلسة"
+
+#: models.py:28
+msgid "expire date"
+msgstr "تاريخ الإنتهاء"
+
+#: models.py:32
+msgid "session"
+msgstr "الجلسة"
+
+#: models.py:33
+msgid "sessions"
+msgstr "الجلسات"
+
+#: templates/user_sessions/session_list.html:5
+msgid "Active Sessions"
+msgstr "الجلسات النشطة"
+
+#: templates/user_sessions/session_list.html:10
+msgid "Location"
+msgstr "المكان"
+
+#: templates/user_sessions/session_list.html:11
+msgid "Device"
+msgstr "الجهاز"
+
+#: templates/user_sessions/session_list.html:12
+msgid "Last Activity"
+msgstr "آخر نشاط"
+
+#: templates/user_sessions/session_list.html:13
+#: templates/user_sessions/session_list.html:30
+msgid "End Session"
+msgstr "إنهاء الجلسة"
+
+#: templates/user_sessions/session_list.html:22
+#, python-format
+msgid "%(time)s ago (this session)"
+msgstr "%(time)s مضت (هذه الجلسة)"
+
+#: templates/user_sessions/session_list.html:24
+#, python-format
+msgid "%(time)s ago"
+msgstr "%(time)s مضت"
+
+#: templatetags/user_sessions.py:12
+msgid "Chrome"
+msgstr "جوجل كروم"
+
+#: templatetags/user_sessions.py:13
+msgid "Safari"
+msgstr "آبل سفاري"
+
+#: templatetags/user_sessions.py:14
+msgid "Firefox"
+msgstr "فايرفوكس"
+
+#: templatetags/user_sessions.py:15
+msgid "Opera"
+msgstr "أوبرا"
+
+#: templatetags/user_sessions.py:16
+msgid "Internet Explorer"
+msgstr "إنترنت إكسبلورر"
+
+#: templatetags/user_sessions.py:19
+msgid "Android"
+msgstr "أندرويد"
+
+#: templatetags/user_sessions.py:20
+msgid "Linux"
+msgstr "لينوكس"
+
+#: templatetags/user_sessions.py:21
+msgid "iPhone"
+msgstr "آيفون"
+
+#: templatetags/user_sessions.py:22
+msgid "iPad"
+msgstr "آيباد"
+
+#: templatetags/user_sessions.py:23
+msgid "OS X"
+msgstr "ماك او اس اكس"
+
+#: templatetags/user_sessions.py:24
+msgid "Windows XP"
+msgstr "ويندوز أكس بي"
+
+#: templatetags/user_sessions.py:25
+msgid "Windows Vista"
+msgstr "ويندوز ڤيستا"
+
+#: templatetags/user_sessions.py:26
+msgid "Windows 7"
+msgstr "ويندوز 7"
+
+#: templatetags/user_sessions.py:27
+msgid "Windows 8"
+msgstr "ويندوز 8"
+
+#: templatetags/user_sessions.py:28
+msgid "Windows 8.1"
+msgstr "ويندوز 8.1"
+
+#: templatetags/user_sessions.py:29
+msgid "Windows"
+msgstr "ويندوز"
+
+#: templatetags/user_sessions.py:47
+#, python-format
+msgid "%(browser)s on %(device)s"
+msgstr "%(browser)s على %(device)s"
+
+#: templatetags/user_sessions.py:59
+msgid "unknown"
+msgstr "غير معروف"
