@@ -19,6 +19,18 @@ away into base64 encoded data. This makes it very difficult to run a query on
 all active sessions for a particular user. `django-user-sessions` fixes this
 and makes session objects a first class citizen like other ORM objects.
 
+Also, have a look at the online `example app`_, hosted by Heroku_. It also
+contains the package `django-two-factor-auth`_, but that application is not a
+dependency for this package. Also have a look at the bundled example templates
+and views to see how you can integrate the application into your project.
+
+Compatible with Django 1.4, 1.5 and 1.6 on Python 2.6, 2.7, 3.2 and 3.3. 
+Documentation is available at `readthedocs.org`_.
+
+
+Features
+========
+
 To get the list of a user's sessions::
 
     user.session_set.filter(expire_date__gt=now())
@@ -35,13 +47,6 @@ allows to show a list of active sessions to the user in the admin:
 And also in a custom layout:
 
 .. image:: http://i.imgur.com/d7kZtr9.png
-
-Also, have a look at the online `example app`_, hosted by Heroku_. It also
-contains the package `django-two-factor-auth`_, but that application is not a
-dependency for this package. Also have a look at the bundled example templates
-and views to see how you can integrate the application into your project.
-
-Compatible with Django 1.4, 1.5 and 1.6 on Python 2.6, 2.7, 3.2 and 3.3. Documentation is available at `readthedocs.org`_.
 
 
 Installation
