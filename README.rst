@@ -36,9 +36,16 @@ And also in a custom layout:
 
 .. image:: http://i.imgur.com/d7kZtr9.png
 
+Also, have a look at the online `example app`_, hosted by Heroku_. It also
+contains the package `django-two-factor-auth`_, but that application is not a
+dependency for this package. Also have a look at the bundled example templates
+and views to see how you can integrate the application into your project.
+
+Compatible with Django 1.4, 1.5 and 1.6 on Python 2.6, 2.7, 3.2 and 3.3. Documentation is available at `readthedocs.org`_.
+
+
 Installation
 ============
-
 1. ``pip install django-user-sessions``
 2. In ``INSTALLED_APPS`` replace ``'django.contrib.sessions'`` with
    ``'user_sessions'``.
@@ -48,7 +55,8 @@ Installation
 4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
 5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
    ``urls.py``.
-6. Run ``python manage.py syncdb`` (or ``migrate``) and start hacking!
+6. Run ``python manage.py syncdb`` (or ``migrate``) and browse to 
+   ``/account/sessions/``.
 
 GeoIP
 -----
@@ -58,21 +66,21 @@ documentation on `installing GeoIP`_.
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
 
-Example application
--------------------
-Also, have a look at the example application. It includes template examples and
-shows how to use the session list and delete views.
 
-Compatibility
--------------
-Tested on Django 1.4, 1.5 and 1.6 with Python 2.7 and 3.3. However it should 
-work fine with Python 2.6 and 3.2 as well.
-
-Contributing
-============
+Contribute
+==========
 * Fork the repository on GitHub and start hacking.
 * Run the tests.
 * Send a pull request with your changes.
 * Provide a translation using Transifex_.
 
+
+License
+=======
+This project is licensed under the MIT license.
+
+
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
+.. _`readthedocs.org`: http://django-user-sessions.readthedocs.org/
+.. _`example app`: http://example-two-factor-auth.herokuapp.com
+.. _Heroku: https://www.heroku.com

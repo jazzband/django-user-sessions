@@ -7,6 +7,9 @@ from django.utils.importlib import import_module
 
 
 class SessionMiddleware(object):
+    """
+    Middleware that provides ip and user_agent to the session store.
+    """
     def process_request(self, request):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)

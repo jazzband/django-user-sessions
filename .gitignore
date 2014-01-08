@@ -7,3 +7,5 @@
 /.coverage
 
 /.tox/
+
+/docs/_build/

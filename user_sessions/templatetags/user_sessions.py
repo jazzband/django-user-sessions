@@ -32,6 +32,16 @@ DEVICES = (
 
 @register.filter
 def device(value):
+    """
+    Transform a User Agent into a human readable text.
+
+    Example output:
+
+    * Safari on iPhone
+    * Chrome on Windows 8.1
+    * Safari on OS X
+    """
+
     for regex, name in BROWSERS:
         if regex.search(value):
             browser = name
@@ -50,6 +60,14 @@ def device(value):
 
 @register.filter
 def location(value):
+    """
+    Transform an IP address into an approximate location.
+
+    Example output:
+
+    * Zwolle, The Netherlands
+    * ``<i>unknown</i>``
+    """
     location = geoip() and geoip().city(value)
     if location and location['country_name']:
         if location['city']:
