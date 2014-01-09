@@ -4,7 +4,7 @@ Release Notes
 0.1.3
 -----
 * Documentation
-* Added Arabic translation
+* Arabic and Hebrew translations added
 
 0.1.2
 -----

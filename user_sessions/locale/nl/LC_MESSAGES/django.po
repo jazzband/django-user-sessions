@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Bouke Haarsma <bouke@webatoom.nl>, 2013
+# Bouke Haarsma <bouke@webatoom.nl>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-user-sessions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-22 08:28+0100\n"
-"PO-Revision-Date: 2013-11-22 07:33+0000\n"
+"POT-Creation-Date: 2014-01-09 20:35+0100\n"
+"PO-Revision-Date: 2014-01-09 19:36+0000\n"
 "Last-Translator: Bouke Haarsma <bouke@webatoom.nl>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/django-user-sessions/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -38,23 +38,23 @@ msgstr "Eigenaar"
 msgid "Self"
 msgstr "Eigen"
 
-#: models.py:25
+#: models.py:21
 msgid "session key"
 msgstr "sessiesleutel"
 
-#: models.py:27
+#: models.py:23
 msgid "session data"
 msgstr "sessiegegevens"
 
-#: models.py:28
-msgid "expire date"
+#: models.py:24
+msgid "expiry date"
 msgstr "verloopdatum"
 
-#: models.py:32
+#: models.py:28
 msgid "session"
 msgstr "sessie"
 
-#: models.py:33
+#: models.py:29
 msgid "sessions"
 msgstr "sessies"
 
@@ -153,11 +153,11 @@ msgstr "Windows 8.1"
 msgid "Windows"
 msgstr "Windows"
 
-#: templatetags/user_sessions.py:47
+#: templatetags/user_sessions.py:57
 #, python-format
 msgid "%(browser)s on %(device)s"
 msgstr "%(browser)s op %(device)s"
 
-#: templatetags/user_sessions.py:59
+#: templatetags/user_sessions.py:77
 msgid "unknown"
 msgstr "onbekend"
