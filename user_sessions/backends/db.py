@@ -1,5 +1,5 @@
 import logging
-from django.contrib.auth import SESSION_KEY
+from django.contrib import auth
 
 from django.contrib.sessions.backends.base import SessionBase, CreateError
 from django.core.exceptions import SuspiciousOperation
@@ -17,7 +17,7 @@ class SessionStore(SessionBase):
         self.user_agent, self.ip, self.user_id = user_agent, ip, None
 
     def __setitem__(self, key, value):
-        if key == SESSION_KEY:
+        if key == auth.SESSION_KEY:
             self.user_id = value
         super(SessionStore, self).__setitem__(key, value)
 
@@ -80,6 +80,10 @@ class SessionStore(SessionBase):
             if must_create and 'session_key' in str(e):
                 raise CreateError
             raise
+
+    def clear(self):
+        super(SessionStore, self).clear()
+        self.user_id = None
 
     def delete(self, session_key=None):
         if session_key is None:
