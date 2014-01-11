@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpRequest
 from django.test import Client as BaseClient
 
-from user_sessions.backends.db import SessionStore
+from ..backends.db import SessionStore
 
 
 class Client(BaseClient):
@@ -51,3 +51,13 @@ class Client(BaseClient):
             return True
         else:
             return False
+
+    def _session(self):
+        """
+        Obtains the current session variables.
+        """
+        if 'user_sessions' in settings.INSTALLED_APPS:
+            cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
+            if cookie:
+                return SessionStore('Python/2.7', '127.0.0.1', cookie.value)
+    session = property(_session)

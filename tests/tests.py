@@ -223,6 +223,38 @@ class SessionStoreTest(TestCase):
         self.assertEqual(session.user_id, None)
 
 
+class ModelTest(TestCase):
+    def test_get_decoded(self):
+        store = SessionStore('Python/2.7', '127.0.0.1', None)
+        store[auth.SESSION_KEY] = 1
+        store['foo'] = 'bar'
+        store.save()
+
+        session = Session.objects.get(pk=store.session_key)
+        self.assertEqual(session.get_decoded(),
+                         {'foo': 'bar', auth.SESSION_KEY: 1})
+
+
+class ClientTest(TestCase):
+    def test_invalid_login(self):
+        client = Client()
+        self.assertFalse(client.login())
+
+    def test_restore_session(self):
+        store = SessionStore('Python/2.7', '127.0.0.1', None)
+        store['foo'] = 'bar'
+        store.save()
+        client = Client()
+        client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        User.objects.create_user('bouke', '', 'secret')
+        assert client.login(username='bouke', password='secret')
+        self.assertEqual(client.session['foo'], 'bar')
+
+    @override_settings(INSTALLED_APPS=())
+    def test_no_session(self):
+        self.assertIsNone(Client().session)
+
+
 class LocationTemplateFilterTest(TestCase):
     @override_settings(GEOIP_PATH=None)
     def test_no_location(self):

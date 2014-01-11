@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from user_sessions.views import SessionListView, SessionDeleteView
+from .views import SessionListView, SessionDeleteView
 
 
 urlpatterns = patterns(

@@ -22,7 +22,7 @@ class SessionListView(LoginRequiredMixin, SessionMixin, ListView):
     """
     View for listing a user's own sessions.
 
-    This view shows list of a user's currently active sessions. You can 
+    This view shows list of a user's currently active sessions. You can
     override the template by providing your own template at
     `user_sessions/session_list.html`.
     """

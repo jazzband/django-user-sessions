@@ -29,7 +29,7 @@ class Session(models.Model):
         verbose_name_plural = _('sessions')
 
     def get_decoded(self):
-        return SessionStore().decode(self.session_data)
+        return SessionStore(None, None).decode(self.session_data)
 
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
                              null=True)
