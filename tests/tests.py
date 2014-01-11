@@ -193,9 +193,11 @@ class SessionStoreTest(TestCase):
 
     def test_integrity(self):
         self.store.user_agent = None
-        with self.assertRaisesMessage(IntegrityError,
-                                      'user_sessions_session.user_agent may '
-                                      'not be NULL'):
+        with self.assertRaisesRegexp(
+                IntegrityError,
+                '(user_sessions_session.user_agent may not be NULL|'
+                'NOT NULL constraint failed: user_sessions_session.user_agent)'
+        ):
             self.store.save()
 
     def test_delete(self):
