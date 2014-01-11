@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-user-sessions',
-    version='0.1.3-dev',
+    version='0.1.3',
     description='Django sessions with a foreign key to the user',
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
