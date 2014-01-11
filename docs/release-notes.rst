@@ -5,6 +5,8 @@ Release Notes
 -----
 * Documentation
 * Arabic and Hebrew translations added
+* Fixed #3 -- Reset user_id on logout
+* Fixed #4 -- Add explicit license text
 
 0.1.2
 -----
