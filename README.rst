@@ -68,9 +68,6 @@ GeoIP
 You need to setup GeoIP for the location detection to work. See the Django
 documentation on `installing GeoIP`_.
 
-.. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
-
 
 Contribute
 ==========
@@ -89,3 +86,6 @@ This project is licensed under the MIT license.
 .. _`readthedocs.org`: http://django-user-sessions.readthedocs.org/
 .. _`example app`: http://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
+.. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
+.. _installing GeoIP:
+   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
