@@ -5,6 +5,20 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 
+# Safe User import for Django < 1.5
+try:
+    from django.contrib.auth import get_user_model
+except ImportError:
+    from django.contrib.auth.models import User
+else:
+    User = get_user_model()
+
+# With the default User model these will be 'auth.User' and 'auth.user'
+# so instead of using orm['auth.User'] we can use orm[user_orm_label]
+user_orm_label = '%s.%s' % (User._meta.app_label, User._meta.object_name)
+user_model_label = '%s.%s' % (User._meta.app_label, User._meta.module_name)
+
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
@@ -13,7 +27,7 @@ class Migration(SchemaMigration):
             ('session_key', self.gf('django.db.models.fields.CharField')(max_length=40, primary_key=True)),
             ('session_data', self.gf('django.db.models.fields.TextField')()),
             ('expire_date', self.gf('django.db.models.fields.DateTimeField')(db_index=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['auth.User'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm[user_orm_label])),
             ('user_agent', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('last_activity', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('ip', self.gf('django.db.models.fields.GenericIPAddressField')(max_length=39)),
@@ -40,21 +54,16 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'blank': 'True', 'symmetrical': 'False', 'related_name': "'user_set'"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'blank': 'True', 'symmetrical': 'False', 'related_name': "'user_set'"}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+        user_model_label: {
+            'Meta': {
+                'object_name': User.__name__,
+                'db_table': "'%s'" % User._meta.db_table
+            },
+            User._meta.pk.attname: (
+                'django.db.models.fields.AutoField', [],
+                {'primary_key': 'True',
+                'db_column': "'%s'" % User._meta.pk.column}
+            ),
         },
         'contenttypes.contenttype': {
             'Meta': {'db_table': "'django_content_type'", 'object_name': 'ContentType', 'unique_together': "(('app_label', 'model'),)", 'ordering': "('name',)"},
@@ -70,7 +79,7 @@ class Migration(SchemaMigration):
             'last_activity': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'session_data': ('django.db.models.fields.TextField', [], {}),
             'session_key': ('django.db.models.fields.CharField', [], {'max_length': '40', 'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'to': "orm['auth.User']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'to': "orm['%s']" % user_orm_label}),
             'user_agent': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         }
     }
