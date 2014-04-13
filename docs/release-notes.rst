@@ -3,6 +3,8 @@ Release Notes
 
 0.1.4
 -----
+* Python 3.4 support
+* Django 1.7 (beta) support
 * Italian translation added (thanks to joke2k)
 * Chinese translation added (thanks to mozillazg)
 * Arabic translation updated (thanks to Bashar Al-Abdulhadi)

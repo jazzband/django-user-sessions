@@ -24,8 +24,8 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 1.4, 1.5 and 1.6 on Python 2.6, 2.7, 3.2 and 3.3. 
-Documentation is available at `readthedocs.org`_.
+Compatible with Django 1.4, 1.5, 1.6 and 1.7 on Python 2.6, 2.7, 3.2, 3.3 and
+3.4. Documentation is available at `readthedocs.org`_.
 
 
 Features
@@ -60,7 +60,7 @@ Installation
 4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
 5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
    ``urls.py``.
-6. Run ``python manage.py syncdb`` (or ``migrate``) and browse to 
+6. Run ``python manage.py syncdb`` (or ``migrate``) and browse to
    ``/account/sessions/``.
 
 GeoIP

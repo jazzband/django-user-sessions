@@ -21,7 +21,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    #'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
@@ -73,7 +73,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-## CUSTOM
+# Custom configuration
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),

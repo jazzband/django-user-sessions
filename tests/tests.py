@@ -5,13 +5,13 @@ try:
 except ImportError:
     from urllib import urlencode
 
+import django
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
-
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.utils.timezone import now
@@ -50,8 +50,13 @@ class MiddlewareTest(TestCase):
         self.assertEqual(session.ip, '127.0.0.1')
 
     def test_login(self):
+        if django.VERSION < (1, 7):
+            admin_login_url = '/admin/'
+        else:
+            admin_login_url = reverse('admin:login')
+
         user = User.objects.create_superuser('bouke', '', 'secret')
-        response = self.client.post('/admin/',
+        response = self.client.post(admin_login_url,
                                     data={
                                         'username': 'bouke',
                                         'password': 'secret',
