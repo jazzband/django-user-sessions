@@ -12,7 +12,7 @@ urlpatterns = patterns(
         name='session_list',
     ),
     url(
-        regex=r'^sessions/(?P<pk>\w+)/delete/$',
+        regex=r'^account/sessions/(?P<pk>\w+)/delete/$',
         view=SessionDeleteView.as_view(),
         name='session_delete',
     ),
