@@ -1,27 +1,50 @@
 language: python
-python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-env:
-  - DJANGO=Django==1.4.10
-  - DJANGO=Django==1.5.5
-  - DJANGO=Django==1.6
-  - DJANGO=https://www.djangoproject.com/download/1.7b1/tarball/
+
 matrix:
-  exclude:
+  include:
     - python: "2.6"
-      env: DJANGO=https://www.djangoproject.com/download/1.7b1/tarball/
+      env: DJANGO=1.4 COVERAGE=YES
+
+    - python: "2.7"
+      env: DJANGO=1.5
     - python: "3.2"
-      env: DJANGO=Django==1.4.10
+      env: DJANGO=1.5
+
+    - python: "2.7"
+      env: DJANGO=1.6
     - python: "3.3"
-      env: DJANGO=Django==1.4.10
+      env: DJANGO=1.6
+
+    - python: "2.7"
+      env: DJANGO=1.7.b4
     - python: "3.4"
-      env: DJANGO=Django==1.4.10
+      env: DJANGO=1.7.b4 COVERAGE=YES
+
+    - python: "3.4"
+      env: FLAKE8=YES
+
 install:
-  - pip install $DJANGO
-  - pip install -e .
-  - pip install coveralls
-script: make coverage
-after_success: coveralls
+  - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then pip install unittest2; fi
+  - if [[ $DJANGO ]]; then
+        pip install -e .;
+        if [[ $DJANGO != 1.7* ]]; then
+            pip install "django>=$DJANGO,<=$DJANGO.99";
+        else
+            pip install https://www.djangoproject.com/download/$DJANGO/tarball/;
+        fi;
+    fi;
+  - if [[ $COVERAGE == "YES" ]]; then pip install coveralls; fi;
+  - if [[ $FLAKE8 == "YES" ]]; then pip install flake8; fi;
+
+script:
+  - if [[ $DJANGO ]]; then
+        if [[ $COVERAGE != "YES" ]]; then
+            make test;
+        else
+            make coverage;
+        fi;
+    fi;
+  - if [[ $FLAKE8 == "YES" ]]; then make flake8; fi;
+
+after_success:
+  - if [[ $COVERAGE == "YES" ]]; then coveralls; fi;
