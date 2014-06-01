@@ -1,5 +1,4 @@
-include LICENSE.txt
-include README.rst
+include *.rst LICENSE
 prune user_sessions/locale
 recursive-include user_sessions/locale *
 recursive-include user_sessions/templates *

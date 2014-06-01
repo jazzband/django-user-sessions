@@ -13,11 +13,15 @@ coverage
 flake8
 tox
 
+# Transifex
+
+transifex-client
+
 # Documentation
 
 Sphinx
 sphinx_rtd_theme
 
-# Transifex
+# Build
 
-transifex-client
+wheel

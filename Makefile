@@ -22,7 +22,7 @@ coverage:
 	coverage report
 
 tx-pull:
-	tx pull -a --minimum-perc=90
+	tx pull -a
 	cd user_sessions; django-admin.py compilemessages
 
 tx-push:
