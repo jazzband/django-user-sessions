@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-user-sessions',
-    version='1.0.0-beta1',
+    version='1.0.0',
     description='Django sessions with a foreign key to the user',
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
@@ -14,7 +14,7 @@ setup(
     install_requires=['Django>=1.4'],
     include_package_data=True,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',

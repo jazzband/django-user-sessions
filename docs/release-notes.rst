@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+1.0.0
+-----
+*No changes from 1.0.0-beta1.*
+
 1.0.0-beta1
 -----------
 * #8 -- Consistent URL patterns
