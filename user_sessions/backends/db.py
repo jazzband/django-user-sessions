@@ -29,9 +29,8 @@ class SessionStore(SessionBase):
                 expire_date__gt=timezone.now()
             )
             self.user_id = s.user_id
-            # do not overwrite user_agent/ip, as those might have been updated
-            if self.user_agent != s.user_agent or self.ip != s.ip:
-                self.modified = True
+            # mark as modified so the last_activity update will be saved
+            self.modified = True
             return self.decode(s.session_data)
         except (Session.DoesNotExist, SuspiciousOperation) as e:
             if isinstance(e, SuspiciousOperation):
