@@ -11,7 +11,7 @@ setup(
     download_url='https://pypi.python.org/pypi/django-user-sessions',
     license='MIT',
     packages=find_packages(exclude=('example', 'tests',)),
-    install_requires=['Django>=1.4'],
+    install_requires=['Django>=1.4', 'django-ipware'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',

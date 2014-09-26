@@ -1,3 +1,4 @@
+import sys
 import os
 BASE_DIR = os.path.dirname(__file__)
 
@@ -8,6 +9,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'user_sessions',
+    'ipware',
     'tests',
 ]
 

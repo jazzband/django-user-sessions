@@ -6,6 +6,7 @@
 
 Django
 South
+django-ipware
 
 # Testing
 

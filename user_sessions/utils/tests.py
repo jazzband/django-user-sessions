@@ -27,10 +27,11 @@ class Client(BaseClient):
         if user and user.is_active:
             # Create a fake request to store login details.
             request = HttpRequest()
+
             if self.session:
                 request.session = self.session
             else:
-                request.session = SessionStore('Python/2.7', '127.0.0.1')
+                request.session = SessionStore('Python/2.7', '85.1.1.1')
             login(request, user)
 
             # Save the session values.
@@ -59,5 +60,5 @@ class Client(BaseClient):
         if 'user_sessions' in settings.INSTALLED_APPS:
             cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
             if cookie:
-                return SessionStore('Python/2.7', '127.0.0.1', cookie.value)
+                return SessionStore('Python/2.7', '85.1.1.1', cookie.value)
     session = property(_session)
