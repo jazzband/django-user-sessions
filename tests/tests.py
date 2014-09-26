@@ -113,7 +113,6 @@ class AdminTest(TestCase):
     def test_list(self):
         response = self.client.get(self.admin_url)
         self.assertContains(response, 'Select session to change')
-        print response
         self.assertContains(response, '85.1.1.1')
         self.assertContains(response, '20.13.1.1')
         self.assertContains(response, '1.1.1.1')
