@@ -36,6 +36,8 @@ except Exception as e:
 
 
 class MiddlewareTest(TestCase):
+    client_class = lambda self: Client(REMOTE_ADDR='85.1.1.1')
+
     def test_unmodified_session(self):
         self.client.get('/', HTTP_USER_AGENT='Python/2.7')
         self.assertNotIn(settings.SESSION_COOKIE_NAME, self.client.cookies)
@@ -47,7 +49,7 @@ class MiddlewareTest(TestCase):
             pk=self.client.cookies[settings.SESSION_COOKIE_NAME].value
         )
         self.assertEqual(session.user_agent, 'Python/2.7')
-        self.assertEqual(session.ip, '127.0.0.1')
+        self.assertEqual(session.ip, '85.1.1.1')
 
     def test_login(self):
         if django.VERSION < (1, 7):
@@ -75,7 +77,7 @@ class MiddlewareTest(TestCase):
 
 
 class ViewsTest(TestCase):
-    client_class = Client
+    client_class = lambda self: Client(REMOTE_ADDR='85.1.1.1')
 
     def setUp(self):
         User.objects.create_user('bouke', '', 'secret')
@@ -94,7 +96,7 @@ class ViewsTest(TestCase):
 
 
 class AdminTest(TestCase):
-    client_class = Client
+    client_class = lambda self: Client(REMOTE_ADDR='85.1.1.1')
 
     def setUp(self):
         User.objects.create_superuser('bouke', '', 'secret')
@@ -111,14 +113,14 @@ class AdminTest(TestCase):
     def test_list(self):
         response = self.client.get(self.admin_url)
         self.assertContains(response, 'Select session to change')
-        self.assertContains(response, '127.0.0.1')
+        self.assertContains(response, '85.1.1.1')
         self.assertContains(response, '20.13.1.1')
         self.assertContains(response, '1.1.1.1')
 
     def test_mine(self):
         my_sessions = '%s?%s' % (self.admin_url, urlencode({'owner': 'my'}))
         response = self.client.get(my_sessions)
-        self.assertContains(response, '127.0.0.1')
+        self.assertContains(response, '85.1.1.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_expired(self):

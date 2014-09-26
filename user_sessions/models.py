@@ -36,9 +36,9 @@ class Session(models.Model):
     user_agent = models.CharField(max_length=200)
     last_activity = models.DateTimeField(auto_now=True)
     if django.VERSION[:2] >= (1, 6):
-        ip = models.GenericIPAddressField()
+        ip = models.GenericIPAddressField(null=True)
     else:
-        ip = models.IPAddressField()
+        ip = models.IPAddressField(null=True)
 
 
 # At bottom to avoid circular import
