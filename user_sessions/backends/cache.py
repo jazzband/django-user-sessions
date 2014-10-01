@@ -91,6 +91,3 @@ class SessionStore(SessionBase):
     @classmethod
     def clear_expired(cls):
         pass
-
-# At bottom to avoid circular import
-from ..models import Session
