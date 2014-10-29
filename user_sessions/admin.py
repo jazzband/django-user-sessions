@@ -39,7 +39,7 @@ class OwnerFilter(admin.SimpleListFilter):
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = 'ip', 'user', 'is_valid', 'location', 'device',
-    search_fields = 'user__name',
+    search_fields = 'user__username',
     list_filter = ExpiredFilter, OwnerFilter
 
     def is_valid(self, obj):
