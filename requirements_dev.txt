@@ -5,7 +5,6 @@
 # Runtime dependencies
 
 Django
-South
 
 # Testing
 
