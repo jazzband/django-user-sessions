@@ -5,6 +5,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
+class TruncatingCharField(models.CharField):
+    def get_prep_value(self, value):
+        value = super(TruncatingCharField, self).get_prep_value(value)
+        if value:
+            return value[:self.max_length]
+        return value
+
+
 class Session(models.Model):
     """
     Session objects containing user session information.
@@ -33,7 +41,7 @@ class Session(models.Model):
 
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
                              null=True)
-    user_agent = models.CharField(max_length=200)
+    user_agent = TruncatingCharField(max_length=200)
     last_activity = models.DateTimeField(auto_now=True)
     if django.VERSION[:2] >= (1, 6):
         ip = models.GenericIPAddressField()
