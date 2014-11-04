@@ -1,6 +1,14 @@
 from django.contrib import admin
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+
+try:
+    from django.contrib.auth import get_user_model
+except ImportError:
+    from django.contrib.auth.models import User
+else:
+    User = get_user_model()
+
 from user_sessions.templatetags.user_sessions import device, location
 
 from .models import Session
@@ -39,7 +47,10 @@ class OwnerFilter(admin.SimpleListFilter):
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = 'ip', 'user', 'is_valid', 'location', 'device',
-    search_fields = 'user__name',
+    search_fields = (
+        'ip',
+        'user__%s' % getattr(User, 'USERNAME_FIELD', 'username'),
+    )
     list_filter = ExpiredFilter, OwnerFilter
 
     def is_valid(self, obj):

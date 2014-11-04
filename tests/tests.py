@@ -115,6 +115,12 @@ class AdminTest(TestCase):
         self.assertContains(response, '20.13.1.1')
         self.assertContains(response, '1.1.1.1')
 
+    def test_search(self):
+        response = self.client.get(self.admin_url, {'q': 'bouke'})
+        self.assertContains(response, '127.0.0.1')
+        self.assertNotContains(response, '20.13.1.1')
+        self.assertNotContains(response, '1.1.1.1')
+
     def test_mine(self):
         my_sessions = '%s?%s' % (self.admin_url, urlencode({'owner': 'my'}))
         response = self.client.get(my_sessions)
