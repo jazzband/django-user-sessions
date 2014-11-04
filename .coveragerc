@@ -1,6 +1,6 @@
 [run]
 source = user_sessions
-omit = */migrations/*
+omit = */migrations/*,*/south_migrations/*
 
 [report]
 precision = 2
