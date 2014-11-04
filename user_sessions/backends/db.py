@@ -15,7 +15,10 @@ class SessionStore(SessionBase):
     """
     def __init__(self, user_agent, ip, session_key=None):
         super(SessionStore, self).__init__(session_key)
-        self.user_agent, self.ip, self.user_id = user_agent, ip, None
+        # Truncate user_agent string to max_length of the CharField
+        self.user_agent = user_agent[:200] if user_agent else user_agent
+        self.ip = ip
+        self.user_id = None
 
     def __setitem__(self, key, value):
         if key == auth.SESSION_KEY:
