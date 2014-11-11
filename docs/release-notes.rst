@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+1.1.0
+-----
+* Fixed #14 -- Truncate long user_agents
+* Fixed #23 -- Cannot use admin view search
+* Added Django 1.7 migrations
+
 1.0.0
 -----
 *No changes from 1.0.0-beta1.*
