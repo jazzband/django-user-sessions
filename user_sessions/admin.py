@@ -1,3 +1,4 @@
+import django
 from django.contrib import admin
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -6,8 +7,9 @@ try:
     from django.contrib.auth import get_user_model
 except ImportError:
     from django.contrib.auth.models import User
-else:
-    User = get_user_model()
+
+    def get_user_model():
+        return User
 
 from user_sessions.templatetags.user_sessions import device, location
 
@@ -47,11 +49,17 @@ class OwnerFilter(admin.SimpleListFilter):
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = 'ip', 'user', 'is_valid', 'location', 'device',
-    search_fields = (
-        'ip',
-        'user__%s' % getattr(User, 'USERNAME_FIELD', 'username'),
-    )
+    search_fields = ()
     list_filter = ExpiredFilter, OwnerFilter
+
+    def __init__(self, *args, **kwargs):
+        super(SessionAdmin, self).__init__(*args, **kwargs)
+        if not self.search_fields and django.VERSION[:2] < (1, 7):
+            self.search_fields = self.get_search_fields(None)
+
+    def get_search_fields(self, request):
+        User = get_user_model()
+        return ('ip', 'user__%s' % getattr(User, 'USERNAME_FIELD', 'username'))
 
     def is_valid(self, obj):
         return obj.expire_date > now()
@@ -62,4 +70,5 @@ class SessionAdmin(admin.ModelAdmin):
 
     def device(self, obj):
         return device(obj.user_agent)
+
 admin.site.register(Session, SessionAdmin)
