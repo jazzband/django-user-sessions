@@ -51,6 +51,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_display = 'ip', 'user', 'is_valid', 'location', 'device',
     search_fields = ()
     list_filter = ExpiredFilter, OwnerFilter
+    raw_id_fields = 'user',
 
     def __init__(self, *args, **kwargs):
         super(SessionAdmin, self).__init__(*args, **kwargs)
