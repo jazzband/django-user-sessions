@@ -52,6 +52,18 @@ class Client(BaseClient):
         else:
             return False
 
+    def logout(self):
+        """
+        Removes the authenticated user's cookies and session object.
+
+        Causes the authenticated user to be logged out.
+        """
+        session_cookie = self.cookies.get(settings.SESSION_COOKIE_NAME)
+        if session_cookie:
+            if self.session:
+                self.session.delete(session_cookie)
+            del self.cookies[settings.SESSION_COOKIE_NAME]
+
     def _session(self):
         """
         Obtains the current session variables.
