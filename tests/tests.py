@@ -274,6 +274,18 @@ class ClientTest(TestCase):
         assert client.login(username='bouke', password='secret')
         self.assertEqual(client.session['foo'], 'bar')
 
+    def test_login_logout(self):
+        client = Client()
+        User.objects.create_user('bouke', '', 'secret')
+        assert client.login(username='bouke', password='secret')
+        assert settings.SESSION_COOKIE_NAME in client.cookies
+
+        client.logout()
+        assert settings.SESSION_COOKIE_NAME not in client.cookies
+
+        # should not raise
+        client.logout()
+
     @override_settings(INSTALLED_APPS=())
     def test_no_session(self):
         self.assertIsNone(Client().session)
