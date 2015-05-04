@@ -14,9 +14,9 @@ class SessionMiddleware(object):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
         ip = request.META.get('REMOTE_ADDR', None)
-        if not ip:
+        if not ip and hasattr(settings, 'USER_SESSIONS_IP_FALLBACK'):
             # check for fallback e.g. behind a proxy
-            x_fallback = settings.get('USER_SESSIONS_IP_FALLBACK', None)
+            x_fallback = settings.USER_SESSIONS_IP_FALLBACK
             if not x_fallback:
                 raise AttributeError('No IP for REMOTE_ADDR and no fallback set')
             ip = request.META.get(x_fallback, None)
