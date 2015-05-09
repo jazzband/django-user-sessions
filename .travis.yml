@@ -17,8 +17,11 @@ matrix:
 
     - python: "2.7"
       env: DJANGO=1.7
+
+    - python: "2.7"
+      env: DJANGO=1.8
     - python: "3.4"
-      env: DJANGO=1.7 COVERAGE=YES
+      env: DJANGO=1.8 COVERAGE=YES
 
     - python: "3.4"
       env: FLAKE8=YES
@@ -27,7 +30,7 @@ install:
   - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then pip install unittest2; fi
   - if [[ $DJANGO ]]; then
         pip install -e .;
-        if [[ $DJANGO != 1.8* ]]; then
+        if [[ $DJANGO != 1.9* ]]; then
             pip install "django>=$DJANGO,<=$DJANGO.99";
         else
             pip install https://www.djangoproject.com/download/$DJANGO/tarball/;

@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+1.1.1
+-----
+* Added Django 1.8 support
+
 1.1.0
 -----
 * Fixed #14 -- Truncate long user_agents
