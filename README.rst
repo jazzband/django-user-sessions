@@ -76,6 +76,33 @@ Contribute
 * Send a pull request with your changes.
 * Provide a translation using Transifex_.
 
+Running tests
+-------------
+This project aims for full code-coverage, this means that your code should be
+well-tested. Also test branches for hardened code. You can run the full test
+suite with::
+
+    make test
+
+Or run a specific test with::
+
+    make test TARGET=tests.tests.MiddlewareTest
+
+For Python compatibility, tox_ is used. You can run the full test suite with::
+
+    tox
+
+Releasing
+---------
+The following actions are required to push a new version:
+
+    python example/manage.py makemigrations two_factor
+    git commit -am "Added migrations"
+
+    bumpversion [major|minor|patch]
+    git commit -am "Released [version]"
+    git tag [version]
+    python setup.py sdist bdist_wheel upload
 
 License
 =======
@@ -89,3 +116,4 @@ This project is licensed under the MIT license.
 .. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+.. _tox: https://testrun.org/tox/latest/
