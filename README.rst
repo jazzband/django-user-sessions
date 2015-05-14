@@ -94,7 +94,7 @@ For Python compatibility, tox_ is used. You can run the full test suite with::
 
 Releasing
 ---------
-The following actions are required to push a new version:
+The following actions are required to push a new version::
 
     python example/manage.py makemigrations two_factor
     git commit -am "Added migrations"
@@ -103,6 +103,7 @@ The following actions are required to push a new version:
     git commit -am "Released [version]"
     git tag [version]
     python setup.py sdist bdist_wheel upload
+
 
 License
 =======
