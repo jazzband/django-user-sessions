@@ -6,6 +6,10 @@
 
 Django
 
+# Example app
+
+django-debug-toolbar
+
 # Testing
 
 coverage

@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView, DeleteView, View
+from django.views.generic.edit import DeletionMixin
 
 
 class SessionMixin(object):
@@ -35,8 +36,24 @@ class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
     """
     View for deleting a user's own session.
 
-    This view allows a user to delete an active session. For example locking
+    This view allows a user to delete an active session. For example log
     out a session from a computer at the local library or a friend's place.
     """
+    def get_success_url(self):
+        return str(reverse_lazy('user_sessions:session_list'))
+
+
+class SessionDeleteOtherView(LoginRequiredMixin, SessionMixin, DeletionMixin, View):
+    """
+    View for deleting all user's sessions but the current.
+
+    This view allows a user to delete all other active session. For example
+    log out all sessions from a computer at the local library or a friend's
+    place.
+    """
+    def get_object(self):
+        return super(SessionDeleteOtherView, self).get_queryset().\
+            exclude(session_key=self.request.session.session_key)
+
     def get_success_url(self):
         return str(reverse_lazy('user_sessions:session_list'))

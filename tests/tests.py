@@ -79,7 +79,7 @@ class ViewsTest(TestCase):
     client_class = Client
 
     def setUp(self):
-        User.objects.create_user('bouke', '', 'secret')
+        self.user = User.objects.create_user('bouke', '', 'secret')
         assert self.client.login(username='bouke', password='secret')
 
     def test_list(self):
@@ -92,6 +92,13 @@ class ViewsTest(TestCase):
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[session_key]))
         self.assertRedirects(response, reverse('user_sessions:session_list'))
+
+    def test_delete_other(self):
+        self.user.session_set.create(ip='127.0.0.1', expire_date=datetime.now() + timedelta(days=1))
+        self.assertEqual(self.user.session_set.count(), 2)
+        response = self.client.post(reverse('user_sessions:session_delete_other'))
+        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        self.assertEqual(self.user.session_set.count(), 1)
 
 
 class AdminTest(TestCase):
