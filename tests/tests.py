@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 import sys
 try:
     from urllib.parse import urlencode
@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
+from django.core.management import call_command
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.test import TestCase
@@ -375,3 +376,12 @@ class DeviceTemplateFilterTest(TestCase):
             device('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
                    'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
         )
+
+
+@skipUnless(django.VERSION >= (1, 5), "Django 1.5 and higher")
+class ClearsessionsCommandTest(TestCase):
+    def test_can_call(self):
+        Session.objects.create(expire_date=datetime.now() - timedelta(days=1),
+                               ip='127.0.0.1')
+        call_command('clearsessions')
+        self.assertEqual(Session.objects.count(), 0)
