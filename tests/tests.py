@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.utils import six
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
@@ -212,7 +213,8 @@ class SessionStoreTest(TestCase):
 
     def test_integrity(self):
         self.store.user_agent = None
-        with self.assertRaisesRegexp(
+        with six.assertRaisesRegex(
+                self,
                 IntegrityError,
                 '(user_sessions_session.user_agent may not be NULL|'
                 'NOT NULL constraint failed: user_sessions_session.user_agent)'
