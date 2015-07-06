@@ -10,7 +10,10 @@ urlpatterns = patterns(
     '',
     url(
         regex=r'^$',
-        view=RedirectView.as_view(url=reverse_lazy('user_sessions:session_list')),
+        view=RedirectView.as_view(
+            url=reverse_lazy('user_sessions:session_list'),
+            permanent=True,
+        ),
         name='home',
     ),
     url(r'', include('user_sessions.urls', 'user_sessions')),
