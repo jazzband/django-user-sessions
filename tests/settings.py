@@ -33,6 +33,5 @@ DATABASES = {
     }
 }
 
-GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR),
-                          'example', 'GeoLiteCity.dat')
+GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR), 'example',)
 SESSION_ENGINE = 'user_sessions.backends.db'
