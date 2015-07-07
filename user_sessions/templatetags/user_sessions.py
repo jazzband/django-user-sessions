@@ -82,7 +82,41 @@ _geoip = None
 def geoip():
     global _geoip
     if _geoip is None and HAS_GEOIP:
-        from django.contrib.gis.geoip import GeoIP
+        import django
+        from django.utils import six
+
+        if six.PY3 and django.VERSION[:2] < (1, 6):
+            # Django 1.5 on Python 3 incorrectly calls libgeoip with str()
+            # objects, rather than byte() objects
+            # Monkey patch the GeoIP class, just enough for location()
+
+            from django.contrib.gis.geoip import base
+
+            class GeoIP(base.GeoIP):
+                def __init__(self, *args, **kwargs):
+                    super(GeoIP, self).__init__(*args, **kwargs)
+
+                    # Reopen the city database with a bytestring path
+                    if self._city:
+                        city_file_enc = self._city_file.encode('ascii')
+                        base.GeoIP_delete(self._city)
+                        ptr = base.GeoIP_open(city_file_enc, self._cache)
+                        self._city = ptr
+
+                def city(self, query):
+                    query_enc = self._check_query(query, city=True)
+                    if base.ipv4_re.match(query):
+                        # If an IP address was passed in
+                        return base.GeoIP_record_by_addr(
+                            self._city, base.c_char_p(query_enc))
+                    else:
+                        # If a FQDN was passed in.
+                        return base.GeoIP_record_by_name(
+                            self._city, base.c_char_p(query))
+
+        else:
+            from django.contrib.gis.geoip import GeoIP
+
         try:
             _geoip = GeoIP()
         except Exception as e:
