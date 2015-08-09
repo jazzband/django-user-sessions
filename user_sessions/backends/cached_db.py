@@ -82,4 +82,4 @@ class SessionStore(DBStore):
         self._session_key = None
 
 # At bottom to avoid circular import
-from django.contrib.sessions.models import Session  # isort:skip
+from .db import Session  # isort:skip
