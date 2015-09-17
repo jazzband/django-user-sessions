@@ -1,3 +1,5 @@
+import importlib
+
 import django
 from django.conf import settings
 from django.contrib.sessions.models import SessionManager
@@ -42,4 +44,4 @@ class Session(models.Model):
 
 
 # At bottom to avoid circular import
-from .backends.db import SessionStore
+SessionStore = getattr(importlib.import_module(settings.SESSION_ENGINE), 'SessionStore')

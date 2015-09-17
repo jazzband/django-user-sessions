@@ -5,6 +5,7 @@ from django.utils.cache import patch_vary_headers
 from django.utils.http import cookie_date
 from django.utils.importlib import import_module
 
+from ipware.ip import get_ip
 
 class SessionMiddleware(object):
     """
@@ -14,7 +15,7 @@ class SessionMiddleware(object):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
         request.session = engine.SessionStore(
-            ip=request.META.get('REMOTE_ADDR', ''),
+            ip=get_ip(request),
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
             session_key=session_key
         )

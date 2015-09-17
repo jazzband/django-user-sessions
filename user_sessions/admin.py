@@ -48,7 +48,7 @@ class OwnerFilter(admin.SimpleListFilter):
 
 
 class SessionAdmin(admin.ModelAdmin):
-    list_display = 'ip', 'user', 'is_valid', 'location', 'device',
+    list_display = 'ip', 'user', 'is_valid', 'location', 'device', 'last_activity',
     search_fields = ()
     list_filter = ExpiredFilter, OwnerFilter
     raw_id_fields = 'user',

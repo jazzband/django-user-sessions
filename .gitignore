@@ -9,3 +9,7 @@
 /.tox/
 
 /docs/_build/
+
+.idea
+build
+dist
