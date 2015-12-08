@@ -1,9 +1,16 @@
 import time
 
+import django
 from django.conf import settings
 from django.utils.cache import patch_vary_headers
 from django.utils.http import cookie_date
-from django.utils.importlib import import_module
+
+if django.VERSION <= (1, 9):
+    from django.utils.importlib import import_module
+else:
+    # If the Django version is at least 1.9, this implies that the Python version
+    # must be at least 2.7
+    from importlib import import_module
 
 
 class SessionMiddleware(object):
