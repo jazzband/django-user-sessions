@@ -24,8 +24,8 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 1.4, 1.5, 1.6, 1.7 and 1.8 on Python 2.6, 2.7, 3.2, 3.3
-and 3.4. Documentation is available at `readthedocs.org`_.
+Compatible with Django 1.8 and 1.9 on Python 2.7, 3.2, 3.3, 3.4 and 3.5.
+Documentation is available at `readthedocs.org`_.
 
 
 Features

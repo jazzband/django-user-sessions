@@ -11,7 +11,7 @@ setup(
     download_url='https://pypi.python.org/pypi/django-user-sessions',
     license='MIT',
     packages=find_packages(exclude=('example', 'tests',)),
-    install_requires=['Django>=1.4'],
+    install_requires=['Django>=1.8'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -22,7 +22,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
