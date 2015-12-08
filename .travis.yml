@@ -2,39 +2,31 @@ language: python
 
 matrix:
   include:
-    - python: "2.6"
-      env: DJANGO=1.4 COVERAGE=YES
-
-    - python: "2.7"
-      env: DJANGO=1.5
-    - python: "3.2"
-      env: DJANGO=1.5
-
-    - python: "2.7"
-      env: DJANGO=1.6
-    - python: "3.3"
-      env: DJANGO=1.6
-
-    - python: "2.7"
-      env: DJANGO=1.7
-
     - python: "2.7"
       env: DJANGO=1.8
     - python: "3.4"
       env: DJANGO=1.8 COVERAGE=YES
+    - python: "3.5"
+      env: DJANGO=1.8
 
+    - python: "2.7"
+      env: DJANGO=1.9
     - python: "3.4"
+      env: DJANGO=1.9
+    - python: "3.5"
+      env: DJANGO=1.9 COVERAGE=YES
+
+    - python: "3.5"
       env: FLAKE8=YES
 
 install:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then pip install unittest2; fi
   - if [[ $DJANGO ]]; then
-        pip install -e .;
-        if [[ $DJANGO != 1.9* ]]; then
+        if [[ $DJANGO != 1.10* ]]; then
             pip install "django>=$DJANGO,<=$DJANGO.99";
         else
             pip install https://www.djangoproject.com/download/$DJANGO/tarball/;
         fi;
+        pip install -e .;
     fi;
   - if [[ $COVERAGE == "YES" ]]; then pip install coveralls; fi;
   - if [[ $FLAKE8 == "YES" ]]; then pip install flake8; fi;
