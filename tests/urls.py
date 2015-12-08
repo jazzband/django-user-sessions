@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.http import HttpResponse
 
@@ -15,10 +15,9 @@ def modify_session(request):
     return HttpResponse('')
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', empty),
     url(r'^modify_session/$', modify_session),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('user_sessions.urls', 'user_sessions')),
-)
+]

@@ -1,12 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from user_sessions.views import SessionDeleteOtherView
 
 from .views import SessionListView, SessionDeleteView
 
 
-urlpatterns = patterns(
-    '',
-
+urlpatterns = [
     url(
         regex=r'^account/sessions/$',
         view=SessionListView.as_view(),
@@ -22,4 +20,4 @@ urlpatterns = patterns(
         view=SessionDeleteView.as_view(),
         name='session_delete',
     ),
-)
+]
