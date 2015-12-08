@@ -1,8 +1,25 @@
 import django
 from django.conf import settings
-from django.contrib.sessions.models import SessionManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+
+class SessionManager(models.Manager):
+    use_in_migrations = True
+
+    def encode(self, session_dict):
+        """
+        Returns the given session dictionary serialized and encoded as a string.
+        """
+        return SessionStore().encode(session_dict)
+
+    def save(self, session_key, session_dict, expire_date):
+        s = self.model(session_key, self.encode(session_dict), expire_date)
+        if session_dict:
+            s.save()
+        else:
+            s.delete()  # Clear sessions with no data.
+        return s
 
 
 class Session(models.Model):
@@ -35,10 +52,7 @@ class Session(models.Model):
                              null=True)
     user_agent = models.CharField(max_length=200)
     last_activity = models.DateTimeField(auto_now=True)
-    if django.VERSION[:2] >= (1, 6):
-        ip = models.GenericIPAddressField(verbose_name='IP')
-    else:
-        ip = models.IPAddressField(verbose_name='IP')
+    ip = models.GenericIPAddressField(verbose_name='IP')
 
 
 # At bottom to avoid circular import

@@ -13,6 +13,10 @@ test:
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
 		django-admin.py test ${TARGET}
 
+migrations:
+	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
+		django-admin.py makemigrations user_sessions
+
 coverage:
 	coverage erase
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
