@@ -69,8 +69,20 @@ You need to setup GeoIP for the location detection to work. See the Django
 documentation on `installing GeoIP`_.
 
 
-Contribute
-==========
+Getting help
+============
+
+For general questions regarding this package, please hop over to Stack 
+Overflow. If you think there is an issue with this package; check if the
+issue is already listed (either open or closed), and file an issue if
+it's not.
+
+
+Development
+===========
+
+How to contribute
+-----------------
 * Fork the repository on GitHub and start hacking.
 * Run the tests.
 * Send a pull request with your changes.
