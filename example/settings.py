@@ -16,7 +16,7 @@ STATIC_URL = '/static/'
 
 SECRET_KEY = 'DO NOT USE THIS KEY!'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'example.middleware.SetRemoteAddrFromForwardedFor',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

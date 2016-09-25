@@ -1,4 +1,10 @@
-class SetRemoteAddrFromForwardedFor(object):
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    class MiddlewareMixin(object): pass
+
+
+class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
     """
     Middleware that sets REMOTE_ADDR based on HTTP_X_FORWARDED_FOR, if the
     latter is set. This is useful if you're sitting behind a reverse proxy that
