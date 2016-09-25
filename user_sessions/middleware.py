@@ -9,8 +9,13 @@ try:
 except ImportError:
     from django.utils.importlib import import_module
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+    BaseClass = MiddlewareMixin
+except ImportError:
+    BaseClass = object
 
-class SessionMiddleware(object):
+class SessionMiddleware(BaseClass):
     """
     Middleware that provides ip and user_agent to the session store.
     """
