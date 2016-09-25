@@ -109,4 +109,4 @@ class SessionStore(SessionBase):
 
 
 # At bottom to avoid circular import
-from ..models import Session
+from ..models import Session  # noqa: E402

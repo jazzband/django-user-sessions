@@ -55,4 +55,4 @@ class Session(models.Model):
 
 
 # At bottom to avoid circular import
-from .backends.db import SessionStore
+from .backends.db import SessionStore  # noqa: E402
