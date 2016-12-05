@@ -30,7 +30,7 @@ class Client(BaseClient):
             if self.session:
                 request.session = self.session
             else:
-                request.session = SessionStore('Python/2.7', '127.0.0.1')
+                request.session = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
             login(request, user)
 
             # Save the session values.
@@ -71,5 +71,6 @@ class Client(BaseClient):
         if 'user_sessions' in settings.INSTALLED_APPS:
             cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
             if cookie:
-                return SessionStore('Python/2.7', '127.0.0.1', cookie.value)
+                return SessionStore(session_key=cookie.value,
+                                    user_agent='Python/2.7', ip='127.0.0.1')
     session = property(_session)

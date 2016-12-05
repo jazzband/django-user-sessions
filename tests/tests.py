@@ -12,10 +12,8 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
 from django.core.urlresolvers import reverse
-from django.db import IntegrityError
 from django.test import TestCase
 from django.test.utils import override_settings
-from django.utils import six
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
@@ -109,10 +107,10 @@ class AdminTest(TestCase):
         User.objects.create_superuser('bouke', '', 'secret')
         assert self.client.login(username='bouke', password='secret')
 
-        expired = SessionStore('Python/2.5', '20.13.1.1')
+        expired = SessionStore(user_agent='Python/2.5', ip='20.13.1.1')
         expired.set_expiry(-365 * 86400)
         expired.save()
-        unexpired = SessionStore('Python/2.7', '1.1.1.1')
+        unexpired = SessionStore(user_agent='Python/2.7', ip='1.1.1.1')
         unexpired.save()
 
         self.admin_url = reverse('admin:user_sessions_session_changelist')
@@ -151,7 +149,7 @@ class AdminTest(TestCase):
 
 class SessionStoreTest(TestCase):
     def setUp(self):
-        self.store = SessionStore('Python/2.7', '127.0.0.1', None)
+        self.store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
 
     def test_untouched_init(self):
         self.assertFalse(self.store.modified)
@@ -182,8 +180,8 @@ class SessionStoreTest(TestCase):
     def test_load_unmodified(self):
         self.store[auth.SESSION_KEY] = 1
         self.store.save()
-        store2 = SessionStore('Python/2.7', '127.0.0.1',
-                              self.store.session_key)
+        store2 = SessionStore(session_key=self.store.session_key,
+                              user_agent='Python/2.7', ip='127.0.0.1')
         store2.load()
         self.assertEqual(store2.user_agent, 'Python/2.7')
         self.assertEqual(store2.ip, '127.0.0.1')
@@ -193,7 +191,8 @@ class SessionStoreTest(TestCase):
     def test_load_modified(self):
         self.store[auth.SESSION_KEY] = 1
         self.store.save()
-        store2 = SessionStore('Python/3.3', '8.8.8.8', self.store.session_key)
+        store2 = SessionStore(session_key=self.store.session_key,
+                              user_agent='Python/3.3', ip='8.8.8.8')
         store2.load()
         self.assertEqual(store2.user_agent, 'Python/3.3')
         self.assertEqual(store2.ip, '8.8.8.8')
@@ -201,25 +200,15 @@ class SessionStoreTest(TestCase):
         self.assertEqual(store2.modified, True)
 
     def test_duplicate_create(self):
-        s1 = SessionStore('Python/2.7', '127.0.0.1', 'DUPLICATE')
+        s1 = SessionStore(session_key='DUPLICATE', user_agent='Python/2.7', ip='127.0.0.1')
         s1.create()
-        s2 = SessionStore('Python/2.7', '127.0.0.1', 'DUPLICATE')
+        s2 = SessionStore(session_key='DUPLICATE', user_agent='Python/2.7', ip='127.0.0.1')
         s2.create()
         self.assertNotEqual(s1.session_key, s2.session_key)
 
-        s3 = SessionStore('Python/2.7', '127.0.0.1', s1.session_key)
+        s3 = SessionStore(session_key=s1.session_key, user_agent='Python/2.7', ip='127.0.0.1')
         with self.assertRaises(CreateError):
             s3.save(must_create=True)
-
-    def test_integrity(self):
-        self.store.user_agent = None
-        with six.assertRaisesRegex(
-                self,
-                IntegrityError,
-                '(user_sessions_session.user_agent may not be NULL|'
-                'NOT NULL constraint failed: user_sessions_session.user_agent)'
-        ):
-            self.store.save()
 
     def test_delete(self):
         # not persisted, should just return
@@ -248,7 +237,7 @@ class SessionStoreTest(TestCase):
 
 class ModelTest(TestCase):
     def test_get_decoded(self):
-        store = SessionStore('Python/2.7', '127.0.0.1', None)
+        store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
         store[auth.SESSION_KEY] = 1
         store['foo'] = 'bar'
         store.save()
@@ -262,7 +251,7 @@ class ModelTest(TestCase):
              'Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; ' \
              '.NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; ' \
              'InfoPath.3; ms-office; MSOffice 14)'
-        store = SessionStore(ua, '127.0.0.1', None)
+        store = SessionStore(user_agent=ua, ip='127.0.0.1')
         store.save()
 
         session = Session.objects.get(pk=store.session_key)
@@ -275,7 +264,7 @@ class ClientTest(TestCase):
         self.assertFalse(client.login())
 
     def test_restore_session(self):
-        store = SessionStore('Python/2.7', '127.0.0.1', None)
+        store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
         store['foo'] = 'bar'
         store.save()
         client = Client()

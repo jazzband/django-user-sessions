@@ -70,6 +70,7 @@ class SessionAdmin(admin.ModelAdmin):
         return location(obj.ip)
 
     def device(self, obj):
-        return device(obj.user_agent)
+        return device(obj.user_agent) if obj.user_agent else u''
+
 
 admin.site.register(Session, SessionAdmin)

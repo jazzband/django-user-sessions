@@ -13,7 +13,7 @@ class SessionStore(SessionBase):
     """
     Implements database session store.
     """
-    def __init__(self, user_agent, ip, session_key=None):
+    def __init__(self, session_key=None, user_agent=None, ip=None):
         super(SessionStore, self).__init__(session_key)
         # Truncate user_agent string to max_length of the CharField
         self.user_agent = user_agent[:200] if user_agent else user_agent
