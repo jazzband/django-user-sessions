@@ -1,6 +1,25 @@
 Release Notes
 =============
 
+1.4.0 (in development)
+----------------------
+* Added Django Channels support
+* Fixed #62 -- Provide request.user in signals
+
+1.3.1
+-----
+* Added Django 1.10 support
+
+1.3.0
+-----
+* Added Django 1.9 support
+* Dropped support for Django 1.7 and below
+
+1.2.0
+-----
+* New feature: delete all-but-current sessions
+* Added clearsessions command
+
 1.1.1
 -----
 * Added Django 1.8 support
