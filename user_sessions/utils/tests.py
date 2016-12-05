@@ -27,6 +27,7 @@ class Client(BaseClient):
         if user and user.is_active:
             # Create a fake request to store login details.
             request = HttpRequest()
+            request.user = None
             if self.session:
                 request.session = self.session
             else:

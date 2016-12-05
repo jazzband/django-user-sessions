@@ -4,6 +4,7 @@ try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
+from mock import patch
 
 import django
 from django.conf import settings
@@ -284,6 +285,15 @@ class ClientTest(TestCase):
 
         # should not raise
         client.logout()
+
+    @patch('django.contrib.auth.signals.user_logged_in.send')
+    def test_login_signal(self, mock_user_logged_in):
+        client = Client()
+        User.objects.create_user('bouke', '', 'secret')
+        assert client.login(username='bouke', password='secret')
+        assert mock_user_logged_in.called
+        request = mock_user_logged_in.call_args[1]['request']
+        assert getattr(request, 'user', None) is not None
 
     @override_settings(INSTALLED_APPS=())
     def test_no_session(self):
