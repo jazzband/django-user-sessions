@@ -58,7 +58,6 @@ class SessionStore(SessionBase):
                 # Key wasn't unique. Try again.
                 continue
             self.modified = True
-            self._session_cache = {}
             return
 
     def save(self, must_create=False):
