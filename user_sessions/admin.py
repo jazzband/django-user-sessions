@@ -2,6 +2,7 @@ import django
 from django.contrib import admin
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 try:
     from django.contrib.auth import get_user_model
@@ -52,7 +53,9 @@ class SessionAdmin(admin.ModelAdmin):
     search_fields = ()
     list_filter = ExpiredFilter, OwnerFilter
     raw_id_fields = 'user',
-    exclude = 'session_key',
+
+    if getattr(settings, 'USER_SESSIONS_ADMIN_EXCLUDE_SESSION_KEY',True):
+        exclude = 'session_key',
 
     def __init__(self, *args, **kwargs):
         super(SessionAdmin, self).__init__(*args, **kwargs)
