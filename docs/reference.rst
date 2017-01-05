@@ -11,7 +11,8 @@ Models
 
 Session Backends
 ----------------
-.. autoclass:: user_sessions.backends.db.SessionStore
+.. autoclass:: user_sessions.backends.db.SessionStore..
+.. autoclass:: user_sessions.backends.cache.SessionStore..
 
 Template Tags
 -------------
