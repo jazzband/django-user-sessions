@@ -4,7 +4,10 @@ try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
-from mock import patch
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
 
 import django
 from django.conf import settings
@@ -91,7 +94,7 @@ class ViewsTest(TestCase):
         session_key = self.client.cookies[settings.SESSION_COOKIE_NAME].value
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[session_key]))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        self.assertRedirects(response, '/')
 
     def test_delete_other(self):
         self.user.session_set.create(ip='127.0.0.1', expire_date=datetime.now() + timedelta(days=1))
