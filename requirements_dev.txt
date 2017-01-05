@@ -11,6 +11,8 @@ django-debug-toolbar
 coverage
 flake8
 tox
+tox-pyenv
+detox
 mock
 
 # Transifex

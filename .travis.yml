@@ -1,45 +1,27 @@
 language: python
 
+python:
+ - 2.7
+ - 3.4
+ - 3.5
+
+env:
+ - DJANGO=1.8
+ - DJANGO=1.9
+ - DJANGO=1.10
+ - DJANGO=master
+
 matrix:
+  exclude:
+    - python: 3.5
+      env: DJANGO=1.10
   include:
-    - python: "2.7"
-      env: DJANGO=1.8
-    - python: "3.4"
-      env: DJANGO=1.8 COVERAGE=YES
-    - python: "3.5"
-      env: DJANGO=1.8
+    - python: 3.5
+      env: DJANGO=1.10 COVERAGE=YES
+    - python: 3.6
+      env: DJANGO=master
+    - python: 3.5
+      env: TOXENV=flake8
 
-    - python: "2.7"
-      env: DJANGO=1.9
-    - python: "3.4"
-      env: DJANGO=1.9
-    - python: "3.5"
-      env: DJANGO=1.9 COVERAGE=YES
-
-    - python: "3.5"
-      env: FLAKE8=YES
-
-install:
-  - if [[ $DJANGO ]]; then
-        if [[ $DJANGO != 1.10* ]]; then
-            pip install "django>=$DJANGO,<=$DJANGO.99";
-        else
-            pip install https://www.djangoproject.com/download/$DJANGO/tarball/;
-        fi;
-        pip install -e .;
-    fi;
-  - if [[ $COVERAGE == "YES" ]]; then pip install coveralls; fi;
-  - if [[ $FLAKE8 == "YES" ]]; then pip install flake8; fi;
-
-script:
-  - if [[ $DJANGO ]]; then
-        if [[ $COVERAGE != "YES" ]]; then
-            make test;
-        else
-            make coverage;
-        fi;
-    fi;
-  - if [[ $FLAKE8 == "YES" ]]; then make flake8; fi;
-
-after_success:
-  - if [[ $COVERAGE == "YES" ]]; then coveralls; fi;
+install: pip install tox-travis
+script: tox
