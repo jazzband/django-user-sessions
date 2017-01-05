@@ -1,5 +1,8 @@
+from django.conf import settings
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect, resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from django.views.generic import ListView, DeleteView, View
@@ -39,6 +42,17 @@ class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
     This view allows a user to delete an active session. For example log
     out a session from a computer at the local library or a friend's place.
     """
+    def delete(self, request, *args, **kwargs):
+        if kwargs['pk'] == request.session.session_key:
+            logout(request)
+            if hasattr(settings, 'LOGOUT_REDIRECT_URL'):
+                # Django 1.10
+                return redirect(resolve_url(settings.LOGOUT_REDIRECT_URL))
+            else:
+                # Django 1.8-1.9
+                return redirect(resolve_url(settings.LOGOUT_URL))
+        super().delete(request, *args, **kwargs)
+
     def get_success_url(self):
         return str(reverse_lazy('user_sessions:session_list'))
 

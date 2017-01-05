@@ -71,3 +71,4 @@ SESSION_ENGINE = 'user_sessions.backends.db'
 GEOIP_PATH = os.path.join(PROJECT_PATH, 'GeoLiteCity.dat')
 
 LOGIN_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/admin/'

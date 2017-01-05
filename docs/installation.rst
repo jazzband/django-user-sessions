@@ -9,7 +9,10 @@ Installation
 4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
 5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
    ``urls.py``.
-6. Run ``python manage.py syncdb`` (or ``migrate``) and start hacking!
+6. Make sure ``LOGOUT_REDIRECT_URL`` is set to some page to redirect users
+   after logging out.
+7. Run ``python manage.py syncdb`` (or ``migrate``) and browse to
+   ``/account/sessions/``.
 
 GeoIP
 -----

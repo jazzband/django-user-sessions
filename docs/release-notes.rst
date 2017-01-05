@@ -5,6 +5,7 @@ Release Notes
 ----------------------
 * Added Django Channels support
 * Fixed #62 -- Provide request.user in signals
+* Ending current session will logout instead, make sure LOGOUT_REDIRECT_URL is set
 
 1.3.1
 -----
