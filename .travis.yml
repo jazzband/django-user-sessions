@@ -12,16 +12,12 @@ env:
  - DJANGO=master
 
 matrix:
-  exclude:
-    - python: 3.5
-      env: DJANGO=1.10
   include:
-    - python: 3.5
-      env: DJANGO=1.10 COVERAGE=YES
     - python: 3.6
       env: DJANGO=master
     - python: 3.5
       env: TOXENV=flake8
 
-install: pip install tox-travis
+install: pip install tox-travis coveralls
 script: tox
+after_success: coveralls
