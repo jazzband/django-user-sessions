@@ -45,12 +45,11 @@ class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         if kwargs['pk'] == request.session.session_key:
             logout(request)
-            if hasattr(settings, 'LOGOUT_REDIRECT_URL'):
-                # Django 1.10
-                return redirect(resolve_url(settings.LOGOUT_REDIRECT_URL))
-            else:
-                # Django 1.8-1.9
-                return redirect(resolve_url(settings.LOGOUT_URL))
+            # Django 1.10 uses LOGOUT_REDIRECT_URL
+            # Django 1.8 and 1.9 use LOGOUT_URL
+            next_page = getattr(settings, 'LOGOUT_REDIRECT_URL',
+                                getattr(settings, 'LOGOUT_URL', '/'))
+            return redirect(resolve_url(next_page))
         super().delete(request, *args, **kwargs)
 
     def get_success_url(self):
