@@ -17,9 +17,11 @@ matrix:
       env: DJANGO=master
     - python: 3.5
       env: TOXENV=flake8
+  allow_failures:
+    - env: DJANGO=master
 
 install:
-  - pip -e git+git@github.com:Bouke/tox-travis.git@7c0468ef39bd65cd02ed864ecb6c328753c158c6#egg=tox_travis
+  - pip install "git+git://github.com/Bouke/tox-travis.git@features/obey_outcomes"
   - pip install coveralls
 script: tox
 after_success: coveralls
