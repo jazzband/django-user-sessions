@@ -20,8 +20,6 @@ matrix:
   allow_failures:
     - env: DJANGO=master
 
-install:
-  - pip install "git+git://github.com/Bouke/tox-travis.git@features/obey_outcomes"
-  - pip install coveralls
+install: pip install tox-travis coveralls
 script: tox
 after_success: coveralls
