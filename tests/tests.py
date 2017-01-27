@@ -306,7 +306,7 @@ class ClientTest(TestCase):
 class LocationTemplateFilterTest(TestCase):
     @override_settings(GEOIP_PATH=None)
     def test_no_location(self):
-        self.assertEqual(location('127.0.0.1'), '<i>unknown</i>')
+        self.assertEqual(location('127.0.0.1'), None)
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
@@ -387,6 +387,42 @@ class DeviceTemplateFilterTest(TestCase):
             device('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
                    'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
         )
+
+    def test_firefox_only(self):
+        self.assertEqual("Firefox", device("Not a legit OS Firefox/51.0"))
+
+    def test_chrome_only(self):
+        self.assertEqual("Chrome", device("Not a legit OS Chrome/54.0.32"))
+
+    def test_safari_only(self):
+        self.assertEqual("Safari", device("Not a legit OS Safari/5.2"))
+
+    def test_linux_only(self):
+        self.assertEqual("Linux", device("Linux not a real browser/10.3"))
+
+    def test_ipad_only(self):
+        self.assertEqual("iPad", device("iPad not a real browser/10.3"))
+
+    def test_iphone_only(self):
+        self.assertEqual("iPhone", device("iPhone not a real browser/10.3"))
+
+    def test_windowsxp_only(self):
+        self.assertEqual("Windows XP", device("NT 5.1 not a real browser/10.3"))
+
+    def test_windowsvista_only(self):
+        self.assertEqual("Windows Vista", device("NT 6.0 not a real browser/10.3"))
+
+    def test_windows7_only(self):
+        self.assertEqual("Windows 7", device("NT 6.1 not a real browser/10.3"))
+
+    def test_windows8_only(self):
+        self.assertEqual("Windows 8", device("NT 6.2 not a real browser/10.3"))
+
+    def test_windows81_only(self):
+        self.assertEqual("Windows 8.1", device("NT 6.3 not a real browser/10.3"))
+
+    def test_windows_only(self):
+        self.assertEqual("Windows", device("Windows not a real browser/10.3"))
 
 
 @skipUnless(django.VERSION >= (1, 5), "Django 1.5 and higher")
