@@ -3,8 +3,7 @@ import warnings
 
 from django import template
 from django.contrib.gis.geoip import HAS_GEOIP
-from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _, ugettext
+from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
@@ -33,29 +32,43 @@ DEVICES = (
 @register.filter
 def device(value):
     """
-    Transform a User Agent into a human readable text.
+    Transform a User Agent into human readable text.
 
     Example output:
 
     * Safari on iPhone
     * Chrome on Windows 8.1
     * Safari on OS X
+    * Firefox
+    * Linux
+    * None
     """
 
+    browser = None
     for regex, name in BROWSERS:
         if regex.search(value):
             browser = name
             break
-    else:
-        browser = 'unknown'
+
+    device = None
     for regex, name in DEVICES:
         if regex.search(value):
             device = name
             break
-    else:
-        device = 'unknown'
-    return _('%(browser)s on %(device)s') % {'browser': browser,
-                                             'device': device}
+
+    if browser and device:
+        return _('%(browser)s on %(device)s') % {
+            'browser': browser,
+            'device': device
+        }
+
+    if browser:
+        return browser
+
+    if device:
+        return device
+
+    return None
 
 
 @register.filter
@@ -66,15 +79,15 @@ def location(value):
     Example output:
 
     * Zwolle, The Netherlands
-    * ``<i>unknown</i>``
+    * The Netherlands
+    * None
     """
     location = geoip() and geoip().city(value)
     if location and location['country_name']:
         if location['city']:
-            return '%s, %s' % (location['city'], location['country_name'])
-        else:
-            return location['country_name']
-    return mark_safe('<i>%s</i>' % ugettext('unknown'))
+            return '{}, {}'.format(location['city'], location['country_name'])
+        return location['country_name']
+    return None
 
 
 _geoip = None
