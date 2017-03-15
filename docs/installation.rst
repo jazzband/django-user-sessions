@@ -21,3 +21,16 @@ documentation on `installing GeoIP`_.
 
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+
+IP Data Accuracy
+----------------
+If you're running Django behind a proxy like nginx, you will have to set 
+the `REMOTE_ADDR` META header manually using a middleware, to stop it from 
+always returning the ip of the proxy (e.g. 127.0.0.1 in many cases).
+
+An example middleware to fix this issue is https://github.com/allo-/django-xforwardedfor-middleware
+Which simply does this for each request:
+
+``request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()``
+
+Your particular configuration may vary, X-Forwarded-For is not always accurate in some cases.
