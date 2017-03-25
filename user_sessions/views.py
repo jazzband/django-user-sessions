@@ -50,7 +50,7 @@ class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
             next_page = getattr(settings, 'LOGOUT_REDIRECT_URL',
                                 getattr(settings, 'LOGOUT_URL', '/'))
             return redirect(resolve_url(next_page))
-        super().delete(request, *args, **kwargs)
+        return super(SessionDeleteView, self).delete(request, *args, **kwargs)
 
     def get_success_url(self):
         return str(reverse_lazy('user_sessions:session_list'))
