@@ -102,7 +102,14 @@ class ViewsTest(TestCase):
         response = self.client.post(reverse('user_sessions:session_delete_other'))
         self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
-
+        
+    def test_delete_individual_other(self):
+        test_session_key = 'test'
+        expire_date = datetime.now() + timedelta(days=1)
+        self.user.session_set.create(session_key=test_session_key, ip='127.0.0.1', expire_date=expire_date)
+        self.assertEqual(self.user.session_set.count(), 2)
+        response = self.client.post(reverse('user_sessions:session_delete', args=[test_session_key]))
+        self.assertEqual(self.user.session_set.count(), 1)
 
 class AdminTest(TestCase):
     client_class = Client
