@@ -86,9 +86,13 @@ class ViewsTest(TestCase):
         assert self.client.login(username='bouke', password='secret')
 
     def test_list(self):
+        self.user.session_set.create(session_key='ABC123', ip='127.0.0.1',
+                                     expire_date=datetime.now() + timedelta(days=1), 
+                                     user_agent='Firefox')
         response = self.client.get(reverse('user_sessions:session_list'))
         self.assertContains(response, 'Active Sessions')
-        self.assertContains(response, 'End Session', 2)
+        self.assertContains(response, 'End Session', 3)
+        self.assertContains(response, 'Firefox')
 
     def test_delete(self):
         session_key = self.client.cookies[settings.SESSION_COOKIE_NAME].value
