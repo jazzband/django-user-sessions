@@ -2,15 +2,15 @@
 Django User Sessions
 ====================
 
-.. image:: https://travis-ci.org/Bouke/django-user-sessions.png?branch=master
+.. image:: https://travis-ci.org/Bouke/django-user-sessions.svg?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/Bouke/django-user-sessions
 
-.. image:: https://coveralls.io/repos/Bouke/django-user-sessions/badge.png?branch=master
+.. image:: https://coveralls.io/repos/Bouke/django-user-sessions/badge.svg?branch=master
     :alt: Test Coverage
     :target: https://coveralls.io/r/Bouke/django-user-sessions?branch=master
 
-.. image:: https://badge.fury.io/py/django-user-sessions.png
+.. image:: https://badge.fury.io/py/django-user-sessions.svg
     :alt: PyPI
     :target: https://pypi.python.org/pypi/django-user-sessions
 
