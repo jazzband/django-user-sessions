@@ -48,6 +48,7 @@ class Session(models.Model):
         return SessionStore(None, None).decode(self.session_data)
 
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+                             to_field=getattr(settings, 'USER_SESSIONS_USER_TO_FIELD', None),
                              null=True)
     user_agent = models.CharField(null=True, blank=True, max_length=200)
     last_activity = models.DateTimeField(auto_now=True)
