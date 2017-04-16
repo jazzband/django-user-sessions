@@ -36,3 +36,7 @@ tx-pull:
 tx-push:
 	cd user_sessions; django-admin.py makemessages -l en
 	tx push -s
+
+geoip:
+	wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+	gunzip GeoLite2-City.mmdb.gz

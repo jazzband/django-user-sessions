@@ -68,7 +68,7 @@ INSTALLED_APPS = (
 
 SESSION_ENGINE = 'user_sessions.backends.db'
 
-GEOIP_PATH = os.path.join(PROJECT_PATH, 'GeoLiteCity.dat')
+GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_PATH), 'GeoLite2-City.mmdb')
 
 LOGIN_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/admin/'
