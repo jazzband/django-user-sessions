@@ -17,13 +17,18 @@ from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
 from django.test import TestCase
 from django.test.utils import override_settings
-from django.urls import reverse
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import location, device
 from user_sessions.utils.tests import Client
+
+try:
+    # Django 1.10 and above
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 if sys.version_info[:2] < (2, 7):
     from django.utils.unittest.case import skipUnless

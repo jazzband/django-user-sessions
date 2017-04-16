@@ -19,5 +19,5 @@ urlpatterns = [
     url(r'^$', empty),
     url(r'^modify_session/$', modify_session),
     url(r'^admin/', admin.site.urls),
-    url(r'', include('user_sessions.urls')),
+    url(r'', include('user_sessions.urls', namespace='user_sessions')),
 ]

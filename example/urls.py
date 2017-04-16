@@ -15,6 +15,6 @@ urlpatterns = [
         ),
         name='home',
     ),
-    url(r'', include('user_sessions.urls')),
+    url(r'', include('user_sessions.urls', namespace='user_sessions')),
     url(r'^admin/', admin.site.urls),
 ]
