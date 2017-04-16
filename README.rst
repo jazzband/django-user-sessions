@@ -54,7 +54,7 @@ Installation
 1. ``pip install django-user-sessions``
 2. In ``INSTALLED_APPS`` replace ``'django.contrib.sessions'`` with
    ``'user_sessions'``.
-3. In ``MIDDLEWARE_CLASSES`` replace
+3. In ``MIDDLEWARE`` or ``MIDDLEWARE_CLASSES`` replace
    ``'django.contrib.sessions.middleware.SessionMiddleware'`` with
    ``'user_sessions.middleware.SessionMiddleware'``.
 4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
