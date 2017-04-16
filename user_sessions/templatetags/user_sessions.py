@@ -28,12 +28,17 @@ DEVICES = (
     (re.compile('Linux'), _('Linux')),
     (re.compile('iPhone'), _('iPhone')),
     (re.compile('iPad'), _('iPad')),
-    (re.compile('(Mac OS X)'), _('OS X')),
+    (re.compile('Mac OS X 10_9'), _('macOS Mavericks')),
+    (re.compile('Mac OS X 10_10'), _('macOS Yosemite')),
+    (re.compile('Mac OS X 10_11'), _('macOS El Capitan')),
+    (re.compile('Mac OS X 10_12'), _('macOS Sierra')),
+    (re.compile('Mac OS X'), _('OS X')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
     (re.compile('NT 6.1'), _('Windows 7')),
     (re.compile('NT 6.2'), _('Windows 8')),
     (re.compile('NT 6.3'), _('Windows 8.1')),
+    (re.compile('NT 10.0'), _('Windows 10')),
     (re.compile('Windows'), _('Windows')),
 )
 
