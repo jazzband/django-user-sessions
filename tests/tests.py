@@ -15,9 +15,9 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.urls import reverse
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore

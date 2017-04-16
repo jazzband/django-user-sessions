@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now

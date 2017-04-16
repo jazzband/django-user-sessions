@@ -4,6 +4,7 @@ from user_sessions.views import SessionDeleteOtherView
 from .views import SessionListView, SessionDeleteView
 
 
+app_name = 'user_sessions'
 urlpatterns = [
     url(
         regex=r'^account/sessions/$',

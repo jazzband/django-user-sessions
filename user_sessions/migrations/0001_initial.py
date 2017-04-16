@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('user_agent', models.CharField(max_length=200)),
                 ('last_activity', models.DateTimeField(auto_now=True)),
                 ('ip', models.GenericIPAddressField()),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'session',

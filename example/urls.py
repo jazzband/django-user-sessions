@@ -15,6 +15,6 @@ urlpatterns = [
         ),
         name='home',
     ),
-    url(r'', include('user_sessions.urls', 'user_sessions')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('user_sessions.urls')),
+    url(r'^admin/', admin.site.urls),
 ]

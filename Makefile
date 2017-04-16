@@ -9,6 +9,10 @@ example:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
 		django-admin.py runserver
 
+check:
+	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
+		python -Wd example/manage.py check
+
 test:
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
 		django-admin.py test ${TARGET}
