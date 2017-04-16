@@ -4,25 +4,20 @@ python:
  - 2.7
  - 3.4
  - 3.5
- - 3.6
 
 env:
  - DJANGO=1.8
  - DJANGO=1.10
  - DJANGO=1.11
- - DJANGO=master
 
 matrix:
-  exclude:
-    - python: 2.7
-      env: DJANGO=master
-    - python: 3.6
-      env: DJANGO=1.8
-    - python: 3.6
-      env: DJANGO=1.10
   include:
     - python: 3.5
       env: TOXENV=flake8
+    - python: 3.5
+      env: DJANGO=master
+    - python: 3.6
+      env: DJANGO=master
   allow_failures:
     - env: DJANGO=master
 
