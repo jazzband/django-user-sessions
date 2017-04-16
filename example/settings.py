@@ -66,6 +66,12 @@ INSTALLED_APPS = (
 
 # Custom configuration
 
+ALLOWED_HOSTS = ['*']
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+}
+
 SESSION_ENGINE = 'user_sessions.backends.db'
 
 GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_PATH), 'GeoLite2-City.mmdb')
