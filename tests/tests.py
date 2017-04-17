@@ -443,7 +443,6 @@ class DeviceTemplateFilterTest(TestCase):
         self.assertEqual("Windows", device("Windows not a real browser/10.3"))
 
 
-@skipUnless(django.VERSION >= (1, 5), "Django 1.5 and higher")
 class ClearsessionsCommandTest(TestCase):
     def test_can_call(self):
         Session.objects.create(expire_date=datetime.now() - timedelta(days=1),
