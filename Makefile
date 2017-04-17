@@ -37,6 +37,5 @@ tx-push:
 	cd user_sessions; django-admin.py makemessages -l en
 	tx push -s
 
-geoip:
-	wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-	gunzip GeoLite2-City.mmdb.gz
+download-geoip:
+	if [ ! -f GeoLite2-City.mmdb ]; then wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz; gunzip GeoLite2-City.mmdb.gz; fi

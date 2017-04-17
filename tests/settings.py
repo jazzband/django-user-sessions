@@ -63,8 +63,7 @@ TEMPLATES = [
     },
 ]
 
-GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR),
-                          'example', 'GeoLiteCity.dat')
+GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR), 'GeoLite2-City.mmdb')
 SESSION_ENGINE = 'user_sessions.backends.db'
 
 LOGIN_URL = '/admin/'
