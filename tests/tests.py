@@ -201,6 +201,8 @@ class SessionStoreTest(TestCase):
         self.assertEqual(session.user_agent, 'Python/2.7')
         self.assertEqual(session.ip, '127.0.0.1')
         self.assertEqual(session.user_id, 1)
+        self.assertAlmostEqual(now(), session.created,
+                               delta=timedelta(seconds=5))
         self.assertAlmostEqual(now(), session.last_activity,
                                delta=timedelta(seconds=5))
 

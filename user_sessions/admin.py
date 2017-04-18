@@ -53,6 +53,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_filter = ExpiredFilter, OwnerFilter
     raw_id_fields = 'user',
     exclude = 'session_key',
+    readonly_fields = 'created', 'last_activity',
 
     def __init__(self, *args, **kwargs):
         super(SessionAdmin, self).__init__(*args, **kwargs)
