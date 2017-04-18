@@ -6,9 +6,9 @@ Django User Sessions
     :alt: Build Status
     :target: https://travis-ci.org/Bouke/django-user-sessions
 
-.. image:: https://coveralls.io/repos/Bouke/django-user-sessions/badge.svg?branch=master
+.. image:: https://codecov.io/gh/Bouke/django-user-sessions/branch/master/graph/badge.svg
     :alt: Test Coverage
-    :target: https://coveralls.io/r/Bouke/django-user-sessions?branch=master
+    :target: https://codecov.io/gh/Bouke/django-user-sessions
 
 .. image:: https://badge.fury.io/py/django-user-sessions.svg
     :alt: PyPI
