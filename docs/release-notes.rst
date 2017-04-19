@@ -1,6 +1,18 @@
 Release Notes
 =============
 
+1.5.0
+-----
+* Added Django 1.11 support
+* Added support for GeoIP2 library
+* Added detection of Windows 10 and macOS from user-agent
+* Fixed #73 -- Error when deleting individual session from list view
+* Fixed #74 -- user agent not being shown in list view
+* Resolved Django’s deprecation warnings (preliminary Django 2.0 support)
+* Make templatetags return None instead of 'unknown', provide your own fallback 
+  value with `default_if_none:`
+* Allow translation of fallback values
+
 1.4.0
 -----
 * Added Django Channels support
