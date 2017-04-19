@@ -21,6 +21,6 @@ matrix:
   allow_failures:
     - env: DJANGO=master
 
-install: pip install tox-travis coveralls
+install: pip install tox-travis codecov
 script: tox
-after_success: coveralls
+after_success: codecov

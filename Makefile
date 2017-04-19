@@ -24,13 +24,12 @@ migrations:
 coverage:
 	coverage erase
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		coverage run --branch --source=user_sessions \
-		`which django-admin.py` test ${TARGET}
+		coverage run example/manage.py test ${TARGET}
 	coverage html
 	coverage report
 
 tx-pull:
-	tx pull -af
+	tx pull -a
 	cd user_sessions; django-admin.py compilemessages
 
 tx-push:
