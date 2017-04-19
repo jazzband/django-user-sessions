@@ -19,6 +19,12 @@ away into base64 encoded data. This makes it very difficult to run a query on
 all active sessions for a particular user. `django-user-sessions` fixes this
 and makes session objects a first class citizen like other ORM objects.
 
+I would love to hear your feedback on this package. If you run into
+problems, please file an issue on GitHub, or contribute to the project by
+forking the repository and sending some pull requests. The package is
+translated into English, Dutch and other languages. Please contribute your own
+language using Transifex_.
+
 Also, have a look at the online `example app`_, hosted by Heroku_. It also
 contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates

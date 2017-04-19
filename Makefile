@@ -29,7 +29,7 @@ coverage:
 	coverage report
 
 tx-pull:
-	tx pull -af
+	tx pull -a
 	cd user_sessions; django-admin.py compilemessages
 
 tx-push:
