@@ -78,12 +78,8 @@ class SessionStore(SessionBase):
         )
         using = router.db_for_write(Session, instance=obj)
         try:
-            if django.VERSION >= (1, 6):
-                with transaction.atomic(using):
-                    obj.save(force_insert=must_create, using=using)
-            else:
-                with transaction.commit_on_success(using):
-                    obj.save(force_insert=must_create, using=using)
+            with transaction.atomic(using):
+                obj.save(force_insert=must_create, using=using)
         except IntegrityError as e:
             if must_create and 'session_key' in str(e):
                 raise CreateError
