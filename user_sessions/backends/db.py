@@ -1,6 +1,5 @@
 import logging
 
-import django
 from django.contrib import auth
 from django.contrib.sessions.backends.base import SessionBase, CreateError
 from django.core.exceptions import SuspiciousOperation
