@@ -23,8 +23,15 @@ class SessionMiddleware(MiddlewareMixin):
     def process_request(self, request):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
+        ip = request.META.get('REMOTE_ADDR', None)
+        if not ip and hasattr(settings, 'USER_SESSIONS_IP_FALLBACK'):
+            # check for fallback e.g. behind a proxy
+            x_fallback = settings.USER_SESSIONS_IP_FALLBACK
+            if not x_fallback:
+                raise AttributeError('No IP for REMOTE_ADDR and no fallback set')
+            ip = request.META.get(x_fallback, None)
         request.session = engine.SessionStore(
-            ip=request.META.get('REMOTE_ADDR', ''),
+            ip=ip,
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
             session_key=session_key
         )
