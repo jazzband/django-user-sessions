@@ -333,8 +333,8 @@ class LocationTemplateFilterTest(TestCase):
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
-        self.assertEqual(location('8.8.8.8'), 'Mountain View, United States')
-        self.assertEqual(location('44.55.66.77'), 'San Diego, United States')
+        self.assertEqual('United States', location('8.8.8.8'))
+        self.assertEqual('San Diego, United States', location('44.55.66.77'))
 
 
 class DeviceTemplateFilterTest(TestCase):
