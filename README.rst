@@ -146,6 +146,11 @@ License
 This project is licensed under the MIT license.
 
 
+Credits
+=======
+This library was written by `Bouke Haarsma`_.
+
+
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
 .. _`readthedocs.org`: https://django-user-sessions.readthedocs.org/
 .. _`example app`: https://example-two-factor-auth.herokuapp.com
@@ -155,3 +160,5 @@ This project is licensed under the MIT license.
    https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip/
 .. _GeoIP2: https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
+.. _Bouke Haarsma:
+   https://twitter.com/BoukeHaarsma
