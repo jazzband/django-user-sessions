@@ -74,7 +74,8 @@ Installation
 GeoIP
 -----
 You need to setup GeoIP for the location detection to work. See the Django
-documentation on `installing GeoIP`_.
+documentation on `installing GeoIP`_. For Django versions 1.9 and newer,
+`GeoIP2`_ should be used instead as GeoIP was deprecated in 1.9.
 
 
 Getting help
@@ -146,10 +147,11 @@ This project is licensed under the MIT license.
 
 
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
-.. _`readthedocs.org`: http://django-user-sessions.readthedocs.org/
-.. _`example app`: http://example-two-factor-auth.herokuapp.com
+.. _`readthedocs.org`: https://django-user-sessions.readthedocs.org/
+.. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
 .. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip/
+.. _GeoIP2: https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
