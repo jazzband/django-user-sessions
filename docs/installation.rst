@@ -17,7 +17,8 @@ Installation
 GeoIP
 -----
 You need to setup GeoIP for the location detection to work. See the Django
-documentation on `installing GeoIP`_.
+documentation on `installing GeoIP`_. For Django versions 1.9 and newer,
+`GeoIP2`_ should be used instead as GeoIP was deprecated in 1.9.
 
 IP when behind a proxy
 ----------------------
@@ -35,7 +36,10 @@ a proxy that you have control over, otherwise it might be spoofed by the
 client.
 
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip/
+
+.. _GeoIP2:
+   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 
 .. _django-xforwardedfor-middleware:
    https://github.com/allo-/django-xforwardedfor-middleware
