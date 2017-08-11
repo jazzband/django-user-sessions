@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+1.5.1
+-----
+* Updated documentation for GeoIP2 library
+* Correctly detect macOS version on Firefox
+
 1.5.0
 -----
 * Added Django 1.11 support
