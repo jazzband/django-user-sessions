@@ -102,8 +102,8 @@ def location(value):
             if location['city']:
                 return '{}, {}'.format(location['city'], location['country_name'])
             return location['country_name']
-    except:
-        pass
+    except Exception as e:
+        warnings.warn(str(e))
     return None
 
 
