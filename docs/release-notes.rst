@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+1.5.2
+-----
+* Also work with GeoIP2 country database
+
 1.5.1
 -----
 * Updated documentation for GeoIP2 library

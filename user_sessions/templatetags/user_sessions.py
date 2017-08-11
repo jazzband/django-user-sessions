@@ -98,12 +98,16 @@ def location(value):
     """
     try:
         location = geoip() and geoip().city(value)
-        if location and location['country_name']:
-            if location['city']:
-                return '{}, {}'.format(location['city'], location['country_name'])
-            return location['country_name']
     except Exception as e:
-        warnings.warn(str(e))
+        try:
+            location = geoip() and geoip().country(value)
+        except Exception as e:
+            warnings.warn(str(e))
+            location = None
+    if location and location['country_name']:
+        if 'city' in location:
+            return '{}, {}'.format(location['city'], location['country_name'])
+        return location['country_name']
     return None
 
 
