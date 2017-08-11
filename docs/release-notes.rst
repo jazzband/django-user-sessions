@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+1.5.3
+-----
+* Fixed issue with incorrect location being displayed
+
 1.5.2
 -----
 * Also work with GeoIP2 country database
