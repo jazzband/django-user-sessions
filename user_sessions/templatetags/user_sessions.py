@@ -105,7 +105,7 @@ def location(value):
             warnings.warn(str(e))
             location = None
     if location and location['country_name']:
-        if 'city' in location:
+        if 'city' in location and location['city']:
             return '{}, {}'.format(location['city'], location['country_name'])
         return location['country_name']
     return None
