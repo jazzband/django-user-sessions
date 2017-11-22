@@ -19,10 +19,12 @@ class Command(BaseCommand):
     Convert existing (old) sessions to the new session store.
     """
     def add_arguments(self, parser):
-        parser.add_argument('--oldmodel',
-                            dest='oldmodel',
-                            default='django.contrib.sessions.models.Session',
-                            help='Existing session model to migrate to the new UserSessions database table')
+        parser.add_argument(
+            '--oldmodel',
+            dest='oldmodel',
+            default='django.contrib.sessions.models.Session',
+            help='Existing session model to migrate to the new UserSessions database table'
+        )
 
     def handle(self, *args, **options):
         User = get_user_model()
@@ -32,7 +34,9 @@ class Command(BaseCommand):
         for old_session in old_sessions:
             if not UserSession.objects.filter(session_key=old_session.session_key).exists():
                 data = old_session.get_decoded()
-                user = User.objects.filter(pk=data['_auth_user_id']).first() if '_auth_user_id' in data else None
+                user = None
+                if '_auth_user_id' in data:
+                    user = User.objects.filter(pk=data['_auth_user_id']).first()
                 UserSession.objects.create(
                     session_key=old_session.session_key,
                     session_data=old_session.session_data,

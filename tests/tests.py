@@ -463,10 +463,12 @@ class MigratesessionsCommandTest(TestCase):
         from django.contrib.sessions.backends.db import SessionStore as DjangoSessionStore
         try:
             call_command('migrate', 'sessions')
+            call_command('clearsessions')
             user = User.objects.create_user('bouke', '', 'secret')
             session = DjangoSessionStore()
             session['_auth_user_id'] = user.id
             session.save()
+            self.assertEqual(Session.objects.count(), 0)
             self.assertEqual(DjangoSession.objects.count(), 1)
             call_command('migratesessions')
             new_sessions = list(Session.objects.all())
