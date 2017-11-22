@@ -98,7 +98,7 @@ def location(value):
     """
     try:
         location = geoip() and geoip().city(value)
-    except Exception as e:
+    except Exception:
         try:
             location = geoip() and geoip().country(value)
         except Exception as e:

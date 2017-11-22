@@ -10,5 +10,3 @@
 
 /docs/_build/
 /GeoLite2-City.mmdb
-.idea/
-*.pyc
