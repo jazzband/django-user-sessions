@@ -9,14 +9,25 @@ logger = logging.getLogger(__name__)
 
 
 def get_model_class(full_model_name):
-    old_model_package, old_model_class_name = full_model_name.rsplit('.', 1)
-    package = importlib.import_module(old_model_package)
-    return getattr(package, old_model_class_name)
+    try:
+        old_model_package, old_model_class_name = full_model_name.rsplit('.', 1)
+        package = importlib.import_module(old_model_package)
+        return getattr(package, old_model_class_name)
+    except RuntimeError as e:
+        if 'INSTALLED_APPS' in e.message:
+            raise RuntimeError(
+                "To run this command, temporarily append '{model}' to settings.INSTALLED_APPS"
+                .format(model=old_model_package.rsplit('.models')[0]))
+        raise
 
 
 class Command(BaseCommand):
     """
-    Convert existing (old) sessions to the new session store.
+    Convert existing (old) sessions to the user_sessions SessionStore.
+
+    If you have an operational site and switch to user_sessions, you might want to keep your
+    active users logged in. We assume the old sessions are stored in a database table `oldmodel`.
+    This command creates a `user_session.Session` object for each session of the previous model.
     """
     def add_arguments(self, parser):
         parser.add_argument(
