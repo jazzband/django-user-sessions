@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
 from django.test import TestCase
-from django.test.utils import override_settings
+from django.test.utils import override_settings, modify_settings
 from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
@@ -454,3 +454,26 @@ class ClearsessionsCommandTest(TestCase):
                                ip='127.0.0.1')
         call_command('clearsessions')
         self.assertEqual(Session.objects.count(), 0)
+
+
+class MigratesessionsCommandTest(TestCase):
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
+    def test_migrate_from_login(self):
+        from django.contrib.sessions.models import Session as DjangoSession
+        from django.contrib.sessions.backends.db import SessionStore as DjangoSessionStore
+        try:
+            call_command('migrate', 'sessions')
+            call_command('clearsessions')
+            user = User.objects.create_user('bouke', '', 'secret')
+            session = DjangoSessionStore()
+            session['_auth_user_id'] = user.id
+            session.save()
+            self.assertEqual(Session.objects.count(), 0)
+            self.assertEqual(DjangoSession.objects.count(), 1)
+            call_command('migratesessions')
+            new_sessions = list(Session.objects.all())
+            self.assertEqual(len(new_sessions), 1)
+            self.assertEqual(new_sessions[0].user, user)
+            self.assertEqual(new_sessions[0].ip, '127.0.0.1')
+        finally:
+            call_command('migrate', 'sessions', 'zero')

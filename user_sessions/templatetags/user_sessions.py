@@ -8,7 +8,7 @@ try:
     # Django 1.9 and above
     from django.contrib.gis.geoip2 import HAS_GEOIP2
     HAS_GEOIP = False
-except:
+except ImportError:
     # Django 1.8
     from django.contrib.gis.geoip import HAS_GEOIP
     HAS_GEOIP2 = False
@@ -98,7 +98,7 @@ def location(value):
     """
     try:
         location = geoip() and geoip().city(value)
-    except:
+    except Exception:
         try:
             location = geoip() and geoip().country(value)
         except Exception as e:
