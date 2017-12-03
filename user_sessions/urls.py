@@ -1,8 +1,7 @@
 from django.conf.urls import url
 from user_sessions.views import SessionDeleteOtherView
 
-from .views import SessionListView, SessionDeleteView
-
+from .views import SessionDeleteView, SessionListView
 
 app_name = 'user_sessions'
 urlpatterns = [

@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
+import importlib
+import logging
+
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from user_sessions.models import Session as UserSession
-from django.contrib.auth import get_user_model
-import logging
-import importlib
 
 logger = logging.getLogger(__name__)
 

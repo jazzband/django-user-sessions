@@ -1,4 +1,5 @@
 import os
+
 BASE_DIR = os.path.dirname(__file__)
 
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'

@@ -2,12 +2,11 @@ from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, resolve_url
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
-from django.views.generic import ListView, DeleteView, View
+from django.views.generic import DeleteView, ListView, View
 from django.views.generic.edit import DeletionMixin
-
-from django.urls import reverse_lazy
 
 
 class SessionMixin(object):

@@ -1,5 +1,22 @@
-from datetime import datetime, timedelta
 import sys
+from datetime import datetime, timedelta
+from unittest import skipUnless
+
+import django
+from django.conf import settings
+from django.contrib import auth
+from django.contrib.auth.models import User
+from django.contrib.sessions.backends.base import CreateError
+from django.core.management import call_command
+from django.test import TestCase
+from django.test.utils import modify_settings, override_settings
+from django.urls import reverse
+from django.utils.timezone import now
+from user_sessions.backends.db import SessionStore
+from user_sessions.models import Session
+from user_sessions.templatetags.user_sessions import device, location
+from user_sessions.utils.tests import Client
+
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -9,24 +26,9 @@ try:
 except ImportError:
     from mock import patch
 
-import django
-from django.conf import settings
-from django.contrib import auth
-from django.contrib.auth.models import User
-from django.contrib.sessions.backends.base import CreateError
-from django.core.management import call_command
-from django.test import TestCase
-from django.test.utils import override_settings, modify_settings
-from django.utils.timezone import now
 
-from user_sessions.backends.db import SessionStore
-from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import location, device
-from user_sessions.utils.tests import Client
 
-from django.urls import reverse
 
-from unittest import skipUnless
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2

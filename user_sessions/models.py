@@ -55,4 +55,4 @@ class Session(models.Model):
 
 
 # At bottom to avoid circular import
-from .backends.db import SessionStore  # noqa: E402
+from .backends.db import SessionStore  # noqa: E402 isort:skip
