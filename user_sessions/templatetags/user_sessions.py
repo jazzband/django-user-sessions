@@ -4,14 +4,7 @@ import warnings
 from django import template
 from django.utils.translation import ugettext_lazy as _
 
-try:
-    # Django 1.9 and above
-    from django.contrib.gis.geoip2 import HAS_GEOIP2
-    HAS_GEOIP = False
-except ImportError:
-    # Django 1.8
-    from django.contrib.gis.geoip import HAS_GEOIP
-    HAS_GEOIP2 = False
+from django.contrib.gis.geoip2 import HAS_GEOIP2
 
 
 register = template.Library()
@@ -121,12 +114,6 @@ def geoip():
             from django.contrib.gis.geoip2 import GeoIP2
             try:
                 _geoip = GeoIP2()
-            except Exception as e:
-                warnings.warn(str(e))
-        elif HAS_GEOIP:
-            from django.contrib.gis.geoip import GeoIP
-            try:
-                _geoip = GeoIP()
             except Exception as e:
                 warnings.warn(str(e))
     return _geoip

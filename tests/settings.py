@@ -11,15 +11,6 @@ INSTALLED_APPS = [
     'tests',
 ]
 
-# This setting can be removed when Django 1.8 support is dropped.
-MIDDLEWARE_CLASSES = (
-    'user_sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-)
-
-# This setting takes precedence over ``MIDDLEWARE_CLASSES``.
 MIDDLEWARE = (
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

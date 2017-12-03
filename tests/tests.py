@@ -24,16 +24,9 @@ from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import location, device
 from user_sessions.utils.tests import Client
 
-try:
-    # Django 1.10 and above
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
+from django.urls import reverse
 
-if sys.version_info[:2] < (2, 7):
-    from django.utils.unittest.case import skipUnless
-else:
-    from unittest import skipUnless
+from unittest import skipUnless
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2
@@ -64,11 +57,7 @@ class MiddlewareTest(TestCase):
         self.assertEqual(session.ip, '127.0.0.1')
 
     def test_login(self):
-        if django.VERSION < (1, 7):
-            admin_login_url = '/admin/'
-        else:
-            admin_login_url = reverse('admin:login')
-
+        admin_login_url = reverse('admin:login')
         user = User.objects.create_superuser('bouke', '', 'secret')
         response = self.client.post(admin_login_url,
                                     data={

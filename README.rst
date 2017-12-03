@@ -30,18 +30,22 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 1.8, 1.10 and 1.11 on Python 2.7, 3.4 and 3.5.
+Compatible with Django 1.11 and 2.0 on Python 2.7, 3.4, 3.5 and 3.6.
 Documentation is available at `readthedocs.org`_.
 
 
 Features
 ========
 
-To get the list of a user's sessions::
+To get the list of a user's sessions:
+
+.. code-block:: python
 
     user.session_set.filter(expire_date__gt=now())
 
-Or logout the user everywhere::
+Or logout the user everywhere:
+
+.. code-block:: python
 
     user.session_set.all().delete()
 
@@ -74,8 +78,7 @@ Installation
 GeoIP
 -----
 You need to setup GeoIP for the location detection to work. See the Django
-documentation on `installing GeoIP`_. For Django versions 1.9 and newer,
-`GeoIP2`_ should be used instead as GeoIP was deprecated in 1.9.
+documentation on `installing GeoIP`_.
 
 
 Getting help
@@ -157,8 +160,7 @@ This library was written by `Bouke Haarsma`_.
 .. _Heroku: https://www.heroku.com
 .. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip/
-.. _GeoIP2: https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
+   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
 .. _Bouke Haarsma:
    https://twitter.com/BoukeHaarsma

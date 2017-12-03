@@ -7,11 +7,7 @@ from django.utils.timezone import now
 from django.views.generic import ListView, DeleteView, View
 from django.views.generic.edit import DeletionMixin
 
-try:
-    # Django 1.10 and above
-    from django.urls import reverse_lazy
-except ImportError:
-    from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 
 class SessionMixin(object):
@@ -50,10 +46,7 @@ class SessionDeleteView(LoginRequiredMixin, SessionMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         if kwargs['pk'] == request.session.session_key:
             logout(request)
-            # Django 1.10 uses LOGOUT_REDIRECT_URL
-            # Django 1.8 and 1.9 use LOGOUT_URL
-            next_page = getattr(settings, 'LOGOUT_REDIRECT_URL',
-                                getattr(settings, 'LOGOUT_URL', '/'))
+            next_page = getattr(settings, 'LOGOUT_REDIRECT_URL', '/')
             return redirect(resolve_url(next_page))
         return super(SessionDeleteView, self).delete(request, *args, **kwargs)
 
