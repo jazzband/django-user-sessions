@@ -8,7 +8,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(PROJECT_PATH, 'database.sqlite3'),
-        'ATOMIC_REQUESTS': True,
     }
 }
 

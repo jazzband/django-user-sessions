@@ -61,19 +61,7 @@ And also in a custom layout:
 
 Installation
 ============
-1. ``pip install django-user-sessions``
-2. In ``INSTALLED_APPS`` replace ``'django.contrib.sessions'`` with
-   ``'user_sessions'``.
-3. In ``MIDDLEWARE`` or ``MIDDLEWARE_CLASSES`` replace
-   ``'django.contrib.sessions.middleware.SessionMiddleware'`` with
-   ``'user_sessions.middleware.SessionMiddleware'``.
-4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
-5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
-   ``urls.py``.
-6. Make sure ``LOGOUT_REDIRECT_URL`` is set to some page to redirect users
-   after logging out.
-7. Run ``python manage.py syncdb`` (or ``migrate``) and browse to
-   ``/account/sessions/``.
+Refer to the `installation instructions`_ in the documentation.
 
 GeoIP
 -----
@@ -156,11 +144,13 @@ This library was written by `Bouke Haarsma`_.
 
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
 .. _`readthedocs.org`: https://django-user-sessions.readthedocs.org/
+.. _`installation instructions`:
+   https://django-user-sessions.readthedocs.io/en/stable/installation.html
 .. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
 .. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
+   https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
 .. _Bouke Haarsma:
    https://twitter.com/BoukeHaarsma
