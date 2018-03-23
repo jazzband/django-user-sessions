@@ -2,10 +2,6 @@
 
 -e .
 
-# Runtime dependencies
-
-Django
-
 # Example app
 
 django-debug-toolbar
@@ -15,7 +11,10 @@ django-debug-toolbar
 coverage
 flake8
 tox
+tox-pyenv
+detox
 mock
+isort
 
 # Transifex
 
@@ -30,3 +29,4 @@ sphinx_rtd_theme
 
 wheel
 bumpversion
+twine

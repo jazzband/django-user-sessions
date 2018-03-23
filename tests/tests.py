@@ -1,10 +1,6 @@
-from datetime import datetime, timedelta
 import sys
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
-from mock import patch
+from datetime import datetime, timedelta
+from unittest import skipUnless
 
 import django
 from django.conf import settings
@@ -12,28 +8,40 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
-from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.test.utils import override_settings
+from django.test.utils import modify_settings, override_settings
+from django.urls import reverse
 from django.utils.timezone import now
-
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import location, device
+from user_sessions.templatetags.user_sessions import device, location
 from user_sessions.utils.tests import Client
 
-if sys.version_info[:2] < (2, 7):
-    from django.utils.unittest.case import skipUnless
-else:
-    from unittest import skipUnless
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
+
+
+
+
 
 try:
-    from django.contrib.gis.geoip import GeoIP
-    geoip = GeoIP()
+    from django.contrib.gis.geoip2 import GeoIP2
+    geoip = GeoIP2()
     geoip_msg = None
-except Exception as e:
-    geoip = None
-    geoip_msg = str(e)
+except Exception as error_geoip2:
+    try:
+        from django.contrib.gis.geoip import GeoIP
+        geoip = GeoIP()
+        geoip_msg = None
+    except Exception as error_geoip:
+        geoip = None
+        geoip_msg = str(error_geoip2) + " and " + str(error_geoip)
 
 
 class MiddlewareTest(TestCase):
@@ -51,11 +59,7 @@ class MiddlewareTest(TestCase):
         self.assertEqual(session.ip, '127.0.0.1')
 
     def test_login(self):
-        if django.VERSION < (1, 7):
-            admin_login_url = '/admin/'
-        else:
-            admin_login_url = reverse('admin:login')
-
+        admin_login_url = reverse('admin:login')
         user = User.objects.create_superuser('bouke', '', 'secret')
         response = self.client.post(admin_login_url,
                                     data={
@@ -83,20 +87,33 @@ class ViewsTest(TestCase):
         assert self.client.login(username='bouke', password='secret')
 
     def test_list(self):
+        self.user.session_set.create(session_key='ABC123', ip='127.0.0.1',
+                                     expire_date=datetime.now() + timedelta(days=1),
+                                     user_agent='Firefox')
         response = self.client.get(reverse('user_sessions:session_list'))
         self.assertContains(response, 'Active Sessions')
-        self.assertContains(response, 'End Session', 2)
+        self.assertContains(response, 'End Session', 3)
+        self.assertContains(response, 'Firefox')
 
     def test_delete(self):
         session_key = self.client.cookies[settings.SESSION_COOKIE_NAME].value
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[session_key]))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        self.assertRedirects(response, '/')
 
-    def test_delete_other(self):
+    def test_delete_all_other(self):
         self.user.session_set.create(ip='127.0.0.1', expire_date=datetime.now() + timedelta(days=1))
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete_other'))
+        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        self.assertEqual(self.user.session_set.count(), 1)
+
+    def test_delete_some_other(self):
+        other = self.user.session_set.create(session_key='OTHER', ip='127.0.0.1',
+                                             expire_date=datetime.now() + timedelta(days=1))
+        self.assertEqual(self.user.session_set.count(), 2)
+        response = self.client.post(reverse('user_sessions:session_delete',
+                                            args=[other.session_key]))
         self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
 
@@ -303,12 +320,12 @@ class ClientTest(TestCase):
 class LocationTemplateFilterTest(TestCase):
     @override_settings(GEOIP_PATH=None)
     def test_no_location(self):
-        self.assertEqual(location('127.0.0.1'), '<i>unknown</i>')
+        self.assertEqual(location('127.0.0.1'), None)
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
-        self.assertEqual(location('8.8.8.8'), 'Mountain View, United States')
-        self.assertEqual(location('44.55.66.77'), 'San Diego, United States')
+        self.assertEqual('United States', location('8.8.8.8'))
+        self.assertEqual('San Diego, United States', location('44.55.66.77'))
 
 
 class DeviceTemplateFilterTest(TestCase):
@@ -385,11 +402,69 @@ class DeviceTemplateFilterTest(TestCase):
                    'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
         )
 
+    def test_firefox_only(self):
+        self.assertEqual("Firefox", device("Not a legit OS Firefox/51.0"))
 
-@skipUnless(django.VERSION >= (1, 5), "Django 1.5 and higher")
+    def test_chrome_only(self):
+        self.assertEqual("Chrome", device("Not a legit OS Chrome/54.0.32"))
+
+    def test_safari_only(self):
+        self.assertEqual("Safari", device("Not a legit OS Safari/5.2"))
+
+    def test_linux_only(self):
+        self.assertEqual("Linux", device("Linux not a real browser/10.3"))
+
+    def test_ipad_only(self):
+        self.assertEqual("iPad", device("iPad not a real browser/10.3"))
+
+    def test_iphone_only(self):
+        self.assertEqual("iPhone", device("iPhone not a real browser/10.3"))
+
+    def test_windowsxp_only(self):
+        self.assertEqual("Windows XP", device("NT 5.1 not a real browser/10.3"))
+
+    def test_windowsvista_only(self):
+        self.assertEqual("Windows Vista", device("NT 6.0 not a real browser/10.3"))
+
+    def test_windows7_only(self):
+        self.assertEqual("Windows 7", device("NT 6.1 not a real browser/10.3"))
+
+    def test_windows8_only(self):
+        self.assertEqual("Windows 8", device("NT 6.2 not a real browser/10.3"))
+
+    def test_windows81_only(self):
+        self.assertEqual("Windows 8.1", device("NT 6.3 not a real browser/10.3"))
+
+    def test_windows_only(self):
+        self.assertEqual("Windows", device("Windows not a real browser/10.3"))
+
+
 class ClearsessionsCommandTest(TestCase):
     def test_can_call(self):
         Session.objects.create(expire_date=datetime.now() - timedelta(days=1),
                                ip='127.0.0.1')
         call_command('clearsessions')
         self.assertEqual(Session.objects.count(), 0)
+
+
+class MigratesessionsCommandTest(TestCase):
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
+    def test_migrate_from_login(self):
+        from django.contrib.sessions.models import Session as DjangoSession
+        from django.contrib.sessions.backends.db import SessionStore as DjangoSessionStore
+        try:
+            call_command('migrate', 'sessions')
+            call_command('clearsessions')
+            user = User.objects.create_user('bouke', '', 'secret')
+            session = DjangoSessionStore()
+            session['_auth_user_id'] = user.id
+            session.save()
+            self.assertEqual(Session.objects.count(), 0)
+            self.assertEqual(DjangoSession.objects.count(), 1)
+            call_command('migratesessions')
+            new_sessions = list(Session.objects.all())
+            self.assertEqual(len(new_sessions), 1)
+            self.assertEqual(new_sessions[0].user, user)
+            self.assertEqual(new_sessions[0].ip, '127.0.0.1')
+        finally:
+            call_command('migrate', 'sessions', 'zero')

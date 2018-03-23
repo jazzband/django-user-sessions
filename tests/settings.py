@@ -1,4 +1,5 @@
 import os
+
 BASE_DIR = os.path.dirname(__file__)
 
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
@@ -11,7 +12,7 @@ INSTALLED_APPS = [
     'tests',
 ]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -29,7 +30,7 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'ATOMIC_REQUESTS': True,
+        'NAME': ':memory:',
     }
 }
 
@@ -54,6 +55,8 @@ TEMPLATES = [
     },
 ]
 
-GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR),
-                          'example', 'GeoLiteCity.dat')
+GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR), 'GeoLite2-City.mmdb')
 SESSION_ENGINE = 'user_sessions.backends.db'
+
+LOGIN_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/'

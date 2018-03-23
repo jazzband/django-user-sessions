@@ -2,9 +2,8 @@ import re
 import warnings
 
 from django import template
-from django.contrib.gis.geoip import HAS_GEOIP
-from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _, ugettext
+from django.contrib.gis.geoip2 import HAS_GEOIP2
+from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
@@ -20,12 +19,18 @@ DEVICES = (
     (re.compile('Linux'), _('Linux')),
     (re.compile('iPhone'), _('iPhone')),
     (re.compile('iPad'), _('iPad')),
-    (re.compile('(Mac OS X)'), _('OS X')),
+    (re.compile('Mac OS X 10[._]9'), _('OS X Mavericks')),
+    (re.compile('Mac OS X 10[._]10'), _('OS X Yosemite')),
+    (re.compile('Mac OS X 10[._]11'), _('OS X El Capitan')),
+    (re.compile('Mac OS X 10[._]12'), _('macOS Sierra')),
+    (re.compile('Mac OS X 10[._]13'), _('macOS High Sierra')),
+    (re.compile('Mac OS X'), _('OS X')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
     (re.compile('NT 6.1'), _('Windows 7')),
     (re.compile('NT 6.2'), _('Windows 8')),
     (re.compile('NT 6.3'), _('Windows 8.1')),
+    (re.compile('NT 10.0'), _('Windows 10')),
     (re.compile('Windows'), _('Windows')),
 )
 
@@ -33,29 +38,43 @@ DEVICES = (
 @register.filter
 def device(value):
     """
-    Transform a User Agent into a human readable text.
+    Transform a User Agent into human readable text.
 
     Example output:
 
     * Safari on iPhone
     * Chrome on Windows 8.1
     * Safari on OS X
+    * Firefox
+    * Linux
+    * None
     """
 
+    browser = None
     for regex, name in BROWSERS:
         if regex.search(value):
             browser = name
             break
-    else:
-        browser = 'unknown'
+
+    device = None
     for regex, name in DEVICES:
         if regex.search(value):
             device = name
             break
-    else:
-        device = 'unknown'
-    return _('%(browser)s on %(device)s') % {'browser': browser,
-                                             'device': device}
+
+    if browser and device:
+        return _('%(browser)s on %(device)s') % {
+            'browser': browser,
+            'device': device
+        }
+
+    if browser:
+        return browser
+
+    if device:
+        return device
+
+    return None
 
 
 @register.filter
@@ -66,15 +85,22 @@ def location(value):
     Example output:
 
     * Zwolle, The Netherlands
-    * ``<i>unknown</i>``
+    * The Netherlands
+    * None
     """
-    location = geoip() and geoip().city(value)
+    try:
+        location = geoip() and geoip().city(value)
+    except Exception:
+        try:
+            location = geoip() and geoip().country(value)
+        except Exception as e:
+            warnings.warn(str(e))
+            location = None
     if location and location['country_name']:
-        if location['city']:
-            return '%s, %s' % (location['city'], location['country_name'])
-        else:
-            return location['country_name']
-    return mark_safe('<i>%s</i>' % ugettext('unknown'))
+        if 'city' in location and location['city']:
+            return '{}, {}'.format(location['city'], location['country_name'])
+        return location['country_name']
+    return None
 
 
 _geoip = None
@@ -82,10 +108,11 @@ _geoip = None
 
 def geoip():
     global _geoip
-    if _geoip is None and HAS_GEOIP:
-        from django.contrib.gis.geoip import GeoIP
-        try:
-            _geoip = GeoIP()
-        except Exception as e:
-            warnings.warn(str(e))
+    if _geoip is None:
+        if HAS_GEOIP2:
+            from django.contrib.gis.geoip2 import GeoIP2
+            try:
+                _geoip = GeoIP2()
+            except Exception as e:
+                warnings.warn(str(e))
     return _geoip
