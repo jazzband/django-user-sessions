@@ -17,7 +17,8 @@ Django User Sessions
 Django includes excellent built-in sessions, however all the data is hidden
 away into base64 encoded data. This makes it very difficult to run a query on
 all active sessions for a particular user. `django-user-sessions` fixes this
-and makes session objects a first class citizen like other ORM objects.
+and makes session objects a first class citizen like other ORM objects. It is
+a drop-in replacement for `django.contrib.sessions`.
 
 I would love to hear your feedback on this package. If you run into
 problems, please file an issue on GitHub, or contribute to the project by
