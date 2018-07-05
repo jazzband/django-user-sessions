@@ -50,6 +50,9 @@ def device(value):
     * None
     """
 
+    if not value:
+        return None
+
     browser = None
     for regex, name in BROWSERS:
         if regex.search(value):
