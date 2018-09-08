@@ -1,5 +1,22 @@
-from datetime import datetime, timedelta
 import sys
+from datetime import datetime, timedelta
+from unittest import skipUnless
+
+import django
+from django.conf import settings
+from django.contrib import auth
+from django.contrib.auth.models import User
+from django.contrib.sessions.backends.base import CreateError
+from django.core.management import call_command
+from django.test import TestCase
+from django.test.utils import modify_settings, override_settings
+from django.urls import reverse
+from django.utils.timezone import now
+from user_sessions.backends.db import SessionStore
+from user_sessions.models import Session
+from user_sessions.templatetags.user_sessions import device, location
+from user_sessions.utils.tests import Client
+
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -9,31 +26,9 @@ try:
 except ImportError:
     from mock import patch
 
-import django
-from django.conf import settings
-from django.contrib import auth
-from django.contrib.auth.models import User
-from django.contrib.sessions.backends.base import CreateError
-from django.core.management import call_command
-from django.test import TestCase
-from django.test.utils import override_settings
-from django.utils.timezone import now
 
-from user_sessions.backends.db import SessionStore
-from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import location, device
-from user_sessions.utils.tests import Client
 
-try:
-    # Django 1.10 and above
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
-if sys.version_info[:2] < (2, 7):
-    from django.utils.unittest.case import skipUnless
-else:
-    from unittest import skipUnless
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2
@@ -64,11 +59,7 @@ class MiddlewareTest(TestCase):
         self.assertEqual(session.ip, '127.0.0.1')
 
     def test_login(self):
-        if django.VERSION < (1, 7):
-            admin_login_url = '/admin/'
-        else:
-            admin_login_url = reverse('admin:login')
-
+        admin_login_url = reverse('admin:login')
         user = User.objects.create_superuser('bouke', '', 'secret')
         response = self.client.post(admin_login_url,
                                     data={
@@ -335,8 +326,8 @@ class LocationTemplateFilterTest(TestCase):
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
-        self.assertEqual(location('8.8.8.8'), 'Mountain View, United States')
-        self.assertEqual(location('44.55.66.77'), 'San Diego, United States')
+        self.assertEqual('United States', location('8.8.8.8'))
+        self.assertEqual('San Diego, United States', location('44.55.66.77'))
 
 
 class DeviceTemplateFilterTest(TestCase):
@@ -456,3 +447,26 @@ class ClearsessionsCommandTest(TestCase):
                                ip='127.0.0.1')
         call_command('clearsessions')
         self.assertEqual(Session.objects.count(), 0)
+
+
+class MigratesessionsCommandTest(TestCase):
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
+    def test_migrate_from_login(self):
+        from django.contrib.sessions.models import Session as DjangoSession
+        from django.contrib.sessions.backends.db import SessionStore as DjangoSessionStore
+        try:
+            call_command('migrate', 'sessions')
+            call_command('clearsessions')
+            user = User.objects.create_user('bouke', '', 'secret')
+            session = DjangoSessionStore()
+            session['_auth_user_id'] = user.id
+            session.save()
+            self.assertEqual(Session.objects.count(), 0)
+            self.assertEqual(DjangoSession.objects.count(), 1)
+            call_command('migratesessions')
+            new_sessions = list(Session.objects.all())
+            self.assertEqual(len(new_sessions), 1)
+            self.assertEqual(new_sessions[0].user, user)
+            self.assertEqual(new_sessions[0].ip, '127.0.0.1')
+        finally:
+            call_command('migrate', 'sessions', 'zero')

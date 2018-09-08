@@ -1,16 +1,8 @@
 import django
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-
-try:
-    from django.contrib.auth import get_user_model
-except ImportError:
-    from django.contrib.auth.models import User
-
-    def get_user_model():
-        return User
-
 from user_sessions.templatetags.user_sessions import device, location
 
 from .models import Session
@@ -54,11 +46,6 @@ class SessionAdmin(admin.ModelAdmin):
     raw_id_fields = 'user',
     exclude = 'session_key',
     readonly_fields = 'created', 'last_activity',
-
-    def __init__(self, *args, **kwargs):
-        super(SessionAdmin, self).__init__(*args, **kwargs)
-        if not self.search_fields and django.VERSION[:2] < (1, 7):
-            self.search_fields = self.get_search_fields(None)
 
     def get_search_fields(self, request):
         User = get_user_model()

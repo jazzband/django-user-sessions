@@ -55,4 +55,4 @@ class Session(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 # At bottom to avoid circular import
-from .backends.db import SessionStore  # noqa: E402
+from .backends.db import SessionStore  # noqa: E402 isort:skip

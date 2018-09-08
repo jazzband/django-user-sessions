@@ -35,7 +35,7 @@ a proxy that you have control over, otherwise it might be spoofed by the
 client.
 
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+   https://docs.djangoproject.com/en/1.11/ref/contrib/gis/geoip2/
 
 .. _django-xforwardedfor-middleware:
    https://github.com/allo-/django-xforwardedfor-middleware

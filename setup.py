@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-user-sessions',
-    version='1.5.0',
+    version='1.6.0',
     description='Django sessions with a foreign key to the user',
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
@@ -11,12 +11,14 @@ setup(
     download_url='https://pypi.python.org/pypi/django-user-sessions',
     license='MIT',
     packages=find_packages(exclude=('example', 'tests',)),
-    install_requires=['Django>=1.8'],
+    install_requires=['Django>=1.11'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
+        'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

@@ -17,7 +17,8 @@ Django User Sessions
 Django includes excellent built-in sessions, however all the data is hidden
 away into base64 encoded data. This makes it very difficult to run a query on
 all active sessions for a particular user. `django-user-sessions` fixes this
-and makes session objects a first class citizen like other ORM objects.
+and makes session objects a first class citizen like other ORM objects. It is
+a drop-in replacement for `django.contrib.sessions`.
 
 I would love to hear your feedback on this package. If you run into
 problems, please file an issue on GitHub, or contribute to the project by
@@ -30,18 +31,22 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 1.8, 1.10 and 1.11 on Python 2.7, 3.4 and 3.5.
+Compatible with Django 1.11 and 2.0 on Python 2.7, 3.4, 3.5 and 3.6.
 Documentation is available at `readthedocs.org`_.
 
 
 Features
 ========
 
-To get the list of a user's sessions::
+To get the list of a user's sessions:
+
+.. code-block:: python
 
     user.session_set.filter(expire_date__gt=now())
 
-Or logout the user everywhere::
+Or logout the user everywhere:
+
+.. code-block:: python
 
     user.session_set.all().delete()
 
@@ -57,19 +62,7 @@ And also in a custom layout:
 
 Installation
 ============
-1. ``pip install django-user-sessions``
-2. In ``INSTALLED_APPS`` replace ``'django.contrib.sessions'`` with
-   ``'user_sessions'``.
-3. In ``MIDDLEWARE`` or ``MIDDLEWARE_CLASSES`` replace
-   ``'django.contrib.sessions.middleware.SessionMiddleware'`` with
-   ``'user_sessions.middleware.SessionMiddleware'``.
-4. Add ``SESSION_ENGINE = 'user_sessions.backends.db'``.
-5. Add ``url(r'', include('user_sessions.urls', 'user_sessions')),`` to your
-   ``urls.py``.
-6. Make sure ``LOGOUT_REDIRECT_URL`` is set to some page to redirect users
-   after logging out.
-7. Run ``python manage.py syncdb`` (or ``migrate``) and browse to
-   ``/account/sessions/``.
+Refer to the `installation instructions`_ in the documentation.
 
 GeoIP
 -----
@@ -145,11 +138,20 @@ License
 This project is licensed under the MIT license.
 
 
+Credits
+=======
+This library was written by `Bouke Haarsma`_.
+
+
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
-.. _`readthedocs.org`: http://django-user-sessions.readthedocs.org/
-.. _`example app`: http://example-two-factor-auth.herokuapp.com
+.. _`readthedocs.org`: https://django-user-sessions.readthedocs.org/
+.. _`installation instructions`:
+   https://django-user-sessions.readthedocs.io/en/stable/installation.html
+.. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
 .. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
-   https://docs.djangoproject.com/en/1.6/ref/contrib/gis/geoip/
+   https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
+.. _Bouke Haarsma:
+   https://twitter.com/BoukeHaarsma

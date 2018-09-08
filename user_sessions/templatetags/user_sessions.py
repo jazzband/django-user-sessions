@@ -2,17 +2,8 @@ import re
 import warnings
 
 from django import template
+from django.contrib.gis.geoip2 import HAS_GEOIP2
 from django.utils.translation import ugettext_lazy as _
-
-try:
-    # Django 1.9 and above
-    from django.contrib.gis.geoip2 import HAS_GEOIP2
-    HAS_GEOIP = False
-except:
-    # Django 1.8
-    from django.contrib.gis.geoip import HAS_GEOIP
-    HAS_GEOIP2 = False
-
 
 register = template.Library()
 
@@ -28,10 +19,11 @@ DEVICES = (
     (re.compile('Linux'), _('Linux')),
     (re.compile('iPhone'), _('iPhone')),
     (re.compile('iPad'), _('iPad')),
-    (re.compile('Mac OS X 10_9'), _('OS X Mavericks')),
-    (re.compile('Mac OS X 10_10'), _('OS X Yosemite')),
-    (re.compile('Mac OS X 10_11'), _('OS X El Capitan')),
-    (re.compile('Mac OS X 10_12'), _('macOS Sierra')),
+    (re.compile('Mac OS X 10[._]9'), _('OS X Mavericks')),
+    (re.compile('Mac OS X 10[._]10'), _('OS X Yosemite')),
+    (re.compile('Mac OS X 10[._]11'), _('OS X El Capitan')),
+    (re.compile('Mac OS X 10[._]12'), _('macOS Sierra')),
+    (re.compile('Mac OS X 10[._]13'), _('macOS High Sierra')),
     (re.compile('Mac OS X'), _('OS X')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
@@ -98,12 +90,16 @@ def location(value):
     """
     try:
         location = geoip() and geoip().city(value)
-        if location and location['country_name']:
-            if location['city']:
-                return '{}, {}'.format(location['city'], location['country_name'])
-            return location['country_name']
-    except:
-        pass
+    except Exception:
+        try:
+            location = geoip() and geoip().country(value)
+        except Exception as e:
+            warnings.warn(str(e))
+            location = None
+    if location and location['country_name']:
+        if 'city' in location and location['city']:
+            return '{}, {}'.format(location['city'], location['country_name'])
+        return location['country_name']
     return None
 
 
@@ -117,12 +113,6 @@ def geoip():
             from django.contrib.gis.geoip2 import GeoIP2
             try:
                 _geoip = GeoIP2()
-            except Exception as e:
-                warnings.warn(str(e))
-        elif HAS_GEOIP:
-            from django.contrib.gis.geoip import GeoIP
-            try:
-                _geoip = GeoIP()
             except Exception as e:
                 warnings.warn(str(e))
     return _geoip

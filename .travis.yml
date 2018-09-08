@@ -1,23 +1,29 @@
 language: python
 
 python:
- - 2.7
  - 3.4
  - 3.5
+ - 3.6
 
 env:
- - DJANGO=1.8
- - DJANGO=1.10
  - DJANGO=1.11
+ - DJANGO=2.0
 
 matrix:
   include:
-    - python: 3.5
-      env: TOXENV=flake8
+    - python: 2.7
+      env: DJANGO=1.11
+
     - python: 3.5
       env: DJANGO=master
     - python: 3.6
       env: DJANGO=master
+
+    - python: 3.5
+      env: TOXENV=isort
+    - python: 3.5
+      env: TOXENV=flake8
+
   allow_failures:
     - env: DJANGO=master
 
