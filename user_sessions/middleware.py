@@ -2,7 +2,11 @@ import time
 
 from django.conf import settings
 from django.utils.cache import patch_vary_headers
-from django.utils.http import cookie_date
+
+try:
+    from django.utils.http import cookie_date
+except ImportError:
+    from django.utils.http import http_date as cookie_date
 
 try:
     from importlib import import_module
