@@ -8,7 +8,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.base import CreateError
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.test.utils import modify_settings, override_settings
 from django.urls import reverse
 from django.utils.timezone import now
@@ -447,7 +447,7 @@ class ClearsessionsCommandTest(TestCase):
         self.assertEqual(Session.objects.count(), 0)
 
 
-class MigratesessionsCommandTest(TestCase):
+class MigratesessionsCommandTest(TransactionTestCase):
     @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
     def test_migrate_from_login(self):
         from django.contrib.sessions.models import Session as DjangoSession
