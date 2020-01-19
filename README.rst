@@ -31,7 +31,7 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 1.11 and 2.0 on Python 2.7, 3.4, 3.5 and 3.6.
+Compatible with Django 2.2 and 3.0 on Python 3.5, 3.6, 3.7 and 3.8.
 Documentation is available at `readthedocs.org`_.
 
 

@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+1.7.0
+-----
+* new: Support for Django 2.2+.
+* Dropped Django <2.2 support.
+
 1.6.0
 -----
 * New: Support for Django 2.0.
