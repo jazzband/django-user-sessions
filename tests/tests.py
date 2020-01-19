@@ -26,10 +26,6 @@ try:
 except ImportError:
     from mock import patch
 
-
-
-
-
 try:
     from django.contrib.gis.geoip2 import GeoIP2
     geoip = GeoIP2()
@@ -168,6 +164,7 @@ class AdminTest(TestCase):
 class SessionStoreTest(TestCase):
     def setUp(self):
         self.store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
+        User.objects.create_user('bouke', '', 'secret', id=1)
 
     def test_untouched_init(self):
         self.assertFalse(self.store.modified)
@@ -255,6 +252,7 @@ class SessionStoreTest(TestCase):
 
 class ModelTest(TestCase):
     def test_get_decoded(self):
+        User.objects.create_user('bouke', '', 'secret', id=1)
         store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
         store[auth.SESSION_KEY] = 1
         store['foo'] = 'bar'
