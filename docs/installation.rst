@@ -14,6 +14,17 @@ Installation
 7. Run ``python manage.py syncdb`` (or ``migrate``) and browse to
    ``/account/sessions/``.
 
+System check framework
+----------------------
+
+Django warns you about common configuration errors. When replacing the session
+middleware with the one provided by this library, it'll start warning about
+`admin.E410`. You can silence this warning by adding the following line in
+your settings file:
+
+    SILENCED_SYSTEM_CHECKS = ['admin.E410']
+
+
 GeoIP
 -----
 You need to setup GeoIP for the location detection to work. See the Django

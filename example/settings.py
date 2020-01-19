@@ -77,3 +77,5 @@ GEOIP_PATH = os.path.join(os.path.dirname(PROJECT_PATH), 'GeoLite2-City.mmdb')
 
 LOGIN_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/admin/'
+
+SILENCED_SYSTEM_CHECKS = ['admin.E410']
