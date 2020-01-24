@@ -7,7 +7,7 @@ setup(
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
     author_email='bouke@haarsma.eu',
-    url='http://github.com/Bouke/django-user-sessions',
+    url='http://github.com/jazzband/django-user-sessions',
     download_url='https://pypi.python.org/pypi/django-user-sessions',
     license='MIT',
     packages=find_packages(exclude=('example', 'tests',)),

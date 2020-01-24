@@ -2,13 +2,17 @@
 Django User Sessions
 ====================
 
-.. image:: https://travis-ci.org/Bouke/django-user-sessions.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/Bouke/django-user-sessions
+.. image:: https://jazzband.co/static/img/badge.svg
+    :target: https://jazzband.co/
+    :alt: Jazzband
 
-.. image:: https://codecov.io/gh/Bouke/django-user-sessions/branch/master/graph/badge.svg
+.. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
+    :alt: Build Status
+    :target: https://travis-ci.org/jazzband/django-user-sessions
+
+.. image:: https://codecov.io/gh/jazzband/django-user-sessions/branch/master/graph/badge.svg
     :alt: Test Coverage
-    :target: https://codecov.io/gh/Bouke/django-user-sessions
+    :target: https://codecov.io/gh/jazzband/django-user-sessions
 
 .. image:: https://badge.fury.io/py/django-user-sessions.svg
     :alt: PyPI
@@ -149,7 +153,7 @@ This library was written by `Bouke Haarsma`_.
    https://django-user-sessions.readthedocs.io/en/stable/installation.html
 .. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
-.. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
+.. _`django-two-factor-auth`: https://github.com/jazzband/django-two-factor-auth
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
