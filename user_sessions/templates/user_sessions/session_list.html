@@ -13,7 +13,6 @@
         <th>{% trans "Location" %}</th>
         <th>{% trans "Device" %}</th>
         <th>{% trans "Last Activity" %}</th>
-        <th>{% trans "End Session" %}</th>
       </tr>
     </thead>
     {% for object in object_list %}
@@ -26,16 +25,6 @@
           {% else %}
             {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago{% endblocktrans %}
           {% endif %}
-        </td>
-        <td>
-          <form method="post" action="{% url 'user_sessions:session_delete' object.pk %}">
-            {% csrf_token %}
-            {% if object.session_key == session_key %}
-              <button type="submit" class="btn btn-xs btn-link">{% trans "End Session" %}</button>
-            {% else %}
-              <button type="submit" class="btn btn-xs btn-warning">{% trans "End Session" %}</button>
-            {% endif %}
-          </form>
         </td>
       </tr>
     {% endfor %}
