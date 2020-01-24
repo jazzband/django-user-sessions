@@ -88,8 +88,8 @@ class ViewsTest(TestCase):
                                      user_agent='Firefox')
         response = self.client.get(reverse('user_sessions:session_list'))
         self.assertContains(response, 'Active Sessions')
-        self.assertContains(response, 'End Session', 3)
         self.assertContains(response, 'Firefox')
+        self.assertNotContains(response, 'ABC123')
 
     def test_delete(self):
         session_key = self.client.cookies[settings.SESSION_COOKIE_NAME].value
