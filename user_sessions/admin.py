@@ -45,6 +45,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_filter = ExpiredFilter, OwnerFilter
     raw_id_fields = 'user',
     exclude = 'session_key',
+    list_select_related = ['user']
 
     def get_search_fields(self, request):
         User = get_user_model()
