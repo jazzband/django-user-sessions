@@ -144,7 +144,7 @@ This project is licensed under the MIT license.
 
 Credits
 =======
-This library was written by `Bouke Haarsma`_.
+This library was written by `Bouke Haarsma`_ and contributors_.
 
 
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
@@ -158,4 +158,6 @@ This library was written by `Bouke Haarsma`_.
    https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
 .. _Bouke Haarsma:
-   https://twitter.com/BoukeHaarsma
+   https://github.com/Bouke
+.. _contributors:
+   https://github.com/jazzband/django-user-sessions/graphs/contributors
