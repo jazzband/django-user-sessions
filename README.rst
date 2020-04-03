@@ -14,6 +14,7 @@ Django User Sessions
     :alt: PyPI
     :target: https://pypi.python.org/pypi/django-user-sessions
 
+
 Django includes excellent built-in sessions, however all the data is hidden
 away into base64 encoded data. This makes it very difficult to run a query on
 all active sessions for a particular user. `django-user-sessions` fixes this
