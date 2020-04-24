@@ -68,6 +68,10 @@ class MiddlewareTest(TestCase):
         session = Session.objects.get(
             pk=self.client.cookies[settings.SESSION_COOKIE_NAME].value
         )
+        self.assertEqual(
+            self.client.cookies[settings.SESSION_COOKIE_NAME]["samesite"],
+            settings.SESSION_COOKIE_SAMESITE,
+        )
         self.assertEqual(user, session.user)
 
     def test_long_ua(self):
