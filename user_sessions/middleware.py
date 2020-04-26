@@ -16,6 +16,20 @@ except ImportError:
         pass
 
 
+def extract_ip_address( request):
+    client_ip = request.META.get('REMOTE_ADDR')
+    proxies = None
+    forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if forwarded_for is not None:
+        closest_proxy = client_ip
+        forwarded_for_ips = [ip.strip() for ip in forwarded_for.split(',')]
+        client_ip = forwarded_for_ips.pop(0)
+        forwarded_for_ips.reverse()
+        proxies = [closest_proxy] + forwarded_for_ips
+
+    return client_ip
+
+
 class SessionMiddleware(MiddlewareMixin):
     """
     Middleware that provides ip and user_agent to the session store.
@@ -23,8 +37,9 @@ class SessionMiddleware(MiddlewareMixin):
     def process_request(self, request):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
+        ip = extract_ip_address(request)
         request.session = engine.SessionStore(
-            ip=request.META.get('REMOTE_ADDR', ''),
+            ip=ip,
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
             session_key=session_key
         )
