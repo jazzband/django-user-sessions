@@ -2,13 +2,13 @@
 Django User Sessions
 ====================
 
-.. image:: https://travis-ci.org/Bouke/django-user-sessions.svg?branch=master
+.. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
     :alt: Build Status
-    :target: https://travis-ci.org/Bouke/django-user-sessions
+    :target: https://travis-ci.org/jazzband/django-user-sessions
 
-.. image:: https://codecov.io/gh/Bouke/django-user-sessions/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/jazzband/django-user-sessions/branch/master/graph/badge.svg
     :alt: Test Coverage
-    :target: https://codecov.io/gh/Bouke/django-user-sessions
+    :target: https://codecov.io/gh/jazzband/django-user-sessions
 
 .. image:: https://badge.fury.io/py/django-user-sessions.svg
     :alt: PyPI
