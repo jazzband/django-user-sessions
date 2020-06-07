@@ -2,6 +2,10 @@
 Django User Sessions
 ====================
 
+.. image:: https://jazzband.co/static/img/badge.svg
+   :target: https://jazzband.co/
+   :alt: Jazzband
+
 .. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/jazzband/django-user-sessions
