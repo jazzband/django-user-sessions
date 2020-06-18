@@ -52,7 +52,7 @@ class Session(models.Model):
     user_agent = models.CharField(null=True, blank=True, max_length=200)
     last_activity = models.DateTimeField(auto_now=True)
     ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
-
+    created = models.DateTimeField(auto_now_add=True)
 
 # At bottom to avoid circular import
 from .backends.db import SessionStore  # noqa: E402 isort:skip
