@@ -3,8 +3,8 @@ Django User Sessions
 ====================
 
 .. image:: https://jazzband.co/static/img/badge.svg
-   :target: https://jazzband.co/
-   :alt: Jazzband
+    :target: https://jazzband.co/
+    :alt: Jazzband
 
 .. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
     :alt: Build Status
@@ -144,7 +144,7 @@ This project is licensed under the MIT license.
 
 Credits
 =======
-This library was written by `Bouke Haarsma`_.
+This library was written by `Bouke Haarsma`_ and contributors_.
 
 
 .. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
@@ -153,9 +153,11 @@ This library was written by `Bouke Haarsma`_.
    https://django-user-sessions.readthedocs.io/en/stable/installation.html
 .. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
-.. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
+.. _`django-two-factor-auth`: https://github.com/jazzband/django-two-factor-auth
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
 .. _Bouke Haarsma:
-   https://twitter.com/BoukeHaarsma
+   https://github.com/Bouke
+.. _contributors:
+   https://github.com/jazzband/django-user-sessions/graphs/contributors
