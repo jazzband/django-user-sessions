@@ -375,7 +375,7 @@ class DeviceTemplateFilterTest(TestCase):
                    'Mobile/11A465 Safari/9537.53')
         )
         self.assertEqual(
-            'Safari on OS X',
+            'Safari on macOS',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) '
                    'AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 '
                    'Safari/536.26.17')

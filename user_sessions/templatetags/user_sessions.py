@@ -26,7 +26,7 @@ DEVICES = (
     (re.compile('Mac OS X 10[._]11'), _('OS X El Capitan')),
     (re.compile('Mac OS X 10[._]12'), _('macOS Sierra')),
     (re.compile('Mac OS X 10[._]13'), _('macOS High Sierra')),
-    (re.compile('Mac OS X'), _('OS X')),
+    (re.compile('Mac OS X'), _('macOS')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
     (re.compile('NT 6.1'), _('Windows 7')),
@@ -46,7 +46,7 @@ def device(value):
 
     * Safari on iPhone
     * Chrome on Windows 8.1
-    * Safari on OS X
+    * Safari on macOS
     * Firefox
     * Linux
     * None
