@@ -375,6 +375,17 @@ class DeviceTemplateFilterTest(TestCase):
                    'Mobile/11A465 Safari/9537.53')
         )
         self.assertEqual(
+            'Chrome on macOS Mojave',
+            device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
+                'AppleWebKit/537.36 (KHTML, like Gecko) '
+                'Chrome/85.0.4178.0 Safari/537.36')
+        )
+        self.assertEqual(
+            'Firefox on macOS Catalina',
+            device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
+                'Gecko/20100101 Firefox/77.0')
+        )
+        self.assertEqual(
             'Safari on OS X',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) '
                    'AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 '
