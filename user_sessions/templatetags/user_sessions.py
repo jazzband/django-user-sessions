@@ -26,6 +26,8 @@ DEVICES = (
     (re.compile('Mac OS X 10[._]11'), _('OS X El Capitan')),
     (re.compile('Mac OS X 10[._]12'), _('macOS Sierra')),
     (re.compile('Mac OS X 10[._]13'), _('macOS High Sierra')),
+    (re.compile('Mac OS X 10[._]14'), _('macOS Mojave')),
+    (re.compile('Mac OS X 10[._]15'), _('macOS Catalina')),
     (re.compile('Mac OS X'), _('macOS')),
     (re.compile('NT 5.1'), _('Windows XP')),
     (re.compile('NT 6.0'), _('Windows Vista')),
