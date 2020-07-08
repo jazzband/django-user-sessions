@@ -23,24 +23,24 @@ You could logout the user everywhere::
 
 Generic views
 -------------
-There are two views included with this application, 
-:class:`~user_sessions.views.SessionListView` and 
+There are two views included with this application,
+:class:`~user_sessions.views.SessionListView` and
 :class:`~user_sessions.views.SessionDeleteView`. Using this views you have a
-simple, but effective, user session management that even looks great out of 
+simple, but effective, user session management that even looks great out of
 the box:
 
 .. image:: _static/custom-view.png
 
 Template tags
 ~~~~~~~~~~~~~
-Two template tags are included 
+Two template tags are included
 :meth:`~user_sessions.templatetags.user_sessions.device` and
 :meth:`~user_sessions.templatetags.user_sessions.location`. These can be used
 for respectively humanizing the user agent string and showing an approximate
 location of the IP address::
 
     {% load user_sessions %}
-    {{ session.user_agent|device }} -> Safari on OS X
+    {{ session.user_agent|device }} -> Safari on macOS
     {{ session.ip|location }}       -> Zwolle, The Netherlands
 
 
