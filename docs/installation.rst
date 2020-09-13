@@ -22,7 +22,7 @@ middleware with the one provided by this library, it'll start warning about
 `admin.E410`. You can silence this warning by adding the following line in
 your settings file:
 
-    SILENCED_SYSTEM_CHECKS = ['admin.E410']
+``SILENCED_SYSTEM_CHECKS = ['admin.E410']``
 
 
 GeoIP
