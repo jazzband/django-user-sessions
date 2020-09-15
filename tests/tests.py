@@ -428,6 +428,26 @@ class DeviceTemplateFilterTest(TestCase):
                    'Mobile Safari/537.36 Edge/40.15254.369')
         )
 
+    def test_edge_chromium(self):
+        self.assertEquals(
+            'Edge on Windows 10',
+            device('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                   'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
+                   'Safari/537.36 Edg/81.0.416.62')
+        )
+        self.assertEquals(
+            'Edge on macOS Catalina',
+            device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
+                   'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
+                   'Safari/537.36 Edg/85.0.564.51')
+        )
+        self.assertEquals(
+            'Edge on Android',
+            device('Mozilla/5.0 (Linux; Android 11; Pixel 3 XL) '
+                   'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 '
+                   'Mobile Safari/537.36 EdgA/45.07.4.5059')
+        )
+
     def test_firefox_only(self):
         self.assertEqual("Firefox", device("Not a legit OS Firefox/51.0"))
 
