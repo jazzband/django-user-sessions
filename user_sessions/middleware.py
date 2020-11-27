@@ -23,6 +23,8 @@ class SessionMiddleware(MiddlewareMixin):
     def process_request(self, request):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
+            request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(",")[0].strip()
         request.session = engine.SessionStore(
             ip=request.META.get('REMOTE_ADDR', ''),
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
