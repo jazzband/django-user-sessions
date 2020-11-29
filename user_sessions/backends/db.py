@@ -60,7 +60,7 @@ class SessionStore(SessionBase):
             self._session_cache = {}
             return
 
-    def save(self, must_create=False):
+    def save(self, namespace=None, must_create=False):
         """
         Saves the current session data to the database. If 'must_create' is
         True, a database error will be raised if the saving operation doesn't
@@ -74,6 +74,7 @@ class SessionStore(SessionBase):
             user_agent=self.user_agent,
             user_id=self.user_id,
             ip=self.ip,
+            namespace=namespace
         )
         using = router.db_for_write(Session, instance=obj)
         try:
