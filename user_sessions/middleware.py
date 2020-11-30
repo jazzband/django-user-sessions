@@ -45,7 +45,6 @@ class SessionMiddleware(MiddlewareMixin):
             if accessed:
                 patch_vary_headers(response, ('Cookie',))
             if modified or settings.SESSION_SAVE_EVERY_REQUEST:
-                namespace = request.resolver_match.namespace.split(':')[0]
                 if request.session.get_expire_at_browser_close():
                     max_age = None
                     expires = None
@@ -56,6 +55,7 @@ class SessionMiddleware(MiddlewareMixin):
                 # Save the session data and refresh the client cookie.
                 # Skip session save for 500 responses, refs #3881.
                 if response.status_code != 500:
+                    namespace = request.resolver_match.namespace.split(':')[0]
                     if namespace:
                         request.session.save(namespace=namespace)
                     response.set_cookie(
