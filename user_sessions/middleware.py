@@ -56,7 +56,8 @@ class SessionMiddleware(MiddlewareMixin):
                 # Save the session data and refresh the client cookie.
                 # Skip session save for 500 responses, refs #3881.
                 if response.status_code != 500:
-                    request.session.save(namespace=namespace)
+                    if namespace:
+                        request.session.save(namespace=namespace)
                     response.set_cookie(
                         settings.SESSION_COOKIE_NAME,
                         request.session.session_key,
