@@ -55,7 +55,10 @@ class SessionMiddleware(MiddlewareMixin):
                 # Save the session data and refresh the client cookie.
                 # Skip session save for 500 responses, refs #3881.
                 if response.status_code != 500:
-                    namespace = request.resolver_match.namespace.split(':')[0]
+                    try:
+                        namespace = request.resolver_match.namespace.split(':')[0]
+                    except AttributeError:
+                        namespace = None
                     if namespace:
                         request.session.save(namespace=namespace)
                     response.set_cookie(
