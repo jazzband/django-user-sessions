@@ -1,4 +1,5 @@
 from django.conf.urls import url
+
 from user_sessions.views import SessionDeleteOtherView
 
 from .views import SessionDeleteView, SessionListView
