@@ -1,6 +1,7 @@
 import sys
 from datetime import datetime, timedelta
 from unittest import skipUnless
+from unittest.mock import patch
 
 import django
 from django.conf import settings
@@ -12,6 +13,7 @@ from django.test import TestCase, TransactionTestCase
 from django.test.utils import modify_settings, override_settings
 from django.urls import reverse
 from django.utils.timezone import now
+
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import device, location
@@ -21,10 +23,6 @@ try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2
@@ -416,12 +414,12 @@ class DeviceTemplateFilterTest(TestCase):
         )
 
     def test_edge(self):
-        self.assertEquals(
+        self.assertEqual(
             'Edge on Windows 10',
             device('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, '
                    'like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136')
         )
-        self.assertEquals(
+        self.assertEqual(
             'Edge on Windows Mobile',
             device('Mozilla/5.0 (Windows Mobile 10; Android 8.0.0; Microsoft; Lumia '
                    '950XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.62 '
@@ -429,19 +427,19 @@ class DeviceTemplateFilterTest(TestCase):
         )
 
     def test_edge_chromium(self):
-        self.assertEquals(
+        self.assertEqual(
             'Edge on Windows 10',
             device('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
                    'Safari/537.36 Edg/81.0.416.62')
         )
-        self.assertEquals(
+        self.assertEqual(
             'Edge on macOS Catalina',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
                    'Safari/537.36 Edg/85.0.564.51')
         )
-        self.assertEquals(
+        self.assertEqual(
             'Edge on Android',
             device('Mozilla/5.0 (Linux; Android 11; Pixel 3 XL) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 '
@@ -496,8 +494,10 @@ class ClearsessionsCommandTest(TestCase):
 class MigratesessionsCommandTest(TransactionTestCase):
     @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
     def test_migrate_from_login(self):
+        from django.contrib.sessions.backends.db import (
+            SessionStore as DjangoSessionStore,
+        )
         from django.contrib.sessions.models import Session as DjangoSession
-        from django.contrib.sessions.backends.db import SessionStore as DjangoSessionStore
         try:
             call_command('migrate', 'sessions')
             call_command('clearsessions')
