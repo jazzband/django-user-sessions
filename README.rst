@@ -6,9 +6,9 @@ Django User Sessions
     :target: https://jazzband.co/
     :alt: Jazzband
 
-.. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/jazzband/django-user-sessions
+.. image:: https://github.com/jazzband/django-user-sessions/workflows/Test/badge.svg
+    :alt: GitHub Actions
+    :target: https://github.com/jazzband/django-user-sessions/actions
 
 .. image:: https://codecov.io/gh/jazzband/django-user-sessions/branch/master/graph/badge.svg
     :alt: Test Coverage
