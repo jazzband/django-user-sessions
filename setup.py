@@ -2,7 +2,8 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-user-sessions',
-    version='1.7.1',
+    use_scm_version={"version_scheme": "post-release"},
+    setup_requires=["setuptools_scm"],
     description='Django sessions with a foreign key to the user',
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
