@@ -1,9 +1,8 @@
-import sys
 from datetime import datetime, timedelta
 from unittest import skipUnless
 from unittest.mock import patch
+from urllib.parse import urlencode
 
-import django
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -18,11 +17,6 @@ from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import device, location
 from user_sessions.utils.tests import Client
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2
@@ -375,13 +369,13 @@ class DeviceTemplateFilterTest(TestCase):
         self.assertEqual(
             'Chrome on macOS Mojave',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
-                'AppleWebKit/537.36 (KHTML, like Gecko) '
-                'Chrome/85.0.4178.0 Safari/537.36')
+                   'AppleWebKit/537.36 (KHTML, like Gecko) '
+                   'Chrome/85.0.4178.0 Safari/537.36')
         )
         self.assertEqual(
             'Firefox on macOS Catalina',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
-                'Gecko/20100101 Firefox/77.0')
+                   'Gecko/20100101 Firefox/77.0')
         )
         self.assertEqual(
             'Safari on macOS',
