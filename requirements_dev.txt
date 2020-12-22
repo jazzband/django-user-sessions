@@ -13,7 +13,6 @@ flake8
 tox
 tox-pyenv
 detox
-mock
 isort
 
 # Transifex
