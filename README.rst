@@ -6,9 +6,9 @@ Django User Sessions
     :target: https://jazzband.co/
     :alt: Jazzband
 
-.. image:: https://travis-ci.org/jazzband/django-user-sessions.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/jazzband/django-user-sessions
+.. image:: https://github.com/jazzband/django-user-sessions/workflows/Test/badge.svg
+    :alt: GitHub Actions
+    :target: https://github.com/jazzband/django-user-sessions/actions
 
 .. image:: https://codecov.io/gh/jazzband/django-user-sessions/branch/master/graph/badge.svg
     :alt: Test Coverage
@@ -35,7 +35,7 @@ contains the package `django-two-factor-auth`_, but that application is not a
 dependency for this package. Also have a look at the bundled example templates
 and views to see how you can integrate the application into your project.
 
-Compatible with Django 2.2, 3,0 and 3.1 on Python 3.6, 3.7, 3.8 and 3.9.
+Compatible with Django 2.2, 3.0 and 3.1 on Python 3.6, 3.7, 3.8 and 3.9.
 Documentation is available at `readthedocs.org`_.
 
 

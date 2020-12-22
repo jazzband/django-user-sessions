@@ -2,7 +2,8 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-user-sessions',
-    version='1.7.1',
+    use_scm_version={"version_scheme": "post-release"},
+    setup_requires=["setuptools_scm"],
     description='Django sessions with a foreign key to the user',
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
@@ -19,6 +20,7 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
+        'Framework :: Django :: 3.1',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

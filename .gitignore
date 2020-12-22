@@ -5,7 +5,7 @@
 /htmlcov/
 
 /.coverage
-
+coverage.xml
 /.tox/
 
 /docs/_build/
