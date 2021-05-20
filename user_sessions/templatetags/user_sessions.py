@@ -40,6 +40,50 @@ DEVICES = (
 
 
 @register.filter
+def platform(value):
+    """
+    Transform a User Agent into human readable text.
+
+    Example output:
+
+    * iPhone
+    * Windows 8.1
+    * macOS
+    * Linux
+    * None
+    """
+
+    platform = None
+    for regex, name in DEVICES:
+        if regex.search(value):
+            platform = name
+            break
+
+    return platform
+
+
+@register.filter
+def browser(value):
+    """
+    Transform a User Agent into human readable text.
+    Example output:
+    * Safari
+    * Chrome
+    * Safari
+    * Firefox
+    * None
+    """
+
+    browser = None
+    for regex, name in BROWSERS:
+        if regex.search(value):
+            browser = name
+            break
+
+    return browser
+
+
+@register.filter
 def device(value):
     """
     Transform a User Agent into human readable text.
@@ -54,29 +98,21 @@ def device(value):
     * None
     """
 
-    browser = None
-    for regex, name in BROWSERS:
-        if regex.search(value):
-            browser = name
-            break
+    browser_ = browser(value)
 
-    device = None
-    for regex, name in DEVICES:
-        if regex.search(value):
-            device = name
-            break
+    platform_ = platform(value)
 
-    if browser and device:
+    if browser_ and platform_:
         return _('%(browser)s on %(device)s') % {
-            'browser': browser,
-            'device': device
+            'browser': browser_,
+            'device': platform_
         }
 
-    if browser:
-        return browser
+    if browser_:
+        return browser_
 
-    if device:
-        return device
+    if platform_:
+        return platform_
 
     return None
 
