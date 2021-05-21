@@ -15,7 +15,7 @@ BROWSERS = (
     (re.compile('Opera'), _('Opera')),
     (re.compile('IE'), _('Internet Explorer')),
 )
-DEVICES = (
+PLATFORMS = (
     (re.compile('Windows Mobile'), _('Windows Mobile')),
     (re.compile('Android'), _('Android')),
     (re.compile('Linux'), _('Linux')),
@@ -54,7 +54,7 @@ def platform(value):
     """
 
     platform = None
-    for regex, name in DEVICES:
+    for regex, name in PLATFORMS:
         if regex.search(value):
             platform = name
             break
@@ -66,7 +66,9 @@ def platform(value):
 def browser(value):
     """
     Transform a User Agent into human readable text.
+    
     Example output:
+    
     * Safari
     * Chrome
     * Safari
@@ -99,7 +101,6 @@ def device(value):
     """
 
     browser_ = browser(value)
-
     platform_ = platform(value)
 
     if browser_ and platform_:
