@@ -153,7 +153,7 @@ This library was written by `Bouke Haarsma`_ and contributors_.
    https://django-user-sessions.readthedocs.io/en/stable/installation.html
 .. _`example app`: https://example-two-factor-auth.herokuapp.com
 .. _Heroku: https://www.heroku.com
-.. _`django-two-factor-auth`: https://github.com/jazzband/django-two-factor-auth
+.. _`django-two-factor-auth`: https://github.com/Bouke/django-two-factor-auth
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
 .. _tox: https://testrun.org/tox/latest/
