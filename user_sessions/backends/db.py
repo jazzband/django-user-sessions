@@ -5,7 +5,7 @@ from django.contrib.sessions.backends.base import CreateError, SessionBase
 from django.core.exceptions import SuspiciousOperation
 from django.db import IntegrityError, router, transaction
 from django.utils import timezone
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 
 class SessionStore(SessionBase):
@@ -39,7 +39,7 @@ class SessionStore(SessionBase):
             if isinstance(e, SuspiciousOperation):
                 logger = logging.getLogger('django.security.%s' %
                                            e.__class__.__name__)
-                logger.warning(force_text(e))
+                logger.warning(force_str(e))
             self.create()
             return {}
 

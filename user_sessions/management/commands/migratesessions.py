@@ -4,6 +4,7 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
+
 from user_sessions.models import Session as UserSession
 
 logger = logging.getLogger(__name__)

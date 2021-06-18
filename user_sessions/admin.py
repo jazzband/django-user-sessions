@@ -1,8 +1,8 @@
-import django
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 from user_sessions.templatetags.user_sessions import device, location
 
 from .models import Session
@@ -45,6 +45,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_filter = ExpiredFilter, OwnerFilter
     raw_id_fields = 'user',
     exclude = 'session_key',
+    list_select_related = ['user']
 
     def get_search_fields(self, request):
         User = get_user_model()
