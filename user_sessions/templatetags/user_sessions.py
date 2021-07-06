@@ -9,10 +9,10 @@ register = template.Library()
 
 BROWSERS = (
     (re.compile('Edg'), _('Edge')),
+    (re.compile('OPR'), _('Opera')),
     (re.compile('Chrome'), _('Chrome')),
     (re.compile('Safari'), _('Safari')),
     (re.compile('Firefox'), _('Firefox')),
-    (re.compile('Opera'), _('Opera')),
     (re.compile('IE'), _('Internet Explorer')),
 )
 DEVICES = (
