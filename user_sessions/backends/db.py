@@ -67,22 +67,23 @@ class SessionStore(SessionBase):
         create a *new* entry (as opposed to possibly updating an existing
         entry).
         """
-        obj = Session(
-            session_key=self._get_or_create_session_key(),
-            session_data=self.encode(self._get_session(no_load=must_create)),
-            expire_date=self.get_expiry_date(),
-            user_agent=self.user_agent,
-            user_id=self.user_id,
-            ip=self.ip,
-        )
-        using = router.db_for_write(Session, instance=obj)
-        try:
-            with transaction.atomic(using):
-                obj.save(force_insert=must_create, using=using)
-        except IntegrityError as e:
-            if must_create and 'session_key' in str(e):
-                raise CreateError
-            raise
+        if "Amazon-Route53-Health-Check-Service" not in self.user_agent and "StatusCake" not in self.user_agent:
+            obj = Session(
+                session_key=self._get_or_create_session_key(),
+                session_data=self.encode(self._get_session(no_load=must_create)),
+                expire_date=self.get_expiry_date(),
+                user_agent=self.user_agent,
+                user_id=self.user_id,
+                ip=self.ip,
+            )
+            using = router.db_for_write(Session, instance=obj)
+            try:
+                with transaction.atomic(using):
+                    obj.save(force_insert=must_create, using=using)
+            except IntegrityError as e:
+                if must_create and 'session_key' in str(e):
+                    raise CreateError
+                raise
 
     def clear(self):
         super(SessionStore, self).clear()
