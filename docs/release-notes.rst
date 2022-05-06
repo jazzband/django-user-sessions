@@ -3,8 +3,9 @@ Release Notes
 
 Unreleased
 ----------
-* New: Support for Django 3.0 and 3.1.
-* New: Support for Python 3.9.
+* New: Support for Django 3.2 and 4.0
+* Dropped Django <3.2 support.
+* New: Support for Python 3.9 and 3.10.
 * Moved CI to GitHub Actions.
 * Dropped Python 3.5 support.
 
