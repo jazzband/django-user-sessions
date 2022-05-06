@@ -33,7 +33,7 @@ language using Transifex_.
 Also have a look at the bundled example templates and views to see how you
 can integrate the application into your project.
 
-Compatible with Django 2.2, 3.0, 3.1, 3.2 and 4.0 on Python 3.6, 3.7, 3.8, 3.9 and 3.10.
+Compatible with Django 3.2 and 4.0 on Python 3.6, 3.7, 3.8, 3.9 and 3.10.
 Documentation is available at `readthedocs.org`_.
 
 
