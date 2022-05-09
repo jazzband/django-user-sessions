@@ -10,3 +10,8 @@ coverage.xml
 
 /docs/_build/
 /GeoLite2-City.mmdb
+
+__pycache__
+/venv/
+/.eggs/
+/build/
