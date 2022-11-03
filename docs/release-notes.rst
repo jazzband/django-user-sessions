@@ -1,13 +1,16 @@
 Release Notes
 =============
 
-Unreleased
+2.0.0
 ----------
 * New: Support for Django 3.2 and 4.0
 * Dropped Django <3.2 support.
 * New: Support for Python 3.9 and 3.10.
 * Moved CI to GitHub Actions.
-* Dropped Python 3.5 support.
+* Dropped support for Python 3.5 and 3.6.
+* Add detection for Chromium-based Edge browser
+* Rename OS X to macOS
+* Add detection for newere macOS versions
 
 1.7.0
 -----
