@@ -75,7 +75,7 @@ documentation on `installing GeoIP`_.
 Getting help
 ============
 
-For general questions regarding this package, please hop over to Stack 
+For general questions regarding this package, please hop over to Stack
 Overflow. If you think there is an issue with this package; check if the
 issue is already listed (either open or closed), and file an issue if
 it's not.

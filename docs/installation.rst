@@ -32,8 +32,8 @@ documentation on `installing GeoIP`_.
 
 IP when behind a proxy
 ----------------------
-If you're running Django behind a proxy like nginx, you will have to set 
-the `REMOTE_ADDR` META header manually using a middleware, to stop it from 
+If you're running Django behind a proxy like nginx, you will have to set
+the `REMOTE_ADDR` META header manually using a middleware, to stop it from
 always returning the ip of the proxy (e.g. 127.0.0.1 in many cases).
 
 An example middleware to fix this issue is `django-xforwardedfor-middleware`_
