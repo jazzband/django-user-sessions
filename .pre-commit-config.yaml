@@ -2,8 +2,29 @@
 # See https://pre-commit.com/hooks.html for more hooks
 # vim: set nospell:
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-added-large-files
+      - id: debug-statements
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
+  - repo: https://github.com/PyCQA/flake8
+    rev: "4.0.1"
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-comprehensions
+          - flake8-bugbear
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.2.2
     hooks:
     -   id: pyupgrade
-        args: [--py3-plus]
+        args: [--py37-plus]
