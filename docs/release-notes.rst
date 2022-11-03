@@ -41,7 +41,7 @@ Unreleased
 * Fixed #73 -- Error when deleting individual session from list view.
 * Fixed #74 -- user agent not being shown in list view.
 * Resolved Django’s deprecation warnings (preliminary Django 2.0 support).
-* Make templatetags return None instead of 'unknown', provide your own fallback 
+* Make templatetags return None instead of 'unknown', provide your own fallback
   value with `default_if_none:`.
 * Allow translation of fallback values.
 
@@ -49,7 +49,7 @@ Unreleased
 -----
 * Added Django Channels support.
 * Fixed #62 -- Provide request.user in signals.
-* Ending current session will logout instead, make sure LOGOUT_REDIRECT_URL is 
+* Ending current session will logout instead, make sure LOGOUT_REDIRECT_URL is
   set.
 
 1.3.1

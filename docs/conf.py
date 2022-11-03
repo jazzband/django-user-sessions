@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import os
+
 from pkg_resources import get_distribution
 
 # If extensions (or modules to document with autodoc) are in another directory,
