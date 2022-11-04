@@ -6,7 +6,9 @@ from django.views.generic.base import RedirectView
 admin.autodiscover()
 
 urlpatterns = [
-    re_path('^$', RedirectView.as_view(
+    re_path(
+        '^$',
+        RedirectView.as_view(
             url=reverse_lazy('user_sessions:session_list'),
             permanent=True,
         ),
