@@ -1,7 +1,6 @@
 from django.conf import settings
-from django.urls import include, re_path
 from django.contrib import admin
-from django.urls import reverse_lazy
+from django.urls import include, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 admin.autodiscover()
