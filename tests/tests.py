@@ -139,19 +139,19 @@ class AdminTest(TestCase):
         self.assertNotContains(response, '1.1.1.1')
 
     def test_mine(self):
-        my_sessions = '%s?%s' % (self.admin_url, urlencode({'owner': 'my'}))
+        my_sessions = '{}?{}'.format(self.admin_url, urlencode({'owner': 'my'}))
         response = self.client.get(my_sessions)
         self.assertContains(response, '127.0.0.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_expired(self):
-        expired = '%s?%s' % (self.admin_url, urlencode({'active': '0'}))
+        expired = '{}?{}'.format(self.admin_url, urlencode({'active': '0'}))
         response = self.client.get(expired)
         self.assertContains(response, '20.13.1.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_unexpired(self):
-        unexpired = '%s?%s' % (self.admin_url, urlencode({'active': '1'}))
+        unexpired = '{}?{}'.format(self.admin_url, urlencode({'active': '1'}))
         response = self.client.get(unexpired)
         self.assertContains(response, '1.1.1.1')
         self.assertNotContains(response, '20.13.1.1')

@@ -13,7 +13,7 @@ class SessionStore(SessionBase):
     Implements database session store.
     """
     def __init__(self, session_key=None, user_agent=None, ip=None):
-        super(SessionStore, self).__init__(session_key)
+        super().__init__(session_key)
         # Truncate user_agent string to max_length of the CharField
         self.user_agent = user_agent[:200] if user_agent else user_agent
         self.ip = ip
@@ -22,7 +22,7 @@ class SessionStore(SessionBase):
     def __setitem__(self, key, value):
         if key == auth.SESSION_KEY:
             self.user_id = value
-        super(SessionStore, self).__setitem__(key, value)
+        super().__setitem__(key, value)
 
     def load(self):
         try:
@@ -85,7 +85,7 @@ class SessionStore(SessionBase):
             raise
 
     def clear(self):
-        super(SessionStore, self).clear()
+        super().clear()
         self.user_id = None
 
     def delete(self, session_key=None):
