@@ -3,7 +3,7 @@
 # vim: set nospell:
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.0.0
+    rev: v3.2.2
     hooks:
     -   id: pyupgrade
         args: [--py3-plus]
