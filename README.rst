@@ -16,7 +16,7 @@ Django User Sessions
 
 .. image:: https://badge.fury.io/py/django-user-sessions.svg
     :alt: PyPI
-    :target: https://pypi.python.org/pypi/django-user-sessions
+    :target: https://pypi.org/project/django-user-sessions/
 
 Django includes excellent built-in sessions, however all the data is hidden
 away into base64 encoded data. This makes it very difficult to run a query on
@@ -55,11 +55,11 @@ Or logout the user everywhere:
 The user's IP address and user agent are also stored on the session. This
 allows to show a list of active sessions to the user in the admin:
 
-.. image:: http://i.imgur.com/YV9Nx3f.png
+.. image:: https://i.imgur.com/YV9Nx3f.png
 
 And also in a custom layout:
 
-.. image:: http://i.imgur.com/d7kZtr9.png
+.. image:: https://i.imgur.com/d7kZtr9.png
 
 
 Installation
@@ -145,13 +145,13 @@ Credits
 This library was written by `Bouke Haarsma`_ and contributors_.
 
 
-.. _Transifex: https://www.transifex.com/projects/p/django-user-sessions/
-.. _`readthedocs.org`: https://django-user-sessions.readthedocs.org/
+.. _Transifex: https://explore.transifex.com/Bouke/django-user-sessions/
+.. _`readthedocs.org`: https://django-user-sessions.readthedocs.io/
 .. _`installation instructions`:
    https://django-user-sessions.readthedocs.io/en/stable/installation.html
 .. _installing GeoIP:
    https://docs.djangoproject.com/en/2.0/ref/contrib/gis/geoip2/
-.. _tox: https://testrun.org/tox/latest/
+.. _tox: https://tox.wiki/en/latest/
 .. _Bouke Haarsma:
    https://github.com/Bouke
 .. _contributors:
