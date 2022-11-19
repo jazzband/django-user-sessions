@@ -14,6 +14,7 @@ setup(
     packages=find_packages(exclude=('example', 'tests',)),
     install_requires=['Django>=3.2'],
     include_package_data=True,
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
