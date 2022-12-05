@@ -8,12 +8,13 @@ setup(
     long_description=open('README.rst').read(),
     author='Bouke Haarsma',
     author_email='bouke@haarsma.eu',
-    url='http://github.com/jazzband/django-user-sessions',
-    download_url='https://pypi.python.org/pypi/django-user-sessions',
+    url='https://github.com/jazzband/django-user-sessions',
+    download_url='https://pypi.org/project/django-user-sessions/',
     license='MIT',
     packages=find_packages(exclude=('example', 'tests',)),
     install_requires=['Django>=3.2'],
     include_package_data=True,
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
@@ -29,6 +30,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Topic :: Security',
     ],
 )
