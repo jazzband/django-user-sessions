@@ -18,6 +18,7 @@ from pkg_resources import get_distribution
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 
 import django
+
 django.setup()
 
 # If extensions (or modules to document with autodoc) are in another directory,
