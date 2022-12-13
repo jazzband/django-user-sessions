@@ -15,6 +15,11 @@ import os
 
 from pkg_resources import get_distribution
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
+
+import django
+django.setup()
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -269,7 +274,3 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
-
-from django.conf import settings
-
-settings.configure(DEBUG=False)
