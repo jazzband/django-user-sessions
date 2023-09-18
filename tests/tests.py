@@ -15,7 +15,7 @@ from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import device, location
+from user_sessions.templatetags.user_sessions import browser, device, location, platform
 from user_sessions.utils.tests import Client
 
 try:
@@ -320,6 +320,276 @@ class LocationTemplateFilterTest(TestCase):
     def test_locations(self):
         self.assertEqual('United States', location('8.8.8.8'))
         self.assertEqual('San Diego, United States', location('44.55.66.77'))
+
+
+class PlatformTemplateFilterTest(TestCase):
+    def test_windows(self):
+        # Generic Windows
+        self.assertEqual("Windows XP", platform("NT 5.1 not a real browser/10.3"))
+        self.assertEqual("Windows Vista", platform("NT 6.0 not a real browser/10.3"))
+        self.assertEqual("Windows 7", platform("NT 6.1 not a real browser/10.3"))
+        self.assertEqual("Windows 8", platform("NT 6.2 not a real browser/10.3"))
+        self.assertEqual("Windows 8.1", platform("NT 6.3 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows not a real browser/10.3"))
+
+        # IE
+        self.assertEqual(
+            'Windows XP',
+            platform('Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 5.1; SV1; '
+                     '.NET CLR 2.0.50727)')
+        )
+        self.assertEqual(
+            'Windows Vista',
+            platform('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; '
+                     'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322;'
+                     ' InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
+                     'MS-RTC LM 8; OfficeLiveConnector.1.4; OfficeLivePatch.1.3;'
+                     ' .NET CLR 3.0.30729)')
+        )
+        self.assertEqual(
+            'Windows 7',
+            platform('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; '
+                     'Trident/6.0)')
+        )
+        self.assertEqual(
+            'Windows 8',
+            platform('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; '
+                     'Win64; x64; Trident/6.0)')
+        )
+        self.assertEqual(
+            'Windows 8.1',
+            platform('Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; '
+                     '.NET4.0E; .NET4.0C; rv:11.0) like Gecko')
+        )
+
+        # Edge
+        self.assertEqual(
+            'Windows 10',
+            platform('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, '
+                     'like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136')
+        )
+        self.assertEqual(
+            'Windows Mobile',
+            platform('Mozilla/5.0 (Windows Mobile 10; Android 8.0.0; Microsoft; Lumia '
+                     '950XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.62 '
+                     'Mobile Safari/537.36 Edge/40.15254.369')
+        )
+
+        # Edge Chromium
+        self.assertEqual(
+            'Windows 10',
+            platform('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
+                     'Safari/537.36 Edg/81.0.416.62')
+        )
+
+        # Firefox
+        self.assertEqual(
+            'Windows 7',
+            platform('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:22.0) '
+                     'Gecko/20130328 Firefox/22.0')
+        )
+
+        # Chrome
+        self.assertEqual(
+            'Windows 8.1',
+            platform('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
+                     'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
+        )
+
+    def test_apple(self):
+        # Generic iPad
+        self.assertEqual("iPad", platform("iPad not a real browser/10.3"))
+
+        # Generic iPhone
+        self.assertEqual("iPhone", platform("iPhone not a real browser/10.3"))
+
+        self.assertEqual(
+            'iPad',
+            platform('Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; ja-jp) '
+                     'AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 '
+                     'Mobile/8C148 Safari/6533.18.5')
+        )
+
+        self.assertEqual(
+            'iPhone',
+            platform('Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) '
+                     'AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 '
+                     'Mobile/11A465 Safari/9537.53')
+        )
+
+        self.assertEqual(
+            'macOS Mojave',
+            platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
+                     'AppleWebKit/537.36 (KHTML, like Gecko) '
+                     'Chrome/85.0.4178.0 Safari/537.36')
+        )
+        self.assertEqual(
+            'macOS Catalina',
+            platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
+                     'Gecko/20100101 Firefox/77.0')
+        )
+        self.assertEqual(
+            'macOS',
+            platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) '
+                     'AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 '
+                     'Safari/536.26.17')
+        )
+
+        # Edge Chromium
+        self.assertEqual(
+            'macOS Catalina',
+            platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
+                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
+                     'Safari/537.36 Edg/85.0.564.51')
+        )
+
+    def test_android(self):
+        # androids identify themselves as Safari to get the good stuff
+        self.assertEqual(
+            'Android',
+            platform('Mozilla/5.0 (Linux; U; Android 1.5; de-de; HTC Magic '
+                     'Build/CRB17) AppleWebKit/528.5+ (KHTML, like Gecko) '
+                     'Version/3.1.2 Mobile Safari/525.20.1')
+        )
+
+        # Edge Chromium
+        self.assertEqual(
+            'Android',
+            platform('Mozilla/5.0 (Linux; Android 11; Pixel 3 XL) '
+                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 '
+                     'Mobile Safari/537.36 EdgA/45.07.4.5059')
+        )
+
+    def test_linux_only(self):
+        self.assertEqual("Linux", platform("Linux not a real browser/10.3"))
+
+
+class BrowserTemplateFilterTest(TestCase):
+    def test_ie(self):
+        self.assertEqual(
+            'Internet Explorer',
+            browser('Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 5.1; SV1; '
+                    '.NET CLR 2.0.50727)')
+        )
+        self.assertEqual(
+            'Internet Explorer',
+            browser('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; '
+                    'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322;'
+                    ' InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
+                    'MS-RTC LM 8; OfficeLiveConnector.1.4; OfficeLivePatch.1.3;'
+                    ' .NET CLR 3.0.30729)')
+        )
+        self.assertEqual(
+            'Internet Explorer',
+            browser('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; '
+                    'Trident/6.0)')
+        )
+        self.assertEqual(
+            'Internet Explorer',
+            browser('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; '
+                    'Win64; x64; Trident/6.0)')
+        )
+        self.assertEqual(
+            'Internet Explorer',
+            browser('Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; '
+                    '.NET4.0E; .NET4.0C; rv:11.0) like Gecko')
+        )
+
+    def test_edge(self):
+        self.assertEqual(
+            'Edge',
+            browser('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, '
+                    'like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136')
+        )
+        self.assertEqual(
+            'Edge',
+            browser('Mozilla/5.0 (Windows Mobile 10; Android 8.0.0; Microsoft; Lumia '
+                    '950XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.62 '
+                    'Mobile Safari/537.36 Edge/40.15254.369')
+        )
+
+    def test_edge_chromium(self):
+        self.assertEqual(
+            'Edge',
+            browser('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
+                    'Safari/537.36 Edg/81.0.416.62')
+        )
+        self.assertEqual(
+            'Edge',
+            browser('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
+                    'Safari/537.36 Edg/85.0.564.51')
+        )
+        self.assertEqual(
+            'Edge',
+            browser('Mozilla/5.0 (Linux; Android 11; Pixel 3 XL) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 '
+                    'Mobile Safari/537.36 EdgA/45.07.4.5059')
+        )
+
+    def test_safari(self):
+        self.assertEqual(
+            'Safari',
+            browser('Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; ja-jp) '
+                    'AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 '
+                    'Mobile/8C148 Safari/6533.18.5')
+        )
+        self.assertEqual(
+            'Safari',
+            browser('Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) '
+                    'AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 '
+                    'Mobile/11A465 Safari/9537.53')
+        )
+        self.assertEqual(
+            'Safari',
+            browser('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) '
+                    'AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 '
+                    'Safari/536.26.17')
+        )
+
+        self.assertEqual("Safari", browser("Not a legit OS Safari/5.2"))
+
+    def test_chrome(self):
+        self.assertEqual(
+            'Chrome',
+            browser('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) '
+                    'Chrome/85.0.4178.0 Safari/537.36')
+        )
+
+        self.assertEqual(
+            'Chrome',
+            browser('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
+                    'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
+        )
+
+        self.assertEqual("Chrome", browser("Not a legit OS Chrome/54.0.32"))
+
+    def test_firefox(self):
+        self.assertEqual(
+            'Firefox',
+            browser('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
+                    'Gecko/20100101 Firefox/77.0')
+        )
+
+        self.assertEqual(
+            'Firefox',
+            browser('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:22.0) '
+                    'Gecko/20130328 Firefox/22.0')
+        )
+
+        self.assertEqual("Firefox", browser("Not a legit OS Firefox/51.0"))
+
+    def test_android(self):
+        # androids identify themselves as Safari to get the good stuff
+        self.assertEqual(
+            'Safari',
+            browser('Mozilla/5.0 (Linux; U; Android 1.5; de-de; HTC Magic '
+                    'Build/CRB17) AppleWebKit/528.5+ (KHTML, like Gecko) '
+                    'Version/3.1.2 Mobile Safari/525.20.1')
+        )
 
 
 class DeviceTemplateFilterTest(TestCase):
