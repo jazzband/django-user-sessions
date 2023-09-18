@@ -14,7 +14,7 @@ urlpatterns = [
         ),
         name='home',
     ),
-    re_path(r'', include('user_sessions.urls', namespace='user_sessions')),
+    re_path(r'account/', include('user_sessions.urls', namespace='user_sessions')),
     re_path(r'^admin/', admin.site.urls),
 ]
 
