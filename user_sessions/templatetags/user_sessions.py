@@ -42,7 +42,7 @@ PLATFORMS = (
 @register.filter
 def platform(value):
     """
-    Transform a User Agent into human readable text.
+    Transform the platform from a User Agent into human readable text.
 
     Example output:
 
@@ -65,10 +65,10 @@ def platform(value):
 @register.filter
 def browser(value):
     """
-    Transform a User Agent into human readable text.
-    
+    Transform the browser from a User Agent into human readable text.
+
     Example output:
-    
+
     * Safari
     * Chrome
     * Safari
