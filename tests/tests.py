@@ -15,7 +15,9 @@ from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import browser, device, location, platform
+from user_sessions.templatetags.user_sessions import (
+    browser, device, location, platform,
+)
 from user_sessions.utils.tests import Client
 
 try:
