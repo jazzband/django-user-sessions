@@ -82,7 +82,8 @@ class ViewsTest(TestCase):
         self.user.session_set.create(session_key='ABC123', ip='127.0.0.1',
                                      expire_date=datetime.now() + timedelta(days=1),
                                      user_agent='Firefox')
-        response = self.client.get(reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            response = self.client.get(reverse('user_sessions:session_list'))
         self.assertContains(response, 'Active Sessions')
         self.assertContains(response, 'Firefox')
         self.assertNotContains(response, 'ABC123')
@@ -97,7 +98,8 @@ class ViewsTest(TestCase):
         self.user.session_set.create(ip='127.0.0.1', expire_date=datetime.now() + timedelta(days=1))
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete_other'))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
 
     def test_delete_some_other(self):
@@ -106,7 +108,8 @@ class ViewsTest(TestCase):
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[other.session_key]))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
 
 
@@ -126,33 +129,38 @@ class AdminTest(TestCase):
         self.admin_url = reverse('admin:user_sessions_session_changelist')
 
     def test_list(self):
-        response = self.client.get(self.admin_url)
+        with self.assertWarnsRegex(UserWarning, r"The address 1\.1\.1\.1 is not in the database"):
+            response = self.client.get(self.admin_url)
         self.assertContains(response, 'Select session to change')
         self.assertContains(response, '127.0.0.1')
         self.assertContains(response, '20.13.1.1')
         self.assertContains(response, '1.1.1.1')
 
     def test_search(self):
-        response = self.client.get(self.admin_url, {'q': 'bouke'})
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            response = self.client.get(self.admin_url, {'q': 'bouke'})
         self.assertContains(response, '127.0.0.1')
         self.assertNotContains(response, '20.13.1.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_mine(self):
         my_sessions = f"{self.admin_url}?{urlencode({'owner': 'my'})}"
-        response = self.client.get(my_sessions)
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            response = self.client.get(my_sessions)
         self.assertContains(response, '127.0.0.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_expired(self):
         expired = f"{self.admin_url}?{urlencode({'active': '0'})}"
-        response = self.client.get(expired)
+        with self.assertWarnsRegex(UserWarning, r"The address 20\.13\.1\.1 is not in the database"):
+            response = self.client.get(expired)
         self.assertContains(response, '20.13.1.1')
         self.assertNotContains(response, '1.1.1.1')
 
     def test_unexpired(self):
         unexpired = f"{self.admin_url}?{urlencode({'active': '1'})}"
-        response = self.client.get(unexpired)
+        with self.assertWarnsRegex(UserWarning, r"The address 1\.1\.1\.1 is not in the database"):
+            response = self.client.get(unexpired)
         self.assertContains(response, '1.1.1.1')
         self.assertNotContains(response, '20.13.1.1')
 
@@ -314,7 +322,12 @@ class ClientTest(TestCase):
 class LocationTemplateFilterTest(TestCase):
     @override_settings(GEOIP_PATH=None)
     def test_no_location(self):
-        self.assertEqual(location('127.0.0.1'), None)
+        with self.assertWarnsRegex(
+            UserWarning,
+            r"The address 127\.0\.0\.1 is not in the database",
+        ):
+            loc = location('127.0.0.1')
+        self.assertEqual(loc, None)
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
