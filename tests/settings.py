@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
@@ -56,7 +56,10 @@ TEMPLATES = [
     },
 ]
 
-GEOIP_PATH = BASE_DIR.parent / 'GeoLite2-City.mmdb'
+GEOIP_PATH = BASE_DIR / 'tests'
+GEOIP_CITY = 'test_city.mmdb'
+GEOIP_COUNTRY = 'test_country.mmdb'
+
 SESSION_ENGINE = 'user_sessions.backends.db'
 
 LOGIN_URL = '/admin/'

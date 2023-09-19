@@ -1,6 +1,8 @@
 /example/database.sqlite3
 /example/GeoLiteCity.dat
 /django_user_sessions.egg-info/
+/tests/test_city.mmdb
+/tests/test_country.mmdb
 
 /htmlcov/
 
