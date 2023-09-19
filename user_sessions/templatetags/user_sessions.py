@@ -98,7 +98,7 @@ def location(value):
         try:
             location = geoip() and geoip().country(value)
         except Exception as e:
-            warnings.warn(str(e))
+            warnings.warn(str(e), stacklevel=2)
             location = None
     if location and location['country_name']:
         if 'city' in location and location['city']:
@@ -118,5 +118,5 @@ def geoip():
             try:
                 _geoip = GeoIP2()
             except Exception as e:
-                warnings.warn(str(e))
+                warnings.warn(str(e), stacklevel=2)
     return _geoip
