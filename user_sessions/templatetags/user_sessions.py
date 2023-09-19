@@ -82,6 +82,22 @@ def device(value):
 
 
 @register.filter
+def city(value):
+    location = geoip() and geoip().city(value)
+    if location and location['city']:
+        return location['city']
+    return None
+
+
+@register.filter
+def country(value):
+    location = geoip() and geoip().country(value)
+    if location and location['country_name']:
+        return location['country_name']
+    return None
+
+
+@register.filter
 def location(value):
     """
     Transform an IP address into an approximate location.

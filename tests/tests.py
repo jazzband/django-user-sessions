@@ -15,7 +15,9 @@ from django.utils.timezone import now
 
 from user_sessions.backends.db import SessionStore
 from user_sessions.models import Session
-from user_sessions.templatetags.user_sessions import device, location
+from user_sessions.templatetags.user_sessions import (
+    city, country, device, location,
+)
 from user_sessions.utils.tests import Client
 
 try:
@@ -328,6 +330,14 @@ class LocationTemplateFilterTest(TestCase):
         ):
             loc = location('127.0.0.1')
         self.assertEqual(loc, None)
+
+    @skipUnless(geoip, geoip_msg)
+    def test_city(self):
+        self.assertEqual('San Diego', city('44.55.66.77'))
+
+    @skipUnless(geoip, geoip_msg)
+    def test_country(self):
+        self.assertEqual('United States', country('8.8.8.8'))
 
     @skipUnless(geoip, geoip_msg)
     def test_locations(self):
