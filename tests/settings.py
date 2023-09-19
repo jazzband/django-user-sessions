@@ -61,4 +61,4 @@ SESSION_ENGINE = 'user_sessions.backends.db'
 LOGIN_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/'
 
-SILENCED_SYSTEM_CHECKS = ['admin.E406', 'admin.E409', 'admin.E410']
+SILENCED_SYSTEM_CHECKS = ['admin.E406', 'admin.E409', 'admin.E410', 'admin.W411']
