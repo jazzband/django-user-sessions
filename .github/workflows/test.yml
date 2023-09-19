@@ -52,6 +52,7 @@ jobs:
         python -m pip install --upgrade tox tox-gh-actions
 
     - name: Tox tests
+      continue-on-error: ${{ endsWith(matrix.python-version, '-dev') || matrix.django-version == 'main' }}
       run: |
         tox -v
       env:
