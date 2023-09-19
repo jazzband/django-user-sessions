@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from unittest import skipUnless
 from unittest.mock import patch
 from urllib.parse import urlencode
@@ -82,7 +82,7 @@ class ViewsTest(TestCase):
 
     def test_list(self):
         self.user.session_set.create(session_key='ABC123', ip='127.0.0.1',
-                                     expire_date=datetime.now() + timedelta(days=1),
+                                     expire_date=now() + timedelta(days=1),
                                      user_agent='Firefox')
         with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
             response = self.client.get(reverse('user_sessions:session_list'))
@@ -97,7 +97,7 @@ class ViewsTest(TestCase):
         self.assertRedirects(response, '/')
 
     def test_delete_all_other(self):
-        self.user.session_set.create(ip='127.0.0.1', expire_date=datetime.now() + timedelta(days=1))
+        self.user.session_set.create(ip='127.0.0.1', expire_date=now() + timedelta(days=1))
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete_other'))
         with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
@@ -106,7 +106,7 @@ class ViewsTest(TestCase):
 
     def test_delete_some_other(self):
         other = self.user.session_set.create(session_key='OTHER', ip='127.0.0.1',
-                                             expire_date=datetime.now() + timedelta(days=1))
+                                             expire_date=now() + timedelta(days=1))
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[other.session_key]))
@@ -502,7 +502,7 @@ class DeviceTemplateFilterTest(TestCase):
 
 class ClearsessionsCommandTest(TestCase):
     def test_can_call(self):
-        Session.objects.create(expire_date=datetime.now() - timedelta(days=1),
+        Session.objects.create(expire_date=now() - timedelta(days=1),
                                ip='127.0.0.1')
         call_command('clearsessions')
         self.assertEqual(Session.objects.count(), 0)
