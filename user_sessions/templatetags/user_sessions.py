@@ -102,7 +102,7 @@ def location(value):
             location = None
     if location and location['country_name']:
         if 'city' in location and location['city']:
-            return '{}, {}'.format(location['city'], location['country_name'])
+            return f"{location['city']}, {location['country_name']}"
         return location['country_name']
     return None
 
