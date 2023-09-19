@@ -1,6 +1,7 @@
-import os
+from pathlib import Path
 
-BASE_DIR = os.path.dirname(__file__)
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
@@ -38,7 +39,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+            BASE_DIR / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -55,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-GEOIP_PATH = os.path.join(os.path.dirname(BASE_DIR), 'GeoLite2-City.mmdb')
+GEOIP_PATH = BASE_DIR.parent / 'GeoLite2-City.mmdb'
 SESSION_ENGINE = 'user_sessions.backends.db'
 
 LOGIN_URL = '/admin/'
