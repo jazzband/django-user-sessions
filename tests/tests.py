@@ -24,7 +24,7 @@ try:
     from django.contrib.gis.geoip2 import GeoIP2
     geoip = GeoIP2()
     geoip_msg = None
-except Exception as error_geoip2:
+except Exception as error_geoip2:  # pragma: no cover
     try:
         from django.contrib.gis.geoip import GeoIP
         geoip = GeoIP()
