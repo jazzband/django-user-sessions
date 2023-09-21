@@ -18,7 +18,8 @@ from user_sessions.models import Session
 from user_sessions.templatetags.user_sessions import (
     city, country, device, location,
 )
-from user_sessions.utils.tests import Client
+
+from .utils import Client
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2

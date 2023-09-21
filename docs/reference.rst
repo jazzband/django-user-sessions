@@ -22,7 +22,3 @@ Views
 -----
 .. autoclass:: user_sessions.views.SessionListView
 .. autoclass:: user_sessions.views.SessionDeleteView
-
-Unit tests
-----------
-.. autoclass:: user_sessions.utils.tests.Client
