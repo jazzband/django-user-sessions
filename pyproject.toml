@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+
+[project]
+name = "django-user-sessions"
+authors = [
+    {name = "Bouke Haarsma", email = "bouke@haarsma.eu"},
+    # {name = "Hugo Osvaldo Barrera", email = "hugo@whynothugo.nl"},
+]
+description = "Django sessions with a foreign key to the user"
+readme = "README.rst"
+# TOOD: drop 3.7
+requires-python = ">=3.7"
+keywords = ["django", "sessions"]
+license = {text = "MIT"}
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "Framework :: Django :: 3.2",
+  "Framework :: Django :: 4.0",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Security",
+]
+dependencies = [
+    "Django>=3.2",
+]
+dynamic = ["version"]
+
+[project.urls]
+homepage = "https://github.com/jazzband/django-user-sessions"
+download = "https://pypi.org/project/django-user-sessions/"
+documentation = "https://django-user-sessions.readthedocs.io/en/stable/"
+changelog = "https://django-user-sessions.readthedocs.io/en/stable/release-notes.html"
+issues = "https://github.com/jazzband/django-user-sessions/issues"
+
+[project.optional-dependencies]
+dev = [
+  # Example app
+  "django-debug-toolbar",
+  # Testing
+  "coverage",
+  "flake8",
+  "tox",
+  "tox-pyenv",
+  "detox",
+  "isort",
+  # Transifex
+  "transifex-client",
+  # Documentation
+  "Sphinx",
+  "sphinx_rtd_theme",
+  # Build
+  "wheel", # TODO: not required?
+  "bumpversion", # TODO: unused?
+  "twine",
+]
+
+[tool.setuptools]
+packages = ["user_sessions"]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+
+# TODO: confirm that package data is shipped properly
