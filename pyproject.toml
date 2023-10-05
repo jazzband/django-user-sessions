@@ -5,7 +5,6 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 name = "django-user-sessions"
 authors = [
     {name = "Bouke Haarsma", email = "bouke@haarsma.eu"},
-    # {name = "Hugo Osvaldo Barrera", email = "hugo@whynothugo.nl"},
 ]
 description = "Django sessions with a foreign key to the user"
 readme = "README.rst"
@@ -60,8 +59,7 @@ dev = [
   "Sphinx",
   "sphinx_rtd_theme",
   # Build
-  "wheel", # TODO: not required?
-  "bumpversion", # TODO: unused?
+  "bumpversion",
   "twine",
 ]
 
@@ -70,5 +68,3 @@ packages = ["user_sessions"]
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
-
-# TODO: confirm that package data is shipped properly

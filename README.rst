@@ -131,7 +131,7 @@ The following actions are required to push a new version:
 
     bumpversion [major|minor|patch]
     git push && git push --tags
-    python -m build --wheel --no-isolation
+    python -m build --wheel
     twine upload dist/*
 
 
