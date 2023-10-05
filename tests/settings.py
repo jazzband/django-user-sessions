@@ -48,6 +48,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
@@ -65,4 +66,4 @@ SESSION_ENGINE = 'user_sessions.backends.db'
 LOGIN_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/'
 
-SILENCED_SYSTEM_CHECKS = ['admin.E406', 'admin.E409', 'admin.E410', 'admin.W411']
+SILENCED_SYSTEM_CHECKS = ['admin.E406', 'admin.E409', 'admin.E410']
