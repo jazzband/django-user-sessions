@@ -33,27 +33,28 @@ the box:
 
 Template tags
 ~~~~~~~~~~~~~
-Four template tags are included.
 
-The first three are
-:meth:`~user_sessions.templatetags.user_sessions.browser`, which can be used
-to get just the browser from a session, and
-:meth:`~user_sessions.templatetags.user_sessions.platform`, which can be used
-to get just the hardware or operating system from a session, and
-:meth:`~user_sessions.templatetags.user_sessions.device`, which can be used to
-get both from a sesesion::
+- ``browser`` - used to get just
+  the browser from a session
+- ``platform`` - used to get just
+  the operating system from a session
+- ``device`` - used to get both
+  the user's browser and the operating system from a session
 
-    {% load user_sessions %}
-    {{ session.user_agent|device }} -> Safari on macOS
-    {{ session.user_agent|browser }}  -> Safari
-    {{ session.user_agent|platform }} -> macOS
+    .. code-block:: html+django
 
-The last one is
-:meth:`~user_sessions.templatetags.user_sessions.location`, which can be used
-to show an approximate location of the last IP address for a session::
+        {% load user_sessions %}
+        {{ session.user_agent|device }}   -> Safari on macOS
+        {{ session.user_agent|browser }}  -> Safari
+        {{ session.user_agent|platform }} -> macOS
 
-    {% load user_sessions %}
-    {{ session.ip|location }}       -> Zwolle, The Netherlands
+- ``location`` - used to show an
+  approximate location of the last IP address for a session
+
+    .. code-block:: html+django
+
+        {% load user_sessions %}
+        {{ session.ip|location }} -> Zwolle, The Netherlands
 
 
 Admin views
