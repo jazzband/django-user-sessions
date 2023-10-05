@@ -49,7 +49,7 @@ class SessionAdmin(admin.ModelAdmin):
 
     def get_search_fields(self, request):
         User = get_user_model()
-        return ('ip', 'user__%s' % getattr(User, 'USERNAME_FIELD', 'username'))
+        return ('ip', f"user__{getattr(User, 'USERNAME_FIELD', 'username')}")
 
     def is_valid(self, obj):
         return obj.expire_date > now()

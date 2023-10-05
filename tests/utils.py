@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpRequest
 from django.test import Client as BaseClient
 
-from ..backends.db import SessionStore
+from user_sessions.backends.db import SessionStore
 
 
 class Client(BaseClient):

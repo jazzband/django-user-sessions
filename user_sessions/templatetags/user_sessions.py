@@ -119,6 +119,22 @@ def device(value):
 
 
 @register.filter
+def city(value):
+    location = geoip() and geoip().city(value)
+    if location and location['city']:
+        return location['city']
+    return None
+
+
+@register.filter
+def country(value):
+    location = geoip() and geoip().country(value)
+    if location and location['country_name']:
+        return location['country_name']
+    return None
+
+
+@register.filter
 def location(value):
     """
     Transform an IP address into an approximate location.
@@ -135,11 +151,11 @@ def location(value):
         try:
             location = geoip() and geoip().country(value)
         except Exception as e:
-            warnings.warn(str(e))
+            warnings.warn(str(e), stacklevel=2)
             location = None
     if location and location['country_name']:
         if 'city' in location and location['city']:
-            return '{}, {}'.format(location['city'], location['country_name'])
+            return f"{location['city']}, {location['country_name']}"
         return location['country_name']
     return None
 
@@ -155,5 +171,5 @@ def geoip():
             try:
                 _geoip = GeoIP2()
             except Exception as e:
-                warnings.warn(str(e))
+                warnings.warn(str(e), stacklevel=2)
     return _geoip

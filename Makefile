@@ -13,7 +13,11 @@ check:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
 		python -Wd example/manage.py check
 
-test:
+generate-mmdb-fixtures:
+	docker --context=default buildx build -f tests/Dockerfile --tag test-mmdb-maker tests
+	docker run --rm --volume $$(pwd)/tests:/data test-mmdb-maker
+
+test: generate-mmdb-fixtures
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
 		django-admin.py test ${TARGET}
 
