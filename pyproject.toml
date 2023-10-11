@@ -48,11 +48,9 @@ dev = [
   "django-debug-toolbar",
   # Testing
   "coverage",
-  "flake8",
   "tox",
   "tox-pyenv",
   "detox",
-  "isort",
   # Transifex
   "transifex-client",
   # Documentation
@@ -62,6 +60,10 @@ dev = [
   "bumpversion",
   "twine",
 ]
+
+[tool.ruff]
+exclude = ["user_sessions/migrations/*.py"]
+line-length = 100
 
 [tool.setuptools]
 packages = ["user_sessions"]
