@@ -1,6 +1,8 @@
 import time
 
 from django.conf import settings
+from django.contrib.sessions.backends.base import UpdateError
+from django.core.exceptions import SuspiciousOperation
 from django.utils.cache import patch_vary_headers
 from django.utils.http import cookie_date
 
@@ -23,6 +25,7 @@ class SessionMiddleware(MiddlewareMixin):
     def process_request(self, request):
         engine = import_module(settings.SESSION_ENGINE)
         session_key = request.COOKIES.get(settings.SESSION_COOKIE_NAME, None)
+        breakpoint()
         if 'HTTP_X_FORWARDED_FOR' in request.META:
             request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(",")[0].strip()
         request.session = engine.SessionStore(
@@ -58,6 +61,15 @@ class SessionMiddleware(MiddlewareMixin):
                     namespace = request.resolver_match.namespace.split(':')[0]
                     if namespace:
                         request.session.save(namespace=namespace)
+                    else:
+                        try:
+                            request.session.save()
+                        except UpdateError:
+                            raise SuspiciousOperation(
+                                "The request's session was deleted before the "
+                                "request completed. The user may have logged "
+                                "out in a concurrent request, for example."
+                            )
                     response.set_cookie(
                         settings.SESSION_COOKIE_NAME,
                         request.session.session_key,
