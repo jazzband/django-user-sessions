@@ -40,6 +40,12 @@ class Session(models.Model):
                                    primary_key=True)
     session_data = models.TextField(_('session data'))
     expire_date = models.DateTimeField(_('expiry date'), db_index=True)
+    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+                             null=True, on_delete=models.CASCADE)
+    user_agent = models.CharField(null=True, blank=True, max_length=200)
+    last_activity = models.DateTimeField(auto_now=True)
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
+
     objects = SessionManager()
 
     class Meta:
@@ -48,9 +54,3 @@ class Session(models.Model):
 
     def get_decoded(self):
         return SessionStore(None, None).decode(self.session_data)
-
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
-                             null=True, on_delete=models.CASCADE)
-    user_agent = models.CharField(null=True, blank=True, max_length=200)
-    last_activity = models.DateTimeField(auto_now=True)
-    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
