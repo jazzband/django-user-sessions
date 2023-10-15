@@ -13,6 +13,7 @@ class SessionStore(DBStore):
         self.ip = ip
         self.user_id = None
 
+    # Used by superclass to get self.model, which is used elsewhere
     @classmethod
     def get_model_class(cls):
         # Avoids a circular import and allows importing SessionStore when
@@ -26,6 +27,7 @@ class SessionStore(DBStore):
             self.user_id = value
         super().__setitem__(key, value)
 
+    # Used in DBStore.load()
     def _get_session_from_db(self):
         s = super()._get_session_from_db()
         self.user_id = s.user_id
@@ -38,6 +40,7 @@ class SessionStore(DBStore):
         super().create()
         self._session_cache = {}
 
+    # Used in DBStore.save()
     def create_model_instance(self, data):
         """
         Return a new instance of the session model object, which represents the
