@@ -1,8 +1,6 @@
-from django.urls import path, re_path
+from django.urls import path
 
-from user_sessions.views import SessionDeleteOtherView
-
-from .views import SessionDeleteView, SessionListView
+from .views import SessionDeleteOtherView, SessionDeleteView, SessionListView
 
 app_name = 'user_sessions'
 urlpatterns = [
@@ -16,8 +14,8 @@ urlpatterns = [
         view=SessionDeleteOtherView.as_view(),
         name='session_delete_other',
     ),
-    re_path(
-        r'^account/sessions/(?P<pk>\w+)/delete/$',
+    path(
+        'account/sessions/<str:pk>/delete/',
         view=SessionDeleteView.as_view(),
         name='session_delete',
     ),
