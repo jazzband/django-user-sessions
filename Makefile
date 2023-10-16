@@ -1,9 +1,9 @@
 TARGET?=tests
 
-.PHONY: flake8 example test coverage
+.PHONY: ruff example test coverage
 
-flake8:
-	flake8 user_sessions example tests
+ruff:
+	ruff user_sessions example tests
 
 example:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
