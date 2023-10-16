@@ -17,7 +17,7 @@ from pkg_resources import get_distribution
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 
-import django
+import django  # noqa: E402
 
 django.setup()
 
