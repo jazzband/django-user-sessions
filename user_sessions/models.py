@@ -1,29 +1,18 @@
 from django.conf import settings
+from django.contrib.sessions.base_session import (
+    AbstractBaseSession, BaseSessionManager,
+)
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from .backends.db import SessionStore
 
 
-class SessionManager(models.Manager):
+class SessionManager(BaseSessionManager):
     use_in_migrations = True
 
-    def encode(self, session_dict):
-        """
-        Returns the given session dictionary serialized and encoded as a string.
-        """
-        return SessionStore().encode(session_dict)
 
-    def save(self, session_key, session_dict, expire_date):
-        s = self.model(session_key, self.encode(session_dict), expire_date)
-        if session_dict:
-            s.save()
-        else:
-            s.delete()  # Clear sessions with no data.
-        return s
-
-
-class Session(models.Model):
+# https://docs.djangoproject.com/en/4.2/topics/http/sessions/#extending-database-backed-session-engines
+class Session(AbstractBaseSession):
     """
     Session objects containing user session information.
 
@@ -36,10 +25,6 @@ class Session(models.Model):
     Additionally this session object providers the following properties:
     ``user``, ``user_agent`` and ``ip``.
     """
-    session_key = models.CharField(_('session key'), max_length=40,
-                                   primary_key=True)
-    session_data = models.TextField(_('session data'))
-    expire_date = models.DateTimeField(_('expiry date'), db_index=True)
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
                              null=True, on_delete=models.CASCADE)
     user_agent = models.CharField(null=True, blank=True, max_length=200)
@@ -48,9 +33,7 @@ class Session(models.Model):
 
     objects = SessionManager()
 
-    class Meta:
-        verbose_name = _('session')
-        verbose_name_plural = _('sessions')
-
-    def get_decoded(self):
-        return SessionStore(None, None).decode(self.session_data)
+    # Used in get_decoded
+    @classmethod
+    def get_session_store_class(cls):
+        return SessionStore
