@@ -18,3 +18,11 @@ repos:
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
+  - repo: local
+    hooks:
+      - id: generate-mmdb-fixtures
+        name: Regenerate MaxMind database files
+        language: system
+        entry: make tests/test_city.mmdb tests/test_country.mmdb
+        always_run: true
+        pass_filenames: false
