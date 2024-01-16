@@ -11,7 +11,7 @@ jobs:
       max-parallel: 5
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12-dev']
-        django-version: ['3.2', '4.0', '4.1', '4.2', 'main']
+        django-version: ['3.2', '4.2', 'main']
         include:
           - python-version: '3.7'
             django-version: '3.2'
