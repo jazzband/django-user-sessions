@@ -18,5 +18,5 @@ urlpatterns = [
     path('', empty),
     path('modify_session/', modify_session),
     path('admin/', admin.site.urls),
-    path('', include('user_sessions.urls', namespace='user_sessions')),
+    path('account/', include('user_sessions.urls', namespace='user_sessions')),
 ]
