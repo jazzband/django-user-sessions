@@ -49,21 +49,21 @@ class LocationTemplateFilterTest(TestCase):
 class PlatformTemplateFilterTest(TestCase):
     def test_windows(self):
         # Generic Windows
-        self.assertEqual("Windows XP", platform("NT 5.1 not a real browser/10.3"))
-        self.assertEqual("Windows Vista", platform("NT 6.0 not a real browser/10.3"))
-        self.assertEqual("Windows 7", platform("NT 6.1 not a real browser/10.3"))
-        self.assertEqual("Windows 8", platform("NT 6.2 not a real browser/10.3"))
-        self.assertEqual("Windows 8.1", platform("NT 6.3 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows NT 5.1 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows NT 6.0 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows NT 6.1 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows NT 6.2 not a real browser/10.3"))
+        self.assertEqual("Windows", platform("Windows NT 6.3 not a real browser/10.3"))
         self.assertEqual("Windows", platform("Windows not a real browser/10.3"))
 
         # IE
         self.assertEqual(
-            'Windows XP',
+            'Windows',
             platform('Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 5.1; SV1; '
                      '.NET CLR 2.0.50727)')
         )
         self.assertEqual(
-            'Windows Vista',
+            'Windows',
             platform('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; '
                      'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322;'
                      ' InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
@@ -71,24 +71,24 @@ class PlatformTemplateFilterTest(TestCase):
                      ' .NET CLR 3.0.30729)')
         )
         self.assertEqual(
-            'Windows 7',
+            'Windows',
             platform('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; '
                      'Trident/6.0)')
         )
         self.assertEqual(
-            'Windows 8',
+            'Windows',
             platform('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; '
                      'Win64; x64; Trident/6.0)')
         )
         self.assertEqual(
-            'Windows 8.1',
+            'Windows',
             platform('Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; '
                      '.NET4.0E; .NET4.0C; rv:11.0) like Gecko')
         )
 
         # Edge
         self.assertEqual(
-            'Windows 10',
+            'Windows',
             platform('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, '
                      'like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136')
         )
@@ -101,7 +101,7 @@ class PlatformTemplateFilterTest(TestCase):
 
         # Edge Chromium
         self.assertEqual(
-            'Windows 10',
+            'Windows',
             platform('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
                      'Safari/537.36 Edg/81.0.416.62')
@@ -109,14 +109,14 @@ class PlatformTemplateFilterTest(TestCase):
 
         # Firefox
         self.assertEqual(
-            'Windows 7',
+            'Windows',
             platform('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:22.0) '
                      'Gecko/20130328 Firefox/22.0')
         )
 
         # Chrome
         self.assertEqual(
-            'Windows 8.1',
+            'Windows',
             platform('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
                      'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
         )
@@ -143,13 +143,13 @@ class PlatformTemplateFilterTest(TestCase):
         )
 
         self.assertEqual(
-            'macOS Mojave',
+            'macOS',
             platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
                      'AppleWebKit/537.36 (KHTML, like Gecko) '
                      'Chrome/85.0.4178.0 Safari/537.36')
         )
         self.assertEqual(
-            'macOS Catalina',
+            'macOS',
             platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
                      'Gecko/20100101 Firefox/77.0')
         )
@@ -162,7 +162,7 @@ class PlatformTemplateFilterTest(TestCase):
 
         # Edge Chromium
         self.assertEqual(
-            'macOS Catalina',
+            'macOS',
             platform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
                      'Safari/537.36 Edg/85.0.564.51')
@@ -319,12 +319,12 @@ class BrowserTemplateFilterTest(TestCase):
 class DeviceTemplateFilterTest(TestCase):
     def test_ie(self):
         self.assertEqual(
-            'Internet Explorer on Windows XP',
+            'Internet Explorer on Windows',
             device('Mozilla/4.0 (Windows; MSIE 6.0; Windows NT 5.1; SV1; '
                    '.NET CLR 2.0.50727)')
         )
         self.assertEqual(
-            'Internet Explorer on Windows Vista',
+            'Internet Explorer on Windows',
             device('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; '
                    'Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 1.1.4322;'
                    ' InfoPath.2; .NET CLR 3.5.21022; .NET CLR 3.5.30729; '
@@ -332,17 +332,17 @@ class DeviceTemplateFilterTest(TestCase):
                    ' .NET CLR 3.0.30729)')
         )
         self.assertEqual(
-            'Internet Explorer on Windows 7',
+            'Internet Explorer on Windows',
             device('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; '
                    'Trident/6.0)')
         )
         self.assertEqual(
-            'Internet Explorer on Windows 8',
+            'Internet Explorer on Windows',
             device('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; '
                    'Win64; x64; Trident/6.0)')
         )
         self.assertEqual(
-            'Internet Explorer on Windows 8.1',
+            'Internet Explorer on Windows',
             device('Mozilla/5.0 (IE 11.0; Windows NT 6.3; Trident/7.0; '
                    '.NET4.0E; .NET4.0C; rv:11.0) like Gecko')
         )
@@ -361,13 +361,13 @@ class DeviceTemplateFilterTest(TestCase):
                    'Mobile/11A465 Safari/9537.53')
         )
         self.assertEqual(
-            'Chrome on macOS Mojave',
+            'Chrome on macOS',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) '
                    'Chrome/85.0.4178.0 Safari/537.36')
         )
         self.assertEqual(
-            'Firefox on macOS Catalina',
+            'Firefox on macOS',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) '
                    'Gecko/20100101 Firefox/77.0')
         )
@@ -389,21 +389,21 @@ class DeviceTemplateFilterTest(TestCase):
 
     def test_firefox(self):
         self.assertEqual(
-            'Firefox on Windows 7',
+            'Firefox on Windows',
             device('Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:22.0) '
                    'Gecko/20130328 Firefox/22.0')
         )
 
     def test_chrome(self):
         self.assertEqual(
-            'Chrome on Windows 8.1',
+            'Chrome on Windows',
             device('Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 ('
                    'KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36')
         )
 
     def test_edge(self):
         self.assertEqual(
-            'Edge on Windows 10',
+            'Edge on Windows',
             device('Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, '
                    'like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136')
         )
@@ -416,13 +416,13 @@ class DeviceTemplateFilterTest(TestCase):
 
     def test_edge_chromium(self):
         self.assertEqual(
-            'Edge on Windows 10',
+            'Edge on Windows',
             device('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 '
                    'Safari/537.36 Edg/81.0.416.62')
         )
         self.assertEqual(
-            'Edge on macOS Catalina',
+            'Edge on macOS',
             device('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) '
                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 '
                    'Safari/537.36 Edg/85.0.564.51')
@@ -453,19 +453,19 @@ class DeviceTemplateFilterTest(TestCase):
         self.assertEqual("iPhone", device("iPhone not a real browser/10.3"))
 
     def test_windowsxp_only(self):
-        self.assertEqual("Windows XP", device("NT 5.1 not a real browser/10.3"))
+        self.assertEqual("Windows", device("Windows NT 5.1 not a real browser/10.3"))
 
     def test_windowsvista_only(self):
-        self.assertEqual("Windows Vista", device("NT 6.0 not a real browser/10.3"))
+        self.assertEqual("Windows", device("Windows NT 6.0 not a real browser/10.3"))
 
     def test_windows7_only(self):
-        self.assertEqual("Windows 7", device("NT 6.1 not a real browser/10.3"))
+        self.assertEqual("Windows", device("Windows NT 6.1 not a real browser/10.3"))
 
     def test_windows8_only(self):
-        self.assertEqual("Windows 8", device("NT 6.2 not a real browser/10.3"))
+        self.assertEqual("Windows", device("Windows NT 6.2 not a real browser/10.3"))
 
     def test_windows81_only(self):
-        self.assertEqual("Windows 8.1", device("NT 6.3 not a real browser/10.3"))
+        self.assertEqual("Windows", device("Windows NT 6.3 not a real browser/10.3"))
 
     def test_windows_only(self):
         self.assertEqual("Windows", device("Windows not a real browser/10.3"))
