@@ -1,5 +1,6 @@
 from unittest import skipUnless
 
+import django
 from django.test import TestCase
 from django.test.utils import override_settings
 
@@ -37,12 +38,22 @@ class LocationTemplateFilterTest(TestCase):
         self.assertEqual('San Diego', city('44.55.66.77'))
 
     @skipUnless(geoip, geoip_msg)
-    def test_country(self):
+    @skipUnless(django.VERSION < (5, 1), "Django 5.1 looks up country using city DB")
+    def test_country_pre_51(self):
         self.assertEqual('United States', country('8.8.8.8'))
 
     @skipUnless(geoip, geoip_msg)
-    def test_locations(self):
+    @skipUnless(django.VERSION >= (5, 1), "Django 5.1 looks up country using city DB")
+    def test_country_51_and_above(self):
+        self.assertEqual('United States', country('44.55.66.77'))
+
+    @skipUnless(geoip, geoip_msg)
+    @skipUnless(django.VERSION < (5, 1), "Django 5.1 looks up country using city DB")
+    def test_locations_country_only_pre_51(self):
         self.assertEqual('United States', location('8.8.8.8'))
+
+    @skipUnless(geoip, geoip_msg)
+    def test_location_in_city(self):
         self.assertEqual('San Diego, United States', location('44.55.66.77'))
 
 
