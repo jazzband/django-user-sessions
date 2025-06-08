@@ -13,6 +13,7 @@ Contents:
 
    installation
    usage
+   testing
    reference
    release-notes
 
