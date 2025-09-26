@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+3.0.1
+----------
+* Fix for release workflow with pyproject.toml and uv.
+
 3.0.0
 ----------
 * New: Support for Python 3.11 and 3.12.
