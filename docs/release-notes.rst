@@ -1,6 +1,23 @@
 Release Notes
 =============
 
+3.0.0
+----------
+* New: Support for Python 3.11 and 3.12.
+* Dropped Python 3.7 support.
+* New: Support for Django 4.2.
+* Dropped Django 4.0 and 4.1 support.
+* New: Added city and country template tags for GeoIP data.
+* New: Added UserSessionsConfig class for better Django app configuration.
+* Switch from setup.py to pyproject.toml for modern Python packaging.
+* Switch from flake8 to ruff for code linting.
+* Use importlib.metadata instead of deprecated pkg_resources.
+* Improved platform detection for macOS and Windows (removed version numbers).
+* Use timezone-aware datetime handling.
+* Modernized test configuration and improved test coverage.
+* Updated translations.
+* Various code improvements and simplifications.
+
 2.0.0
 ----------
 * New: Support for Django 3.2 and 4.0
