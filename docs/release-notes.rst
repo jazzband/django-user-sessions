@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+3.0.3
+----------
+* Final!! fix for release workflow.
+
 3.0.2
 ----------
 * Second fix for release workflow.
