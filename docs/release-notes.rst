@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+development
+-----------
+* Breaking: Tweak URLConf and update instructions on how to include it (#164).
+
 2.0.0
 ----------
 * New: Support for Django 3.2 and 4.0
