@@ -47,17 +47,3 @@ city_writer.insert_network(
 )
 
 city_writer.to_db_file("tests/test_city.mmdb")
-
-# country_writer = MMDBWriter(
-#     IPSet(["8.8.8.8/32"]),
-#     {
-#         "country": {
-#             "iso_code": "US",
-#             "names": {
-#                 "en": "United States",
-#             },
-#         },
-#     },
-# )
-
-# country_writer.to_db_file("tests/test_country.mmdb")
