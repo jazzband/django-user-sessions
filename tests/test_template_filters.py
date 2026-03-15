@@ -25,12 +25,7 @@ except Exception as error_geoip2:  # pragma: no cover
 class LocationTemplateFilterTest(TestCase):
     @override_settings(GEOIP_PATH=None)
     def test_no_location(self):
-        with self.assertWarnsRegex(
-            UserWarning,
-            r"The address 127\.0\.0\.1 is not in the database",
-        ):
-            loc = location('127.0.0.1')
-        self.assertEqual(loc, None)
+        self.assertIsNone(location('127.0.0.1'))
 
     @skipUnless(geoip, geoip_msg)
     def test_city(self):

@@ -12,22 +12,22 @@ requires-python = ">=3.8"
 keywords = ["django", "sessions"]
 license = {text = "MIT"}
 classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Environment :: Web Environment",
-  "Framework :: Django",
-  "Framework :: Django :: 3.2",
-  "Framework :: Django :: 4.2",
-  "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Topic :: Security",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
 ]
 dependencies = [
     "Django>=3.2",
@@ -43,21 +43,21 @@ issues = "https://github.com/jazzband/django-user-sessions/issues"
 
 [project.optional-dependencies]
 dev = [
-  # Example app
-  "django-debug-toolbar",
-  # Testing
-  "coverage",
-  "tox",
-  "tox-pyenv",
-  "detox",
-  # Transifex
-  "transifex-client",
-  # Documentation
-  "Sphinx",
-  "sphinx_rtd_theme",
-  # Build
-  "bumpversion",
-  "twine",
+    # Example app
+    "django-debug-toolbar",
+    # Testing
+    "coverage",
+    "tox",
+    "tox-pyenv",
+    "detox",
+    # Transifex
+    "transifex-client",
+    # Documentation
+    "Sphinx",
+    "sphinx_rtd_theme",
+    # Build
+    "bumpversion",
+    "twine",
 ]
 
 [tool.ruff]
