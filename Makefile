@@ -14,8 +14,7 @@ check:
 		python -Wd example/manage.py check
 
 generate-mmdb-fixtures:
-	docker --context=default buildx build -f tests/Dockerfile --tag test-mmdb-maker tests
-	docker run --rm --volume $$(pwd)/tests:/data test-mmdb-maker
+	[ -e tests/test_city.mmdb ] || python3 generate_mmdb.py
 
 test: generate-mmdb-fixtures
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \

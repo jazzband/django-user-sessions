@@ -58,6 +58,7 @@ dev = [
     # Build
     "bumpversion",
     "twine",
+    "mmdb-writer",
 ]
 
 [tool.ruff]
