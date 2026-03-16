@@ -4,7 +4,7 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 [project]
 name = "django-user-sessions"
 authors = [
-    {name = "Bouke Haarsma", email = "bouke@haarsma.eu"},
+  {name = "Bouke Haarsma", email = "bouke@haarsma.eu"},
 ]
 description = "Django sessions with a foreign key to the user"
 readme = "README.rst"
@@ -30,7 +30,7 @@ classifiers = [
   "Topic :: Security",
 ]
 dependencies = [
-    "Django>=3.2",
+  "Django>=3.2",
 ]
 dynamic = ["version"]
 
