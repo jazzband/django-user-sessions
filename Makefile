@@ -1,29 +1,31 @@
 TARGET?=tests
 
-.PHONY: ruff example test coverage
+.PHONY: ruff example test coverage generate-mmdb-fixtures
 
 ruff:
 	ruff user_sessions example tests
 
 example:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
-		django-admin.py runserver
+		django-admin runserver
 
 check:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
 		python -Wd example/manage.py check
 
-generate-mmdb-fixtures:
-	docker --context=default buildx build -f tests/Dockerfile --tag test-mmdb-maker tests
-	docker run --rm --volume $$(pwd)/tests:/data test-mmdb-maker
+$(TARGET)/test_city.mmdb $(TARGET)/test_country.mmdb: $(TARGET)/generate_mmdb.py
+	python3 $(TARGET)/generate_mmdb.py
+	stat $@
+
+generate-mmdb-fixtures: $(TARGET)/test_city.mmdb $(TARGET)/test_country.mmdb
 
 test: generate-mmdb-fixtures
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		django-admin.py test ${TARGET}
+		django-admin test ${TARGET}
 
 migrations:
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		django-admin.py makemigrations user_sessions
+		django-admin makemigrations user_sessions
 
 coverage:
 	coverage erase
@@ -34,8 +36,8 @@ coverage:
 
 tx-pull:
 	tx pull -a
-	cd user_sessions; django-admin.py compilemessages
+	cd user_sessions; django-admin compilemessages
 
 tx-push:
-	cd user_sessions; django-admin.py makemessages -l en
+	cd user_sessions; django-admin makemessages -l en
 	tx push -s

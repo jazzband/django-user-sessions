@@ -107,7 +107,10 @@ def device(value):
 
 @register.filter
 def city(value):
-    location = geoip() and geoip().city(value)
+    try:
+        location = geoip() and geoip().city(value)
+    except Exception:
+        location = None
     if location and location['city']:
         return location['city']
     return None
@@ -115,7 +118,11 @@ def city(value):
 
 @register.filter
 def country(value):
-    location = geoip() and geoip().country(value)
+    try:
+        location = geoip() and geoip().country(value)
+    except Exception as e:
+        warnings.warn(str(e), stacklevel=2)
+        location = geoip() and geoip().city(value)
     if location and location['country_name']:
         return location['country_name']
     return None

@@ -3,6 +3,7 @@ from unittest import skipUnless
 from django.test import TestCase
 from django.test.utils import override_settings
 
+from user_sessions.templatetags import user_sessions
 from user_sessions.templatetags.user_sessions import (
     browser, city, country, device, location, platform,
 )
@@ -13,24 +14,23 @@ try:
     geoip = GeoIP2()
     geoip_msg = None
 except Exception as error_geoip2:  # pragma: no cover
-    try:
-        from django.contrib.gis.geoip import GeoIP
-        geoip = GeoIP()
-        geoip_msg = None
-    except Exception as error_geoip:
-        geoip = None
-        geoip_msg = str(error_geoip2) + " and " + str(error_geoip)
+    geoip = None
+    geoip_msg = str(error_geoip2)
 
 
 class LocationTemplateFilterTest(TestCase):
-    @override_settings(GEOIP_PATH=None)
+    def setUp(self):
+        # Remove the cached GeoIP object, since it caches the database type and
+        # this fails when we switch between city and country MMDB files
+        user_sessions._geoip = None
+
+    @override_settings(GEOIP_CITY="")
     def test_no_location(self):
         with self.assertWarnsRegex(
             UserWarning,
             r"The address 127\.0\.0\.1 is not in the database",
         ):
-            loc = location('127.0.0.1')
-        self.assertEqual(loc, None)
+            self.assertIsNone(location('127.0.0.1'))
 
     @skipUnless(geoip, geoip_msg)
     def test_city(self):
@@ -44,6 +44,40 @@ class LocationTemplateFilterTest(TestCase):
     def test_locations(self):
         self.assertEqual('United States', location('8.8.8.8'))
         self.assertEqual('San Diego, United States', location('44.55.66.77'))
+
+
+@override_settings(GEOIP_CITY="doesnt_exist")
+class CountryLocationTemplateFilterTest(TestCase):
+    def setUp(self):
+        # Remove the cached GeoIP object, since it caches the database type and
+        # this fails when we switch between city and country MMDB files
+        user_sessions._geoip = None
+
+    def test_no_location(self):
+        with self.assertWarnsRegex(
+            UserWarning,
+            r"The address 127\.0\.0\.1 is not in the database",
+        ):
+            self.assertIsNone(location('127.0.0.1'))
+
+    @skipUnless(geoip, geoip_msg)
+    def test_city(self):
+        self.assertIsNone(city('55.66.77.88'))
+        self.assertIsNone(city('8.8.4.4'))
+        # Make sure it isn't somehow pulling any IP addresses from the city
+        # database
+        self.assertIsNone(city('44.55.66.77'))
+        self.assertIsNone(city('8.8.8.8'))
+
+    @skipUnless(geoip, geoip_msg)
+    def test_country(self):
+        self.assertEqual('United States', country('55.66.77.88'))
+        self.assertEqual('United States', country('8.8.4.4'))
+
+    @skipUnless(geoip, geoip_msg)
+    def test_locations(self):
+        self.assertEqual('United States', location('55.66.77.88'))
+        self.assertEqual('United States', location('8.8.4.4'))
 
 
 class PlatformTemplateFilterTest(TestCase):
