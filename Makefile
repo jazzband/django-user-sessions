@@ -1,6 +1,6 @@
 TARGET?=tests
 
-.PHONY: ruff example test coverage
+.PHONY: ruff example test coverage generate-mmdb-fixtures
 
 ruff:
 	ruff user_sessions example tests
@@ -13,8 +13,11 @@ check:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
 		python -Wd example/manage.py check
 
-generate-mmdb-fixtures:
-	[ -e tests/test_city.mmdb ] || python3 generate_mmdb.py
+$(TARGET)/test_city.mmdb $(TARGET)/test_country.mmdb: $(TARGET)/generate_mmdb.py
+	python3 $(TARGET)/generate_mmdb.py
+	stat $@
+
+generate-mmdb-fixtures: $(TARGET)/test_city.mmdb $(TARGET)/test_country.mmdb
 
 test: generate-mmdb-fixtures
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \

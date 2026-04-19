@@ -3,7 +3,7 @@ from netaddr import IPSet
 from mmdb_writer import MMDBWriter
 
 
-city_writer = MMDBWriter()
+city_writer = MMDBWriter(database_type="GeoIP2-City")
 
 city_writer.insert_network(
     IPSet(["44.55.66.77/32"]),
@@ -45,19 +45,41 @@ city_writer.insert_network(
         ],
     },
 )
-
+city_writer.insert_network(
+    IPSet(["8.8.8.8/32"]),
+    {
+        "country": {
+            "iso_code": "US",
+            "names": {
+                "en": "United States",
+            },
+        },
+    },
+)
 city_writer.to_db_file("tests/test_city.mmdb")
 
-# country_writer = MMDBWriter(
-#     IPSet(["8.8.8.8/32"]),
-#     {
-#         "country": {
-#             "iso_code": "US",
-#             "names": {
-#                 "en": "United States",
-#             },
-#         },
-#     },
-# )
+country_writer = MMDBWriter(database_type="GeoIP2-Country")
+country_writer.insert_network(
+    IPSet(["55.66.77.88/32"]),
+    {
+        "country": {
+            "iso_code": "US",
+            "names": {
+                "en": "United States",
+            },
+        },
+    },
+)
+country_writer.insert_network(
+    IPSet(["8.8.4.4/32"]),
+    {
+        "country": {
+            "iso_code": "US",
+            "names": {
+                "en": "United States",
+            },
+        },
+    },
+)
 
-# country_writer.to_db_file("tests/test_country.mmdb")
+country_writer.to_db_file("tests/test_country.mmdb")

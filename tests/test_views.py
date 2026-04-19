@@ -20,7 +20,8 @@ class ViewsTest(TestCase):
         self.user.session_set.create(session_key='ABC123', ip='127.0.0.1',
                                      expire_date=now() + timedelta(days=1),
                                      user_agent='Firefox')
-        response = self.client.get(reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            response = self.client.get(reverse('user_sessions:session_list'))
         self.assertContains(response, 'Active Sessions')
         self.assertContains(response, 'Firefox')
         self.assertNotContains(response, 'ABC123')
@@ -35,7 +36,8 @@ class ViewsTest(TestCase):
         self.user.session_set.create(ip='127.0.0.1', expire_date=now() + timedelta(days=1))
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete_other'))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
 
     def test_delete_some_other(self):
@@ -44,5 +46,6 @@ class ViewsTest(TestCase):
         self.assertEqual(self.user.session_set.count(), 2)
         response = self.client.post(reverse('user_sessions:session_delete',
                                             args=[other.session_key]))
-        self.assertRedirects(response, reverse('user_sessions:session_list'))
+        with self.assertWarnsRegex(UserWarning, r"The address 127\.0\.0\.1 is not in the database"):
+            self.assertRedirects(response, reverse('user_sessions:session_list'))
         self.assertEqual(self.user.session_set.count(), 1)
