@@ -50,6 +50,16 @@ $city_tree->insert_network(
     },
 );
 
+# Django >= 5.1 GeoIP2 queries the city database (when configured) for
+# country lookups too, so the city db needs this country-only record.
+$city_tree->insert_network(
+    '8.8.8.8/32',
+    {
+        continent => { code => 'NA', names => {en => 'North America'} },
+        country   => { iso_code => 'US', names => {en => 'United States'} },
+    },
+);
+
 my $outfile = ($ENV{'DATA_DIR'} || '/data/') . ($ENV{'CITY_FILENAME'} || 'test_city.mmdb');
 open my $fh, '>:raw', $outfile;
 $city_tree->write_tree($fh);

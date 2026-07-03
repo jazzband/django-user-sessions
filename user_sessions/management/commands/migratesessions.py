@@ -15,7 +15,7 @@ def get_model_class(full_model_name):
         package = importlib.import_module(old_model_package)
         return getattr(package, old_model_class_name)
     except RuntimeError as e:
-        if 'INSTALLED_APPS' in e.message:
+        if 'INSTALLED_APPS' in str(e):
             raise RuntimeError(
                 "To run this command, temporarily append '{model}' to settings.INSTALLED_APPS"
                 .format(model=old_model_package.rsplit('.models')[0]))

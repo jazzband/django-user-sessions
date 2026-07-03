@@ -7,7 +7,7 @@ ruff:
 
 example:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
-		django-admin.py runserver
+		django-admin runserver
 
 check:
 	DJANGO_SETTINGS_MODULE=example.settings PYTHONPATH=. \
@@ -19,11 +19,11 @@ generate-mmdb-fixtures:
 
 test: generate-mmdb-fixtures
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		django-admin.py test ${TARGET}
+		django-admin test ${TARGET}
 
 migrations:
 	DJANGO_SETTINGS_MODULE=tests.settings PYTHONPATH=. \
-		django-admin.py makemigrations user_sessions
+		django-admin makemigrations user_sessions
 
 coverage:
 	coverage erase
@@ -34,8 +34,8 @@ coverage:
 
 tx-pull:
 	tx pull -a
-	cd user_sessions; django-admin.py compilemessages
+	cd user_sessions; django-admin compilemessages
 
 tx-push:
-	cd user_sessions; django-admin.py makemessages -l en
+	cd user_sessions; django-admin makemessages -l en
 	tx push -s
