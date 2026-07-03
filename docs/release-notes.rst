@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+3.0.0
+----------
+* New: Support for Django 5.2 and 6.0.
+* New: Support for Python 3.13.
+* Dropped support for Django 3.2 and 4.2 (both end-of-life).
+* Dropped support for Python 3.7, 3.8 and 3.9.
+
 2.0.0
 ----------
 * New: Support for Django 3.2 and 4.0
