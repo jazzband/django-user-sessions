@@ -145,3 +145,9 @@ class AsyncSessionStoreTest(TestCase):
 
         session = await Session.objects.aget(pk=self.store.session_key)
         self.assertEqual(session.user_id, 1)
+
+    async def test_aset_non_session_key(self):
+        # A non-auth key must not be treated as the user id
+        await self.store.aset('foo', 'bar')
+        self.assertIsNone(self.store.user_id)
+        self.assertEqual(await self.store.aget('foo'), 'bar')
