@@ -40,3 +40,25 @@ class MigratesessionsCommandTest(TransactionTestCase):
             self.assertEqual(new_sessions[0].ip, '127.0.0.1')
         finally:
             call_command('migrate', 'sessions', 'zero')
+
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.sessions'})
+    def test_migrate_anonymous_and_idempotent(self):
+        from django.contrib.sessions.backends.db import (
+            SessionStore as DjangoSessionStore,
+        )
+        try:
+            call_command('migrate', 'sessions')
+            call_command('clearsessions')
+            # Anonymous session without _auth_user_id migrates with user=None
+            session = DjangoSessionStore()
+            session['foo'] = 'bar'
+            session.save()
+            call_command('migratesessions')
+            new_sessions = list(Session.objects.all())
+            self.assertEqual(len(new_sessions), 1)
+            self.assertIsNone(new_sessions[0].user)
+            # Running again skips the already-migrated session
+            call_command('migratesessions')
+            self.assertEqual(Session.objects.count(), 1)
+        finally:
+            call_command('migrate', 'sessions', 'zero')

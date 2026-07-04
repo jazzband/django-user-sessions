@@ -11,15 +11,10 @@ from user_sessions.templatetags.user_sessions import (
 try:
     from django.contrib.gis.geoip2 import GeoIP2
     geoip = GeoIP2()
-    geoip_msg = None
+    geoip_msg = ''
 except Exception as error_geoip2:  # pragma: no cover
-    try:
-        from django.contrib.gis.geoip import GeoIP
-        geoip = GeoIP()
-        geoip_msg = None
-    except Exception as error_geoip:
-        geoip = None
-        geoip_msg = str(error_geoip2) + " and " + str(error_geoip)
+    geoip = None
+    geoip_msg = str(error_geoip2)
 
 
 class LocationTemplateFilterTest(TestCase):

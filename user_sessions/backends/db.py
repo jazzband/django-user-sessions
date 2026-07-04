@@ -27,6 +27,12 @@ class SessionStore(DBStore):
             self.user_id = value
         super().__setitem__(key, value)
 
+    # Used by auth.alogin() on Django >= 5.1, which bypasses __setitem__()
+    async def aset(self, key, value):
+        if key == auth.SESSION_KEY:
+            self.user_id = value
+        await super().aset(key, value)
+
     # Used in DBStore.load()
     def _get_session_from_db(self):
         s = super()._get_session_from_db()
@@ -36,8 +42,21 @@ class SessionStore(DBStore):
             self.modified = True
         return s
 
+    # Used in DBStore.aload() on Django >= 5.1
+    async def _aget_session_from_db(self):
+        s = await super()._aget_session_from_db()
+        self.user_id = s.user_id
+        # do not overwrite user_agent/ip, as those might have been updated
+        if self.user_agent != s.user_agent or self.ip != s.ip:
+            self.modified = True
+        return s
+
     def create(self):
         super().create()
+        self._session_cache = {}
+
+    async def acreate(self):
+        await super().acreate()
         self._session_cache = {}
 
     # Used in DBStore.save()
@@ -51,6 +70,18 @@ class SessionStore(DBStore):
             session_key=self._get_or_create_session_key(),
             session_data=self.encode(data),
             expire_date=self.get_expiry_date(),
+            user_agent=self.user_agent,
+            user_id=self.user_id,
+            ip=self.ip,
+        )
+
+    # Used in DBStore.asave() on Django >= 5.1
+    async def acreate_model_instance(self, data):
+        """See create_model_instance()."""
+        return self.model(
+            session_key=await self._aget_or_create_session_key(),
+            session_data=self.encode(data),
+            expire_date=await self.aget_expiry_date(),
             user_agent=self.user_agent,
             user_id=self.user_id,
             ip=self.ip,

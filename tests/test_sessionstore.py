@@ -97,3 +97,57 @@ class SessionStoreTest(TestCase):
 
         session = Session.objects.get(pk=self.store.session_key)
         self.assertEqual(session.user_id, None)
+
+
+class AsyncSessionStoreTest(TestCase):
+    def setUp(self):
+        self.store = SessionStore(user_agent='Python/2.7', ip='127.0.0.1')
+        User.objects.create_user('bouke', '', 'secret', id=1)
+
+    async def test_asave(self):
+        # auth.alogin() writes the session key via aset()
+        await self.store.aset(auth.SESSION_KEY, 1)
+        await self.store.asave()
+
+        session = await Session.objects.aget(pk=self.store.session_key)
+        self.assertEqual(session.user_agent, 'Python/2.7')
+        self.assertEqual(session.ip, '127.0.0.1')
+        self.assertEqual(session.user_id, 1)
+        self.assertAlmostEqual(now(), session.last_activity,
+                               delta=timedelta(seconds=5))
+
+    async def test_aload_unmodified(self):
+        await self.store.aset(auth.SESSION_KEY, 1)
+        await self.store.asave()
+        store2 = SessionStore(session_key=self.store.session_key,
+                              user_agent='Python/2.7', ip='127.0.0.1')
+        await store2.aload()
+        self.assertEqual(store2.user_agent, 'Python/2.7')
+        self.assertEqual(store2.ip, '127.0.0.1')
+        self.assertEqual(store2.user_id, 1)
+        self.assertEqual(store2.modified, False)
+
+    async def test_aload_modified(self):
+        await self.store.aset(auth.SESSION_KEY, 1)
+        await self.store.asave()
+        store2 = SessionStore(session_key=self.store.session_key,
+                              user_agent='Python/3.3', ip='8.8.8.8')
+        await store2.aload()
+        self.assertEqual(store2.user_agent, 'Python/3.3')
+        self.assertEqual(store2.ip, '8.8.8.8')
+        self.assertEqual(store2.user_id, 1)
+        self.assertEqual(store2.modified, True)
+
+    async def test_acycle_key_retains_user(self):
+        await self.store.aset(auth.SESSION_KEY, 1)
+        await self.store.acycle_key()
+        await self.store.asave()
+
+        session = await Session.objects.aget(pk=self.store.session_key)
+        self.assertEqual(session.user_id, 1)
+
+    async def test_aset_non_session_key(self):
+        # A non-auth key must not be treated as the user id
+        await self.store.aset('foo', 'bar')
+        self.assertIsNone(self.store.user_id)
+        self.assertEqual(await self.store.aget('foo'), 'bar')
