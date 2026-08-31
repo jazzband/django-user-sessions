@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.sessions.base_session import (
-    AbstractBaseSession, BaseSessionManager,
+    AbstractBaseSession,
+    BaseSessionManager,
 )
 from django.db import models
 

@@ -18,7 +18,7 @@ class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
         try:
             real_ip = request.META['HTTP_X_REAL_IP']
         except KeyError:
-            return None
+            return
         else:
             # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs. The
             # client's IP will be the first one.
