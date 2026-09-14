@@ -141,7 +141,7 @@ def location(value):
             warnings.warn(str(e), stacklevel=2)
             location = None
     if location and location['country_name']:
-        if 'city' in location and location['city']:
+        if location.get('city'):
             return f"{location['city']}, {location['country_name']}"
         return location['country_name']
     return None
