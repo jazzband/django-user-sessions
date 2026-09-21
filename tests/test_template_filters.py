@@ -4,9 +4,13 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 from user_sessions.templatetags.user_sessions import (
-    browser, city, country, device, location, platform,
+    browser,
+    city,
+    country,
+    device,
+    location,
+    platform,
 )
-
 
 try:
     from django.contrib.gis.geoip2 import GeoIP2
